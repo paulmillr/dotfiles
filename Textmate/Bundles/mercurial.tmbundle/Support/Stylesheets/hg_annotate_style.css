@@ -1,0 +1,101 @@
+#tm_webpreview_content {
+	padding: 0;
+	margin-top: 59px;
+}
+
+/* some adds for the links in the table (clickable lines)..*/
+table.blame a, table.blame a:visited, table.blame a:link {
+   text-decoration: none;
+   color: inherit;
+}
+
+table.blame a:hover, table.blame a:active {
+   background-color: #a3c8ff;
+   color: inherit;
+   text-decoration: none;
+}
+
+.dark table.blame a:hover,
+.dark table.blame a:active,
+.shiny table.blame a:hover,
+.shiny table.blame a:active,
+.halloween table.blame a:hover,
+.halloween table.blame a:active {
+   background-color: #101b73;
+   color: inherit;
+   text-decoration: none;
+}
+
+
+/* formating the table.. */
+table.blame {
+   font-size: 12px;
+   padding: 1px;
+   border-collapse: collapse;
+   width: 100%;
+}
+
+table.blame th {
+   text-align: left;
+   background-color: #eee;
+   border-bottom: 1px solid #999;
+   padding: 3px;
+   padding-bottom: 1px;
+   padding-top: 1px;
+   color: #666;
+}
+
+/* i have to format just this 2, because i just want
+   borders beween the headers and not at their sides.. */
+th.revhead {
+   border-left: 1px solid #bbb;
+   border-right: 1px solid #bbb;
+}
+
+th.codehead {
+   border-left: 1px solid #bbb;
+}
+
+/* to make it look good if a line gets wrapped: */
+table.blame td {
+   vertical-align: top;
+}
+
+/* about the several column classes.. */
+td.linecol {
+   background-color: #ddd;
+   border-right: 1px solid #999;
+   color: #888;
+   text-align: right;
+}
+
+td.revcol, td.namecol {
+   text-align: right;
+   background-color: #f8f8f8;
+   color: #888;
+   border-right: 1px solid #ddd;
+   padding-right: 2px;
+   padding-left: 2px;
+}
+
+td.namecol {
+   border-right: 1px solid #aaa;
+}
+
+/* bitstream vera sans looks really _very_ good. */
+td.codecol {
+   font: 12px "Bitstream Vera Sans Mono", monospace;
+   padding-left: 4px;
+   width: 100%;
+}
+
+/* maybe this should be implemented as id but its
+   an optimisation for less ruby code. :) */
+.bright td.codecol.current_line {
+   background-color: #f0d2fc;
+}
+.dark td.codecol.current_line,
+.shiny td.codecol.current_line,
+.halloween td.codecol.current_line {
+   background-color: #411452;
+}

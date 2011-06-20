@@ -1,0 +1,27 @@
+/* formating the definition lists.. */
+dl.info dt {
+   font-weight: bold;
+   padding: 4px;
+   padding-bottom: 0;
+   margin: 0;
+   border-top: 1px dashed #ddd;
+}
+
+dl.info.alternate dt {
+   border-top: 1px dashed #ccc;
+}
+
+dl.info dt:first-child {
+   border-top: 0;
+}
+
+dl.info dt:after {
+   content: ":";
+}
+
+dl.info dd {
+   margin: 0;
+   padding: 4px;
+   padding-top: 0;
+   padding-left: 24px;
+}

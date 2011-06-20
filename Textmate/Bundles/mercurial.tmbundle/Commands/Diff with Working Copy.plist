@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>require_cmd "${TM_HG:=hg}" "If you have installed hg, then you need to either update your &lt;tt&gt;PATH&lt;/tt&gt; or set the &lt;tt&gt;TM_HG&lt;/tt&gt; shell variable (e.g. in Preferences / Advanced)"
+
+if [[ -d "$TM_PROJECT_DIRECTORY" ]]
+   then export WorkPath="$TM_PROJECT_DIRECTORY"; cd "$TM_PROJECT_DIRECTORY"
+   else export WorkPath="$TM_DIRECTORY"; cd "$TM_PROJECT_DIRECTORY"
+fi
+
+ruby -I "$TM_BUNDLE_SUPPORT/" &lt;&lt;END
+	if ENV['TM_HG_EXT_DIFF']
+		require 'hg_extdiff'
+	else
+		require 'hg_diff'
+	end
+	Mercurial::diff_active_file("", "Diff With Working Copy")
+END</string>
+	<key>input</key>
+	<string>none</string>
+	<key>keyEquivalent</key>
+	<string>^M</string>
+	<key>name</key>
+	<string>Diff with Working Copy</string>
+	<key>output</key>
+	<string>openAsNewDocument</string>
+	<key>uuid</key>
+	<string>D8C78EA6-68A7-4625-826A-C64E51EF0724</string>
+</dict>
+</plist>

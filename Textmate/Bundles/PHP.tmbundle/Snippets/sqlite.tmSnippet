@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>\${1:database} = new PDO('sqlite:db.db');
+</string>
+	<key>name</key>
+	<string>sqlite</string>
+	<key>tabTrigger</key>
+	<string>sqlite</string>
+	<key>uuid</key>
+	<string>CD783BD0-7224-4E01-8AB0-F6B45C05D678</string>
+</dict>
+</plist>

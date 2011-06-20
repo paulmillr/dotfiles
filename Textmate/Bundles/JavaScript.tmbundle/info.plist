@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>changed</key>
+	<dict>
+		<key>ordering</key>
+		<array>
+			<string>73951799-AC15-40A6-81DB-EC051AB4A033</string>
+			<string>1717B5AE-209B-4548-9155-9E88A7230C1C</string>
+			<string>B4874A14-2491-465A-A349-61E4EBCF4700</string>
+			<string>36EC03E9-EFF4-479A-AB90-8DFA16800642</string>
+			<string>20E61C43-B81F-4FB9-9362-BFFE668EB9C9</string>
+			<string>77065D69-742A-4FF0-9A41-AD211DFBE72F</string>
+			<string>F0E4FB6A-4878-48C6-A777-62438DF1E14F</string>
+			<string>2F96136B-0193-42F5-90FC-B6F456A3AD77</string>
+			<string>4C6EDB43-3E2E-411B-A016-13C135C59833</string>
+			<string>93E017CC-6F27-11D9-90EB-000D93589AF6</string>
+			<string>A67A8BD9-A951-406F-9175-018DD4B52FD1</string>
+			<string>BC062860-3346-4D3B-8421-C5543F83D11F</string>
+			<string>834BC727-6B31-4073-A161-4823227219EF</string>
+			<string>3CEA49B2-A5C5-405C-82E2-B8B668877C37</string>
+			<string>E6EB7CC8-04E8-43A9-93B2-BC9EF5BA862B</string>
+			<string>73557394-4F0F-4DD3-8029-EEE8201AC7F5</string>
+			<string>51841DDB-C2A4-461C-A8AB-6C124AD50EAE</string>
+			<string>F19F3732-39A7-48EC-A72B-A8F477A01795</string>
+			<string>31964029-9D71-4ADC-8213-DFE5C4E222B3</string>
+			<string>011C4681-FBEC-4891-9326-3DECFCDED6D6</string>
+			<string>7ACCBC0F-0B51-45EB-AF6A-3D3317459BFE</string>
+			<string>C207B7C3-5597-4873-8AAD-C46FB8842AF2</string>
+			<string>AD506BEC-B33C-4168-A900-0A4D386A4B05</string>
+			<string>DC8B46FB-8ADA-45EA-8F36-94C807A0D302</string>
+			<string>009A3E6C-FE3F-4A18-8759-2DC31F17BBE2</string>
+			<string>7B9AEFCC-B450-416D-8527-430FE2A08568</string>
+			<string>9E0E3BCC-7F20-4D6B-891D-A44D6EC56E31</string>
+			<string>7FC97695-E2E7-42E1-8A2E-4A0BE36790F1</string>
+			<string>C5E4AE5F-4A61-4533-A084-BC960B19694B</string>
+			<string>9E57BBF4-224E-4409-9046-BFEF0F4890EE</string>
+			<string>10A49DFD-DA81-4508-8398-FF03E668352A</string>
+		</array>
+	</dict>
+	<key>deleted</key>
+	<array/>
+	<key>isDelta</key>
+	<true/>
+	<key>uuid</key>
+	<string>AAB4FD74-73F9-11D9-B89A-000D93589AF6</string>
+</dict>
+</plist>

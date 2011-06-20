@@ -1,0 +1,9 @@
+<keyword.declaration.volatile.scala>var</keyword.declaration.volatile.scala> <entity.name.var>$test</entity.name.var> = <string.quoted.double.scala>"lol"</string.quoted.double.scala>
+<keyword.declaration.volatile.scala>var</keyword.declaration.volatile.scala> <entity.name.var>_test</entity.name.var> = <string.quoted.double.scala>"lol"</string.quoted.double.scala>
+<keyword.declaration.volatile.scala>var</keyword.declaration.volatile.scala> <entity.name.var>go_fst_cand</entity.name.var> = <string.quoted.double.scala>"lol"</string.quoted.double.scala>
+<keyword.declaration.volatile.scala>var</keyword.declaration.volatile.scala> <entity.name.var>go$fst$cand</entity.name.var> = <string.quoted.double.scala>"lol"</string.quoted.double.scala>
+<keyword.declaration.scala>def</keyword.declaration.scala> <entity.name.function>$test</entity.name.function> = <string.quoted.double.scala>"lol"</string.quoted.double.scala>
+<keyword.declaration.scala>def</keyword.declaration.scala> <entity.name.function>_test</entity.name.function> = <string.quoted.double.scala>"lol"</string.quoted.double.scala>
+<keyword.declaration.scala>def</keyword.declaration.scala> <entity.name.function>go_fst_cand</entity.name.function> = <string.quoted.double.scala>"lol"</string.quoted.double.scala>
+<keyword.declaration.scala>def</keyword.declaration.scala> <entity.name.function>go$fst$cand</entity.name.function> = <string.quoted.double.scala>"lol"</string.quoted.double.scala>
+<keyword.declaration.scala>def</keyword.declaration.scala> <entity.name.function>go_fst_cand</entity.name.function>(<variable.parameter>$name</variable.parameter>: <entity.name.type>String</entity.name.type>) = <string.quoted.double.scala>"lol"</string.quoted.double.scala>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>require_cmd "${TM_HG:=hg}" "If you have installed hg, then you need to either update your &lt;tt&gt;PATH&lt;/tt&gt; or set the &lt;tt&gt;TM_HG&lt;/tt&gt; shell variable (e.g. in Preferences / Advanced)"
+
+if [[ -d "$TM_PROJECT_DIRECTORY" ]]
+   then export WorkPath="$TM_PROJECT_DIRECTORY"; cd "$TM_PROJECT_DIRECTORY"
+   else export WorkPath="$TM_DIRECTORY"; cd "$TM_DIRECTORY"
+fi
+
+export CommitWindow="$TM_SUPPORT_PATH/bin/CommitWindow.app/Contents/MacOS/CommitWindow"
+
+# show it..
+
+ruby -r "$TM_SUPPORT_PATH/lib/shelltokenize.rb" &lt;&lt;END
+	hg = ENV['TM_HG'] || "hg"
+	puts %x{#{hg} status --debug #{TextMate.selected_paths_for_shell} 2&gt;&amp;1|ruby -KU -- "${TM_BUNDLE_SUPPORT}/format_status.rb" "--status"}
+END
+
+</string>
+	<key>input</key>
+	<string>none</string>
+	<key>keyEquivalent</key>
+	<string>^M</string>
+	<key>name</key>
+	<string>Status</string>
+	<key>output</key>
+	<string>showAsHTML</string>
+	<key>uuid</key>
+	<string>ED977BA9-3604-4EC9-999B-39C588CD4801</string>
+</dict>
+</plist>

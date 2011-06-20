@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>contactEmailRot13</key>
+	<string>xriva@fo.bet</string>
+	<key>contactName</key>
+	<string>Kevin Ballard</string>
+	<key>description</key>
+	<string>&lt;a href="http://www.tcl.tk/"&gt;Tcl&lt;/a&gt; (Tool Command Language) is a very powerful but easy to learn dynamic programming language, suitable for a very wide range of uses. It is often used to write GUI frontends for UNIX stuff.</string>
+	<key>mainMenu</key>
+	<dict>
+		<key>items</key>
+		<array>
+			<string>59700A78-7CB7-11D9-875B-000A95E13C98</string>
+			<string>------------------------------------</string>
+			<string>35FD4583-34CA-446A-958B-D6446220B2BF</string>
+			<string>686ACE8E-AF2D-4429-BD3D-DB2272DE22FE</string>
+			<string>3BF57469-548C-4745-BB68-127C29CE70A1</string>
+			<string>16FB1812-6644-416D-8544-03F7E9C7C45E</string>
+			<string>9301C846-1EED-4749-AB9D-2728EA661E97</string>
+			<string>6F958C1C-2A05-4794-A551-4C3ABAAEE817</string>
+		</array>
+		<key>submenus</key>
+		<dict/>
+	</dict>
+	<key>name</key>
+	<string>Tcl</string>
+	<key>ordering</key>
+	<array>
+		<string>59700A78-7CB7-11D9-875B-000A95E13C98</string>
+		<string>56F8C50E-B263-430C-9301-A34EDF05E9F5</string>
+		<string>35FD4583-34CA-446A-958B-D6446220B2BF</string>
+		<string>686ACE8E-AF2D-4429-BD3D-DB2272DE22FE</string>
+		<string>3BF57469-548C-4745-BB68-127C29CE70A1</string>
+		<string>16FB1812-6644-416D-8544-03F7E9C7C45E</string>
+		<string>9301C846-1EED-4749-AB9D-2728EA661E97</string>
+		<string>6F958C1C-2A05-4794-A551-4C3ABAAEE817</string>
+		<string>F01F22AC-7CBB-11D9-9B10-000A95E13C98</string>
+		<string>42F00A35-6D17-44B8-8C9B-438F9FE9E241</string>
+		<string>806FD10F-E1F2-4B59-A049-83014D4CBD16</string>
+		<string>0FC70800-0EC9-436E-B290-67E83A3C8B53</string>
+		<string>742ABED6-94AD-4150-B0C8-329825E18B61</string>
+	</array>
+	<key>uuid</key>
+	<string>49882962-7CB7-11D9-875B-000A95E13C98</string>
+</dict>
+</plist>

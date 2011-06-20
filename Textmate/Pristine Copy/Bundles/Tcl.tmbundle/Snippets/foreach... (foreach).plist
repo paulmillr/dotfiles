@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>foreach ${1:var} ${2:\$list} {
+	${3}
+}
+</string>
+	<key>name</key>
+	<string>foreach...</string>
+	<key>scope</key>
+	<string>source.tcl</string>
+	<key>tabTrigger</key>
+	<string>foreach</string>
+	<key>uuid</key>
+	<string>686ACE8E-AF2D-4429-BD3D-DB2272DE22FE</string>
+</dict>
+</plist>

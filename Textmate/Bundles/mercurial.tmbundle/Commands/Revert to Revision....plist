@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>require_cmd "${TM_HG:=hg}" "If you have installed hg, then you need to either update your &lt;tt&gt;PATH&lt;/tt&gt; or set the &lt;tt&gt;TM_HG&lt;/tt&gt; shell variable (e.g. in Preferences / Advanced)"
+
+revs=$("$TM_HG" log -q "$TM_FILEPATH" \
+	2&gt; &gt;(CocoaDialog progressbar --indeterminate \
+		--title "Revert to Revision…" \
+		--text "Retrieving List of Revisions…" \
+	))
+
+revs=`osascript&lt;&lt;END
+	set AppleScript's text item delimiters to {"\n","\r"}
+	tell app "SystemUIServer"
+		activate
+		set ourList to (every text item of "$revs")
+		if the count of items in ourList is 0 then
+			display dialog "No older revisions of file '$(basename "$TM_FILEPATH")' found" buttons ("OK")
+			set the result to false
+		else
+			choose from list ourList with prompt "Revert '$(basename "$TM_FILEPATH")' to revision:"
+		end if
+	end tell
+END`
+
+# exit if user canceled
+if [[ $revs = "false" ]]; then
+	osascript -e 'tell app "TextMate" to activate' &amp;&gt;/dev/null &amp;	exit_discard
+fi
+
+
+revs=`echo "$revs" | tr '\r' '\n' | cut -d ":" -f 1`
+revs=( $revs )
+
+if [[ -z $TM_SELECTED_FILES ]]; then
+   "$TM_HG" revert -r "${revs[0]#r}" "$TM_FILEPATH"
+else
+   eval "$TM_HG" revert -r "${revs[0]#r}" $TM_SELECTED_FILES
+fi
+
+# will cause current file to be re-loaded
+rescan_project
+
+</string>
+	<key>input</key>
+	<string>none</string>
+	<key>keyEquivalent</key>
+	<string>^M</string>
+	<key>name</key>
+	<string>Revert to Revision...</string>
+	<key>output</key>
+	<string>showAsTooltip</string>
+	<key>uuid</key>
+	<string>59DD3EDA-43DB-4819-8C50-CCBBEED5B0F7</string>
+</dict>
+</plist>

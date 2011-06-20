@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bundleUUID</key>
+	<string>452017E8-0065-49EF-AB9D-7849B27D9367</string>
+	<key>name</key>
+	<string>Indention rules</string>
+	<key>scope</key>
+	<string>source.scala</string>
+	<key>settings</key>
+	<dict>
+		<key>decreaseIndentPattern</key>
+		<string>^\s*(\}|\))</string>
+		<key>increaseIndentPattern</key>
+		<string>(^.*(\{[^}]*|\([^)]*)$)</string>
+	</dict>
+	<key>uuid</key>
+	<string>EEEDB0BB-E825-4BFF-8D9B-CAE34FFCD8FC</string>
+</dict>
+</plist>

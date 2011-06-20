@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>SHELL_NAME=${SHELL_NAME:="Textmate Scala REPL"}
+PASTE=$(echo "$TM_SELECTED_TEXT" | sed s/\"/\\\\\"/g)
+osascript &lt;&lt; END
+tell application "Terminal"
+  activate
+  do script "$PASTE" in window 1
+end tell
+END</string>
+	<key>input</key>
+	<string>none</string>
+	<key>keyEquivalent</key>
+	<string>@r</string>
+	<key>name</key>
+	<string>Scala REPL: Paste selection</string>
+	<key>output</key>
+	<string>discard</string>
+	<key>scope</key>
+	<string>source.scala</string>
+	<key>uuid</key>
+	<string>7F176B4F-5D0E-459A-8042-A459B41051A8</string>
+</dict>
+</plist>

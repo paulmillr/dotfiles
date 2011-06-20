@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+	&lt;meta charset="utf-8"&gt;
+	&lt;title&gt;$1&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+$0
+&lt;/body&gt;
+&lt;/html&gt;</string>
+	<key>name</key>
+	<string>Skeleton</string>
+	<key>tabTrigger</key>
+	<string>skel</string>
+	<key>uuid</key>
+	<string>4D6491F0-5D44-4868-BB48-F713E0A603F9</string>
+</dict>
+</plist>

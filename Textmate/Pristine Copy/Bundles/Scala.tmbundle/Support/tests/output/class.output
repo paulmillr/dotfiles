@@ -1,0 +1,3 @@
+<keyword.declaration.scala>class</keyword.declaration.scala> <entity.name.class>MyClass</entity.name.class> <keyword.declaration.scala>extends</keyword.declaration.scala> <entity.other.inherited-class.scala>Any</entity.other.inherited-class.scala>  {
+  
+}

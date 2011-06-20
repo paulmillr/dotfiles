@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>changed</key>
+	<dict>
+		<key>content</key>
+		<string>def ${1:fname}(${2:`if [ "$TM_CURRENT_LINE" != "" ]
+                # poor man's way ... check if there is an indent or not
+                # (cuz we would have lost the class scope by this point)
+                then
+                    echo "self"
+                fi`}):
+    ${3/.+/"""/}${3:docstring for $1}${3/.+/"""\n/}${3/.+/\t/}${0:pass}</string>
+	</dict>
+	<key>deleted</key>
+	<array/>
+	<key>isDelta</key>
+	<true/>
+	<key>uuid</key>
+	<string>6499BB56-7BB5-11D9-8E83-000D93B6E43C</string>
+</dict>
+</plist>

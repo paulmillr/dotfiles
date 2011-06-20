@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>CREATE TABLE \`${1:table}\` (
+    \`id\` int(11) NOT NULL auto_increment,
+    ${2:field},
+    PRIMARY KEY (\`id\`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;</string>
+	<key>name</key>
+	<string>tpl</string>
+	<key>scope</key>
+	<string>source.sql</string>
+	<key>tabTrigger</key>
+	<string>sqltpl</string>
+	<key>uuid</key>
+	<string>6DE12010-8503-4686-9354-D8FB1CA1A19C</string>
+</dict>
+</plist>

@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>bundleUUID</key>
+	<string>452017E8-0065-49EF-AB9D-7849B27D9367</string>
+	<key>command</key>
+	<string>#!/usr/bin/env ruby
+#
+# ----------------------------------------------------------------
+# MODIFIED BY MADS HARTMANN JENSEN TO MATCH THE NEEDS OF THE SCALA 
+# PROGRAMMING LANGUAGE
+# ----------------------------------------------------------------
+#
+# Assignment block tidier, version 0.1.
+#
+# Copyright Chris Poirier 2006.
+# Licensed under the Academic Free License version 3.0.
+#
+# This script can be used as a command for TextMate to align all 
+# of the equal signs within a block of text.  When using it with
+# TextMate, set the command input to "Selected Text" or "Document",
+# and the output to "Replace Selected Text".  Map it to a key 
+# equivalent, and any time you want to tidy up a block, either 
+# select it, or put your cursor somewhere within it; then hit the
+# key equivalent.  Voila.
+#
+# Note that this is the first version of the script, and it hasn't
+# been heavily tested.  You might encounter a bug or two. 
+#
+# Per the license, use of this script is ENTIRELY at your own risk.
+# See the license for full details (they override anything I've 
+# said here).
+
+lines = STDIN.readlines()
+selected_text = ENV.member?("TM_SELECTED_TEXT")
+
+
+pattern, column_pattern, split_pattern, symbol = begin
+  line                             = ENV['TM_CURRENT_LINE']
+  
+  arrow_line_pattern               = /^[^=]+[^-+&lt;&gt;=!%\/|&amp;*^]-&gt;(?!=|~)/
+  arrow_left_line_pattern          = /^[^=]+[^-+&lt;&gt;=!%\/|&amp;*^]&lt;-(?!=|~)/
+  assignment_line_pattern          = /^[^=]+[^-+&lt;&gt;=!%\/|&amp;*^]=([^&gt;]|(?=.*=))/
+  function_line_pattern            = /^[^=]+[^-+&lt;&gt;=!%\/|&amp;*^]=&gt;(?!=|~)/
+
+  arrow_column_search_pattern      = /[\t ]*-&gt;/
+  arrow_left_column_search_pattern = /[\t ]*&lt;-/
+  assignment_column_search_pattern = /[\t ]*=[^&gt;]/
+  function_column_search_pattern   = /[\t ]*=&gt;/
+
+  assignment_split_pattern         = /[\t ]*=(?!&gt;)[\t ]*/
+  function_split_pattern           = /[\t ]*=&gt;[\t ]*/
+  arrow_split_pattern              = /[\t ]*-&gt;[\t ]*/
+  arrow_left_split_pattern         = /[\t ]*&lt;-[\t ]*/
+
+  arrow_symbol                     = "-&gt;"
+  arrow_left_symbol                = "&lt;-"
+  assignment_symbol                = "="
+  function_symbol                  = "=&gt;"
+  
+  if !line.match(function_line_pattern).nil?
+    [function_line_pattern, function_column_search_pattern, function_split_pattern, function_symbol]
+  elsif !line.match(assignment_line_pattern).nil?
+    [assignment_line_pattern, assignment_column_search_pattern, assignment_split_pattern, assignment_symbol]
+  elsif !line.match(arrow_line_pattern).nil?
+    [arrow_line_pattern, arrow_column_search_pattern, arrow_split_pattern, arrow_symbol]
+  elsif !line.match(arrow_left_line_pattern).nil?
+    [arrow_left_line_pattern, arrow_left_column_search_pattern, arrow_left_split_pattern, arrow_left_symbol]
+  end
+    
+end
+
+#
+# If called on a selection, every assignment statement
+# is in the block.  If called on the document, we start on the 
+# current line and look up and down for the start and end of the
+# block.
+
+if selected_text then
+   block_top    = 1
+   block_bottom = lines.length
+else
+ 
+   #
+   # We start looking on the current line.  However, if the
+   # current line doesn't match the pattern, we may be just
+   # after or just before a block, and we should check.  If
+   # neither, we are done.
+
+   start_on      = ENV["TM_LINE_NUMBER"].to_i
+   block_top     = lines.length + 1
+   block_bottom  = 0
+   search_top    = 1
+   search_bottom = lines.length
+   search_failed = false
+
+   if lines[start_on - 1] !~ pattern then
+      if lines[start_on - 2] =~ pattern then
+         search_bottom = start_on = start_on - 1
+      elsif lines[start_on] =~ pattern then
+         search_top = start_on = start_on
+      else
+         search_failed = true
+      end 
+   end
+
+   #
+   # Now with the search boundaries set, start looking for
+   # the block top and bottom.
+   
+   unless search_failed
+      start_on.downto(search_top) do |number|
+         if lines[number-1] =~ pattern then
+            block_top = number
+         else
+            break
+         end
+      end
+      
+      start_on.upto(search_bottom) do |number|
+         if lines[number-1] =~ pattern then
+            block_bottom = number
+         else
+            break
+         end
+      end
+   end
+end
+
+
+# First off, make sure that the indentation is the same for each line. 
+# The smallest indentation is used. 
+
+indentation = nil ## some number that
+block_top.upto(block_bottom) do |number|
+  line = lines[number - 1]
+  if line =~ pattern then
+    _indentation = line.match(/^\s*/).to_s
+    indentation = _indentation if indentation.nil? 
+    indentation = _indentation if _indentation.size &lt; indentation.size
+  end
+end
+
+block_top.upto(block_bottom) do |number|
+  if lines[number-1] =~ pattern then
+        symbol, before, after = begin
+          line = lines[number-1]
+          if !line.match(split_pattern).nil?
+            [symbol] | line.split(split_pattern,2)
+          end
+        end
+        
+        lines[number-1] = indentation + lines[number-1].gsub(/^\s*/,"")
+
+     end
+end
+
+#
+# Now, iterate over the block and find the best column number
+# for the = sign.  The pattern will tell us the position of the
+# first bit of whitespace before the equal sign.  We put the
+# equals sign to the right of the furthest-right one.  Note that
+# we cannot assume every line in the block is relevant.
+
+best_column = 0
+block_top.upto(block_bottom) do |number|
+  line = lines[number - 1]
+  if line =~ pattern then
+    m = column_pattern.match(line)
+    best_column = m.begin(0) if m.begin(0) &gt; best_column
+  end
+end
+
+#
+# Reformat the block.  Again, we cannot assume all lines in the 
+# block are relevant.
+
+block_top.upto(block_bottom) do |number|
+  if lines[number-1] =~ pattern then
+        symbol, before, after = begin
+          line = lines[number-1]
+          if !line.match(split_pattern).nil?
+            [symbol] | line.split(split_pattern,2)
+          end
+        end
+        lines[number-1] = [before.ljust(best_column), after].join(after[0,1] == '&gt;' ? " #{symbol}" : " #{symbol} ")
+     end
+end
+
+#
+# Output the replacement text
+
+lines.each do |line|
+   puts line
+end
+</string>
+	<key>input</key>
+	<string>selection</string>
+	<key>keyEquivalent</key>
+	<string>~@]</string>
+	<key>name</key>
+	<string>Align Assignments</string>
+	<key>output</key>
+	<string>replaceSelectedText</string>
+	<key>scope</key>
+	<string>source.scala</string>
+	<key>uuid</key>
+	<string>04D3E42F-4497-4D65-AE50-E7F261D25158</string>
+</dict>
+</plist>

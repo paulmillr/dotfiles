@@ -1,0 +1,3 @@
+<keyword.declaration.scala>def</keyword.declaration.scala> <entity.name.function>method</entity.name.function>(<variable.parameter>arg</variable.parameter> :<entity.name.type>String</entity.name.type>): <entity.name.type>String</entity.name.type> = {
+  
+}

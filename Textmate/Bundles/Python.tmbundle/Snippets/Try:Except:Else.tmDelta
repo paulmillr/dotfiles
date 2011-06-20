@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>changed</key>
+	<dict>
+		<key>content</key>
+		<string>try:
+    ${1:pass}
+except ${2:Exception} as ${3:e}:
+    ${4:raise $3}
+else:
+    ${5:pass}</string>
+	</dict>
+	<key>deleted</key>
+	<array/>
+	<key>isDelta</key>
+	<true/>
+	<key>uuid</key>
+	<string>4D382FF4-C740-4250-B4AE-7299DD6B4D3A</string>
+</dict>
+</plist>
