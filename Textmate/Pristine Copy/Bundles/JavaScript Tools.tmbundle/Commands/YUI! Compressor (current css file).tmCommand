@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>cat &gt;'/tmp/compress_this_file.css';
+java -jar "$TM_BUNDLE_SUPPORT/bin/yuicompressor.jar" --charset utf8 --preserve-semi --type=css '/tmp/compress_this_file.css' -o '/tmp/compress_this_file.css';
+cat /tmp/compress_this_file.css;</string>
+	<key>fallbackInput</key>
+	<string>scope</string>
+	<key>input</key>
+	<string>selection</string>
+	<key>keyEquivalent</key>
+	<string>^@c</string>
+	<key>name</key>
+	<string>Compress with YUI! Compressor CSS</string>
+	<key>output</key>
+	<string>replaceSelectedText</string>
+	<key>scope</key>
+	<string>source.css -entity.name.tag</string>
+	<key>uuid</key>
+	<string>14281367-C8CB-4FE4-AD3B-E23B153F528D</string>
+</dict>
+</plist>

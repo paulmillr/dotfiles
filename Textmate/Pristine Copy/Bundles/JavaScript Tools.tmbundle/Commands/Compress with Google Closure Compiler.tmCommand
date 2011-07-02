@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>cat &gt;'/tmp/compress_this_file.js';
+java -jar "$TM_BUNDLE_SUPPORT/bin/compiler.jar" --warning_level QUIET --js '/tmp/compress_this_file.js'</string>
+	<key>fallbackInput</key>
+	<string>scope</string>
+	<key>input</key>
+	<string>selection</string>
+	<key>keyEquivalent</key>
+	<string>^@c</string>
+	<key>name</key>
+	<string>Compress with Google Closure Compiler</string>
+	<key>output</key>
+	<string>replaceSelectedText</string>
+	<key>scope</key>
+	<string>source.js -entity.name.tag.script.html</string>
+	<key>uuid</key>
+	<string>9E7612FA-58B7-43AD-BCC4-F7989D953137</string>
+</dict>
+</plist>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>. "$TM_SUPPORT_PATH/lib/webpreview.sh"
+html_header "Validate Javascript"
+"${TM_RUBY:-ruby}" "$TM_BUNDLE_SUPPORT/bin/lint-gcc.rb"
+html_footer
+</string>
+	<key>fallbackInput</key>
+	<string>scope</string>
+	<key>input</key>
+	<string>selection</string>
+	<key>keyEquivalent</key>
+	<string>^V</string>
+	<key>name</key>
+	<string>Validate with Google Closure Compiler</string>
+	<key>output</key>
+	<string>showAsHTML</string>
+	<key>scope</key>
+	<string>source.js -entity.name.tag.script.html</string>
+	<key>uuid</key>
+	<string>88D4CEE6-2D1F-4B65-A04D-F4ABBC8F9145</string>
+</dict>
+</plist>

@@ -13,20 +13,20 @@ Array::indexOf ?= (searchElem) ->
 
 Array::map ?= (callback) -> (callback(i) for i in @)
 Array::filter ?= (predicate) -> (i for i in @ when predicate(i))
-Array::reduce ?= (accumulator, initialValue) ->
-  if typeof accumulator isnt 'function'
+Array::reduce ?= (callback, initialValue) ->
+  if typeof callback isnt 'function'
     throw new TypeError('First argument is not callable')
   len = @length
   if len is 0 and initialValue is undefined
     throw new TypeError('Empty array and no second argument')
   if initialValue isnt undefined
-    curr = initialValue
+    accumulator = initialValue
     from = 0
   else
-    curr = @[0]
+    accumulator = @[0]
     from = 1
   for i in [from...len]
-    curr = accumulator.call(undefined, curr, @[i], i, @)
+    accumulator = callback.call(undefined, accumulator, @[i], i, @)
   return curr
 
 Array::some ?= (predicate = (item) -> item) ->

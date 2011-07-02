@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>cat &gt; /tmp/reformat_this_file.js
+cd "$TM_BUNDLE_SUPPORT/bin/js-beautify/"
+java -jar ../js.jar beautify-cl.js -n -i 1 /tmp/reformat_this_file.js 2&gt;&amp;1
+</string>
+	<key>fallbackInput</key>
+	<string>scope</string>
+	<key>input</key>
+	<string>selection</string>
+	<key>keyEquivalent</key>
+	<string>^H</string>
+	<key>name</key>
+	<string>Reformat with JS Beautifier</string>
+	<key>output</key>
+	<string>replaceSelectedText</string>
+	<key>scope</key>
+	<string>source.js -entity.name.tag.script.html</string>
+	<key>uuid</key>
+	<string>0C3CB37C-1C88-4F62-814B-5C6998E1709B</string>
+</dict>
+</plist>

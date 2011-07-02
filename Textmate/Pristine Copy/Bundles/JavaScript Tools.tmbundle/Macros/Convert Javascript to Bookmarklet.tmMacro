@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>commands</key>
+	<array>
+		<dict>
+			<key>argument</key>
+			<dict>
+				<key>beforeRunningCommand</key>
+				<string>nop</string>
+				<key>command</key>
+				<string>ruby "$TM_BUNDLE_SUPPORT/bin/jsmin.rb"
+</string>
+				<key>input</key>
+				<string>selection</string>
+				<key>keyEquivalent</key>
+				<string>^~Q</string>
+				<key>name</key>
+				<string>Minimize selection</string>
+				<key>output</key>
+				<string>replaceSelectedText</string>
+				<key>scope</key>
+				<string>source.js, source.prototype.js</string>
+				<key>uuid</key>
+				<string>E620A7EF-DB9B-48D9-874F-60EAF426E70D</string>
+			</dict>
+			<key>command</key>
+			<string>executeCommandWithOptions:</string>
+		</dict>
+		<dict>
+			<key>argument</key>
+			<dict>
+				<key>action</key>
+				<string>replaceAll</string>
+				<key>findInProjectIgnoreCase</key>
+				<false/>
+				<key>findInProjectRegularExpression</key>
+				<false/>
+				<key>findString</key>
+				<string>\n| </string>
+				<key>ignoreCase</key>
+				<true/>
+				<key>regularExpression</key>
+				<true/>
+				<key>replaceAllScope</key>
+				<string>selection</string>
+				<key>replaceString</key>
+				<string>%20</string>
+				<key>wrapAround</key>
+				<true/>
+			</dict>
+			<key>command</key>
+			<string>findWithOptions:</string>
+		</dict>
+		<dict>
+			<key>argument</key>
+			<dict>
+				<key>action</key>
+				<string>replaceAll</string>
+				<key>findInProjectIgnoreCase</key>
+				<false/>
+				<key>findInProjectRegularExpression</key>
+				<false/>
+				<key>findString</key>
+				<string>^</string>
+				<key>ignoreCase</key>
+				<true/>
+				<key>regularExpression</key>
+				<true/>
+				<key>replaceAllScope</key>
+				<string>selection</string>
+				<key>replaceString</key>
+				<string>javascript:</string>
+				<key>wrapAround</key>
+				<true/>
+			</dict>
+			<key>command</key>
+			<string>findWithOptions:</string>
+		</dict>
+	</array>
+	<key>keyEquivalent</key>
+	<string>^~Q</string>
+	<key>name</key>
+	<string>Convert Javascript to Bookmarklet ᵇᵉᵗᵃ</string>
+	<key>scope</key>
+	<string>source.js</string>
+	<key>uuid</key>
+	<string>67347C19-DA7A-41B8-8C48-8CC92E11E4E3</string>
+</dict>
+</plist>

@@ -1,0 +1,118 @@
+== PackR
+
+PackR is a Ruby port of Dean Edwards' MIT-licensed JavaScript compressor, Packer:
+
+  # Packer version 3.0 (final) - copyright 2004-2007, Dean Edwards
+  # http://www.opensource.org/licenses/mit-license
+  http://dean.edwards.name/packer/
+
+This version is based on Packer 3.0. You may find that the results it produces
+are not strictly identical to those of the JavaScript version, but the difference is
+just a question of how the base-62 word list is ordered -- your scripts
+will work just like those produced with the online version. The level of
+compression achieved is identical between the two versions.
+
+=== Installation
+
+PackR is available both as a gem and as a Rails plugin. The plugin gives you the
++Packr+ class from the gem, plus some helpful +rake+ tasks to use during Rails
+development. To get the gem:
+
+  gem install packr
+
+To get the Rails plugin:
+
+  ruby script/plugin install
+      http://svn.jcoglan.com/packr/trunk/packr
+
+=== Usage
+
+Usage is dead simple. Within your Ruby/Rails app, you can compress pieces of code
+like this:
+
+  compressed = Packr.pack(script)
+  
+  # Pass options to control the type of compression
+  compressed = Packr.pack(script, :shrink_vars => true)
+  compressed = Packr.pack(script, :base62 => true)
+  compressed = Packr.pack(script, :shrink_vars => true, :base62 => true)
+
+If you want to compress a particular file, you can do this:
+
+  Packr.pack_file(path, ... options as above ...)
+
+Be careful with that - it will overwrite the contents of the file with
+the packed version. Be a good kid and use version control in case something
+goes wrong and you lose all your source code!
+
+If you want PackR's variable-shrinking routine to preserve certain variable names,
+you can tell it to do so by instantiating it and telling it which names you want to
+preserve:
+
+  my_packr = Packr.new
+  my_packr.protect_vars(:some, :variable, :names)
+  
+  my_packr.pack('var func = function(foo, bar, some) { return some(foo + bar); }', :shrink_vars => true)
+  #=> "var func=function(a,b,some){return some(a+b)}"
+
+If you want to protect the same variables for all scripts your program compresses,
+tell the +Packr+ class to protect them:
+
+  Packr.protect_vars(:some, :variable, :names)
+  
+  Packr.pack('var func = function(foo, bar, some) { return some(foo + bar); }', :shrink_vars => true)
+  #=> "var func=function(a,b,some){return some(a+b)}"
+
+By default, PackR always protects the variable <tt>$super</tt> so you can compress
+Prototype code that uses class inheritance. The constant +PROTECTED_NAMES+ in the
++Packr+ source code controls which variables are protected by default.
+
+=== Automated packing
+
+When installed as a Rails plugin, PackR also comes with a +rake+ task to let you
+batch-pack all your scripts. To use it, store any files you want to serve in
+packed form in the directory <tt>lib/javascripts</tt>. (The idea is that you won't
+be serving the source files to the public, so why keep them in the public folder?
+Also, it keeps the source files and packed copies nicely separated.) Then run:
+
+  rake packr:pack_libs
+
+You can specify the type of packing using flags:
+
+  rake packr:pack_libs shrink_vars=
+  rake packr:pack_libs base62= shrink_vars=
+
+PackR will put packed copies of all the scripts from <tt>lib/javascripts</tt> in
+<tt>public/javascripts</tt>. Again, be careful as this will overwrite any pre-existing
+files in your public directory.
+
+It is not recommended to run this as part of your deployment process, as you will
+need to verfiy that your JavaScript works when packed before committing it. PackR
+works using regular expressions -- not a true JavaScript interpreter -- and cannot
+fix missing semicolons for you.
+
+Also, DO NOT use PackR to compress files on-the-fly in response to HTTP
+requests. The packing process can be quite processor-intensive and it will
+make you app very slow when serving script files.
+
+=== License
+
+Copyright (c) 2007 Dean Edwards, James Coglan
+
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the "Software"),
+to deal in the Software without restriction, including without limitation
+the rights to use, copy, modify, merge, publish, distribute, sublicense,
+and/or sell copies of the Software, and to permit persons to whom the
+Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included
+in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+DEALINGS IN THE SOFTWARE.

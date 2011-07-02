@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>mate "$TM_BUNDLE_SUPPORT/conf/jsl.textmate.conf"</string>
+	<key>input</key>
+	<string>none</string>
+	<key>name</key>
+	<string>Edit Lint Validation settings</string>
+	<key>output</key>
+	<string>discard</string>
+	<key>scope</key>
+	<string>source.js</string>
+	<key>uuid</key>
+	<string>02917AD5-E190-40B5-998A-DD7DBC79BAF0</string>
+</dict>
+</plist>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>#!/usr/bin/env ruby
+
+source = nil
+dest = nil
+
+begin
+  require File.join(ENV['TM_SUPPORT_PATH'], 'lib', 'exit_codes')
+  require File.join(ENV['TM_BUNDLE_SUPPORT'], 'lib', 'rbeautify')
+
+  source = STDIN.read
+  dest = RBeautify.beautify_string(:ruby, source)
+  unless dest == source
+    STDOUT.write(dest)
+  end
+
+rescue Exception =&gt; e
+  TextMate.exit_show_tool_tip("There is a problem beautifying this source: #{e}")
+end
+
+if dest == source
+  TextMate.exit_discard
+end
+
+  </string>
+	<key>input</key>
+	<string>document</string>
+	<key>keyEquivalent</key>
+	<string>~@b</string>
+	<key>name</key>
+	<string>Beautify Ruby</string>
+	<key>output</key>
+	<string>replaceDocument</string>
+	<key>scope</key>
+	<string>source.ruby</string>
+	<key>uuid</key>
+	<string>374B6862-84D9-4169-8B42-E090EEF63DC2</string>
+</dict>
+</plist>
