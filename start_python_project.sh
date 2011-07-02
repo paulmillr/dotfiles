@@ -86,14 +86,14 @@ from optparse import OptionParser
 
 
 def main():
-    parser = OptionParser(prog='${PROJECT_NAME}')
-    parser.add_option('-v', '--verbose',
-                      action='store_true', dest='verbose', default=False,
-                      help='be verbose')
+    parser = OptionParser(prog="${PROJECT_NAME}")
+    parser.add_option("-v", "--verbose",
+                      action="store_true", dest="verbose", default=False,
+                      help="be verbose")
     (options, args) = parser.parse_args()
     return 0
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     sys.exit(main())
 END
     cat <<END > test/test_sanity.py
@@ -106,7 +106,7 @@ class SanityTest(unittest.TestCase):
     def runTest(self):
         self.assertTrue(2 * 2 == 4)
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()
 END
     cat <<END > run
@@ -156,27 +156,27 @@ def read(fname):
     return open(os.path.join(os.path.dirname(__file__), fname)).read()
 
 setup(
-    name='${PROJECT_NAME}',
+    name="${PROJECT_NAME}",
     version="0.0.1",
-    packages=['${PROJECT_NAME}'],
+    packages=["${PROJECT_NAME}"],
     package_data={
-        '': ['*.txt', '*.rst', '*.md']
+        "": ["*.txt", "*.rst", "*.md"]
     },
     data_files=[
-        ('', ['LICENSE'])
+        ("", ["LICENSE"])
     ],
 
-    author='Paul Miller',
-    author_email='paulpmillr@gmail.com',
-    description='No description entered for ${PROJECT_NAME}',
-    url='http://pbagwl.com/projects/${PROJECT_NAME}',
-    license='MIT',
+    author="Paul Miller",
+    author_email="paulpmillr@gmail.com",
+    description="No description entered for ${PROJECT_NAME}",
+    url="http://pbagwl.com/projects/${PROJECT_NAME}",
+    license="MIT",
 
-    long_description=read('readme.md'),
+    long_description=read("readme.md"),
     classifiers=[
-        'Development Status :: 2 - Pre-Alpha',
-        'Topic :: Utilities',
-        'License :: OSI Approved :: MIT License',
+        "Development Status :: 2 - Pre-Alpha",
+        "Topic :: Utilities",
+        "License :: OSI Approved :: MIT License",
     ],
 )
 END
