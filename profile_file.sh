@@ -1,17 +1,12 @@
-# MacPorts Installer addition on 2010-02-21_at_15:38:12: adding an appropriate PATH variable for use with MacPorts.
-export PATH=/opt/local/bin:/opt/local/sbin:$PATH
-# Finished adapting your PATH environment variable for use with MacPorts.
-
-# MacPorts Installer addition on 2010-02-21_at_15:38:12: adding an appropriate MANPATH variable for use with MacPorts.
-export MANPATH=/opt/local/share/man:$MANPATH
-# Finished adapting your MANPATH environment variable for use with MacPorts.
+#!/usr/bin/env zsh
 
 autoload colors; colors
 
+export PATH=$PATH:/usr/local/Cellar/python3/3.2.1/bin
 export TERM=xterm-color
 export CLICOLOR=1
-export LSCOLORS=fxfxcxdxbxegedabagacad
-export PS1="%B%{$fg[blue]%}%~%B%{$reset_color%}%b "
+export LSCOLORS=gxBxhxDxfxhxhxhxhxcxcx
+export PS1="%B%{$fg[green]%}%~%B%{$reset_color%}%b "
 #export PS1="%B[%{$fg[red]%}%n%{$reset_color%}%b@%B%{$fg[yellow]%}%m%b%{$reset_color%}:%~%B]%b "
 
 alias apache2ctl='sudo /opt/local/apache2/bin/apachectl'
@@ -76,12 +71,3 @@ function ram() {
         echo ${fg[green]}${SUM}${reset_color} KB
     fi
 }
-
-##
-# Your previous /Users/paul/.profile file was backed up as /Users/paul/.profile.macports-saved_2011-01-25_at_22:28:33
-##
-
-# MacPorts Installer addition on 2011-01-25_at_22:28:33: adding an appropriate PATH variable for use with MacPorts.
-export PATH=/opt/local/bin:/opt/local/sbin:$PATH
-# Finished adapting your PATH environment variable for use with MacPorts.
-
