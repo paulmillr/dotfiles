@@ -43,6 +43,16 @@ curl http://npmjs.org/install.sh | sh
 
 * Clone GitHub packages.
 
+* Install python packages
+
+```python
+# iPython (I use this as a default command shell)
+sudo pip-2.7 install ipython
+
+````
+
+* Do ./symlink_dotfiles.sh
+
 
 ## License
 
