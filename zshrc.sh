@@ -84,4 +84,4 @@ function ram() {
   fi
 }
 
-exec /usr/local/bin/ipython -noconfirm_exit -p sh
+#exec /usr/local/bin/ipython -noconfirm_exit -p sh
