@@ -3,7 +3,13 @@
 <plist version="1.0">
 <dict>
 	<key>changed</key>
-	<dict/>
+	<dict>
+		<key>content</key>
+		<string>class ${1:ClassName}(${2:object}):
+	def __init__(self${4/([^,])?(.*)/(?1:, )/}${4:arg}):
+		${5:super($1, self).__init__()}
+${4/(\A\s*,\s*\Z)|,?\s*([A-Za-z_][a-zA-Z0-9_]*)\s*(=[^,]*)?(,\s*|$)/(?2:\t\tself.$2 = $2\n)/g}		$0</string>
+	</dict>
 	<key>deleted</key>
 	<array/>
 	<key>isDelta</key>

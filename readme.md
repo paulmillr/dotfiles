@@ -1,58 +1,21 @@
 # Dotfiles
 My personal dotfiles.
 
-## Building my system from scratch (reminder)
+## Building system from scratch (reminder)
 
-* Apps to install:
+- Install [OS X LLVM-GCC](https://github.com/kennethreitz/osx-gcc-installer).
+- Change default shell to ZSH: ```chsh -s /bin/zsh```
+- Clone this project (dotfiles) and run ./install
+- Apps to install
 
-```sh
-XCode, TextMate, CSSEdit, Tower, Sequel Pro, Transmit, Droplr, 1Password,
+```
+TextMate, CSSEdit, Tower, Sequel Pro, Transmit, Droplr, 1Password,
 iLife, iWork, Firefox, Chrome, Handbrake, Lastfm, Screenflow, UnrarX,
 Transmission, VLC, Skype [, VMWare Fusion, PSCS5]
 ```
 
-* Sync 1Password, Keychain, iPhoto, iDisk, iTunes, iCloud.
-* Install homebrew: 
-    
-```sh
-ruby -e "$(curl -fsSL https://raw.github.com/gist/323731)"
-```
-
-* Install brew packages:
-
-```sh
-brew install cmake geoip hub mysql51 python3 wget coffee-script git libevent node readline gdbm htop memcached pidof sqlite
-```
-
-* Install:
-
-```sh
-# Distribute for Python 3
-wget http://pypi.python.org/packages/source/d/distribute/distribute-0.6.19.tar.gz
-tar -zxvf distribute-0.6.19.tar.gz
-cd distribute-0.6.19
-sudo python setup.py install
-
-# PIP
-sudo easy_install-2.7 pip
-sudo easy_install-3.2 pip
-
-# NPM
-curl http://npmjs.org/install.sh | sh
-```
-
-* Clone GitHub packages.
-
-* Install python packages
-
-```python
-# iPython (I use this as a default command shell)
-sudo pip-2.7 install ipython
-
-````
-
-* Do ./symlink_dotfiles.sh
-
+- Sync 1Password, Keychain, iPhoto, iDisk, iTunes, iCloud.
+- Clone GitHub packages.
 
 ## License
 

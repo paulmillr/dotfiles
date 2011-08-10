@@ -1,0 +1,29 @@
+#!/usr/bin/env zsh
+
+echo "Installing distribute for Python 3..."
+  wget http://pypi.python.org/packages/source/d/distribute/distribute-0.6.19.tar.gz
+  tar -zxvf distribute-0.6.19.tar.gz
+  cd distribute-0.6.19
+  sudo python3 setup.py install
+
+echo "Installing PIP..."
+  sudo easy_install-2.7 pip
+  sudo easy_install-3.2 pip
+
+echo "Installing PIP modules..."
+  function install_pip() {
+    sudo pip-2.7 install $1 > /dev/null 2> /dev/stdin
+  }
+  install_pip ipython
+  install_pip Tornado==1.2.1
+  install_pip Django
+  install_pip python-memcached
+  install_pip redis
+  install_pip pep8
+  install_pip nose
+  install_pip PyYAML
+  install_pip appscript
+  install_pip MySQL-python
+  install_pip Fabric
+  install_pip Pygments
+

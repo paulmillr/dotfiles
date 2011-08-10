@@ -1,3 +1,5 @@
+#!/usr/bin/env zsh
+
 # Path to your oh-my-zsh configuration.
 ZSH=$HOME/Documents/code/oh-my-zsh
 
@@ -21,7 +23,7 @@ ZSH_THEME="robbyrussell"
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git osx brew django git github node npm pip textmate)
+plugins=(git osx cloudapp brew django git github node npm pip textmate)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -83,5 +85,7 @@ function ram() {
     echo $1 uses ${fg[green]}${sum}${reset_color} MBs of RAM.
   fi
 }
+
+export LANG=en_US.UTF-8
 
 #exec /usr/local/bin/ipython -noconfirm_exit -p sh
