@@ -1,0 +1,64 @@
+#!/usr/bin/env zsh
+
+# A simple script for setting up OSX dev environment.
+
+CODEDIR=$HOME/Documents/code
+pushd .
+mkdir -p $CODEDIR
+cd $CODEDIR
+
+function install() {
+  echo "Installing $1..."
+  brew install $1
+}
+
+echo "Checking for SSH key, generating one if it doesn't exist ..."
+  [[ -f ~/.ssh/id_rsa.pub ]] || ssh-keygen -t rsa
+
+echo "Copying public key to clipboard. Paste it into your Github account ..."
+  [[ -f ~/.ssh/id_rsa.pub ]] && cat ~/.ssh/id_rsa.pub | pbcopy
+  open https://github.com/account/ssh
+
+echo "Configuring git..."
+  local $username=""
+  local $email=""
+  echo "Enter your git username"
+  read username
+  echo "Enter your git email"
+  read email
+  git config --global user.name $username
+  git config --global user.email $email
+
+echo "Installing Homebrew..."
+  ruby -e "$(curl -fsSL https://gist.github.com/raw/323731/install_homebrew.rb)"
+  brew update
+
+echo "Installing Homebrew packages..."
+  install MySQL
+  install SQLite
+  install Redis
+  install Memcached
+  install Python3
+  install WGet
+  install Node
+  install Coffee-script
+  install HTop
+  install tmux && source ~/.zshrc
+
+echo "Installing NPM..."
+  curl http://npmjs.org/install.sh | sh
+
+echo "Installing python things..."
+  source install_python
+
+echo "Symlinking config files..."
+  source symlink_dotfiles
+
+popd
+
+
+echo "OS X tweaking..."
+  echo "Disabling useless Safari page previews..."
+  defaults write com.apple.Safari DebugSnapshotsUpdatePolicy -int 2
+  echo "Disabling warning dialogue on downloaded applications..."
+  defaults write com.apple.LaunchServices LSQuarantine -bool NO
