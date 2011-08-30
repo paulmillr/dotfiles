@@ -3,21 +3,15 @@ My personal dotfiles.
 
 ## Building system from scratch (reminder)
 
-- Install [OS X LLVM-GCC](https://github.com/kennethreitz/osx-gcc-installer).
+- Install XCode.
 - Change default shell to ZSH: ```chsh -s /bin/zsh```
-- Clone this project (dotfiles) and run ./install
-- Apps to install
-
-```
-TextMate, CSSEdit, Tower, Sequel Pro, Transmit, Droplr, 1Password,
-iLife, iWork, Firefox, Chrome, Handbrake, Lastfm, Screenflow, UnrarX,
-Transmission, VLC, Skype [, VMWare Fusion, PSCS5]
-```
-
+- Clone this project (dotfiles) and run ```./install```
 - Sync 1Password, Keychain, iPhoto, iDisk, iTunes, iCloud.
 - Clone GitHub packages.
 
 ## License
+
+tl;dr: MIT
 
 Copyright (c) 2011 Paul Miller.
 
