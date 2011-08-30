@@ -6,7 +6,7 @@ DOTFILES="$HOME/Documents/code/dotfiles"
 BIN="/usr/local/bin"
 
 function link_bin () {
-	ln -s "$DOTFILES/$1.sh" "$BIN/$1";
+	ln -s "$DOTFILES/$1" "$BIN/$1";
 }
 
 ln -s "$DOTFILES/zshrc.sh" "$HOME/.zshrc"
