@@ -7,7 +7,7 @@ ZSH=$HOME/Documents/code/oh-my-zsh
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="robbyrussell"
+ZSH_THEME="wezm+"
 
 # Set to this to use case-sensitive completion
 # CASE_SENSITIVE="true"
@@ -28,7 +28,8 @@ plugins=(git osx cloudapp brew django git github node npm pip textmate)
 source $ZSH/oh-my-zsh.sh
 
 # Customize to your needs...
-export PATH=$PATH:/usr/local/Cellar/python3/3.2.1/bin
+
+export PATH=$PATH:/usr/local/share/python:/usr/local/Cellar/python3/3.2.1/bin
 
 # Count code lines in some directory.
 # Example usage: `linecount .py .js .css`
