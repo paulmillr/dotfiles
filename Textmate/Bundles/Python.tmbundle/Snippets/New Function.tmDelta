@@ -11,7 +11,7 @@
                 then
                     echo "self"
                 fi`}):
-    ${3/.+/"""/}${3:docstring for $1}${3/.+/"""\n/}${3/.+/\t/}${0:pass}</string>
+	${0:pass}</string>
 	</dict>
 	<key>deleted</key>
 	<array/>
