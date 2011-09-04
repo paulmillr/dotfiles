@@ -53,7 +53,7 @@ function nginx_() {
   if [[ $1 == 'start' ]]; then
     sudo nginx
   elif [[ $1 == 'stop' ]]; then
-    pidfile='/opt/local/logs/nginx.pid'
+    pidfile='/var/run/nginx.pid'
     pid=`cat $pidfile`
     sudo kill $pid
   else
