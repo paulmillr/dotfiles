@@ -5,17 +5,23 @@
 DOTFILES="$HOME/Documents/code/dotfiles"
 BIN="/usr/local/bin"
 
-function link_bin () {
-	ln -s "$DOTFILES/$1" "$BIN/$1";
+function link() {
+  old=$1
+  new=$2
+
+  rm "$new"
+  ln -s "$old" "$new"
 }
 
-ln -s "$DOTFILES/zshrc.sh" "$HOME/.zshrc"
-ln -s "$DOTFILES/gitignore" "$HOME/.gitignore"
-ln -s "$DOTFILES/Textmate/" "$HOME/Library/Application Support/Textmate"
+function link_bin() {
+	link "$DOTFILES/$1" "$BIN/$1"
+}
+
+link "$DOTFILES/zshrc.sh" "$HOME/.zshrc"
+link "$DOTFILES/gitignore" "$HOME/.gitignore"
+link "$DOTFILES/Textmate/" "$HOME/Library/Application Support/Textmate"
+link "$DOTFILES/ipythonrc" "$HOME/.ipython/ipythonrc"
 link_bin "backup_system"
 link_bin "start_python_project"
 link_bin "rewrite_git_history"
 link_bin "symlink_dotfiles"
-
-mkdir ~/.ipython
-ln -s "$DOTFILES/ipythonrc" "$HOME/.ipython/ipythonrc"
