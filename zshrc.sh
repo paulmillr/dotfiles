@@ -31,7 +31,7 @@ source $ZSH/oh-my-zsh.sh
 
 # Theme.
 PRE='%{$fg_bold[red]%}➜'
-HOSTINFO="{$fg_bold[red]%}%n{$reset_color%}@%{$fg_bold[orange]%}%m%{$reset_color%}"
+HOSTINFO="%{$fg_bold[yellow]%}%n@%m"
 CURDIR="%{$fg_bold[green]%}%p %{$fg[cyan]%}%~ %{$fg_bold[blue]%}$(git_prompt_info)%{$fg_bold[blue]%} % %{$reset_color%}"
 
 ZSH_THEME_GIT_PROMPT_PREFIX="git:(%{$fg[red]%}"
