@@ -9,6 +9,8 @@ My personal dotfiles.
 - Sync 1Password, Keychain, iPhoto, iDisk, iTunes, iCloud.
 - Clone GitHub packages.
 
+[How this looks](http://cl.ly/2Y2G003W2k1u111D3X27)
+
 ## License
 
 tl;dr: MIT
