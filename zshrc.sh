@@ -5,9 +5,9 @@ ZSH=$HOME/Documents/code/oh-my-zsh
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
-# Optionally, if you set this to "random", it'll load a random theme each
+# Optionally, if you set this to "random", it"ll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="wezm+"
+# ZSH_THEME="robbyrussell"
 
 # Set to this to use case-sensitive completion
 # CASE_SENSITIVE="true"
@@ -29,6 +29,25 @@ source $ZSH/oh-my-zsh.sh
 
 # Customize to your needs...
 
+# Theme.
+PRE='%{$fg_bold[red]%}➜'
+HOSTINFO="{$fg_bold[red]%}%n{$reset_color%}@%{$fg_bold[orange]%}%m%{$reset_color%}"
+CURDIR="%{$fg_bold[green]%}%p %{$fg[cyan]%}%~ %{$fg_bold[blue]%}$(git_prompt_info)%{$fg_bold[blue]%} % %{$reset_color%}"
+
+ZSH_THEME_GIT_PROMPT_PREFIX="git:(%{$fg[red]%}"
+ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%}"
+ZSH_THEME_GIT_PROMPT_DIRTY="%{$fg[blue]%}) %{$fg[yellow]%}✗%{$reset_color%}"
+ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg[blue]%})"
+
+ISMYMAC="`uname -a | grep paulmillr`"
+
+# Show hostname and username on remote shells.
+if [[ -z "$ISMYMAC" ]]; then
+  PROMPT="$PRE $HOSTINFO $CURDIR"
+else
+  PROMPT="$PRE $CURDIR"
+fi
+
 export PATH=$PATH:/usr/local/share/python:/usr/local/Cellar/python3/3.2.1/bin
 
 # Count code lines in some directory.
@@ -37,7 +56,7 @@ function linecount() {
   total=0
   for ext in $@; do
     firstletter=$(echo $ext | cut -c1-1)
-    if [[ firstletter != '.' ]]; then
+    if [[ firstletter != "." ]]; then
       ext=".$ext"
     fi
     lines=`find . -name "*$ext" -exec cat {} \; | wc -l`
@@ -50,10 +69,10 @@ function linecount() {
 
 # Start / stop / restart nginx.
 function nginx_() {
-  if [[ $1 == 'start' ]]; then
+  if [[ $1 == "start" ]]; then
     sudo nginx
-  elif [[ $1 == 'stop' ]]; then
-    pidfile='/var/run/nginx.pid'
+  elif [[ $1 == "stop" ]]; then
+    pidfile="/var/run/nginx.pid"
     pid=`cat $pidfile`
     sudo kill $pid
   else
@@ -63,10 +82,10 @@ function nginx_() {
 
 # Disable / enable screenshot shadow in OS X.
 function scrshadow() {
-  if [[ $1 == 'on' ]]; then
+  if [[ $1 == "on" ]]; then
     defaults delete com.apple.screencapture disable-shadow 
     killall SystemUIServer
-  elif [[ $1 == 'off' ]]; then
+  elif [[ $1 == "off" ]]; then
     defaults write com.apple.screencapture disable-shadow -bool true 
     killall SystemUIServer
   else
@@ -79,7 +98,7 @@ function ram() {
     echo "First argument - pattern to grep from processes"
   else
     sum=0
-    for i in `ps aux|grep -i $1|awk '{print $6}'`; do
+    for i in `ps aux|grep -i $1|awk "{print $6}"`; do
       sum=$(($i + $sum))
     done
     sum=$(echo "scale=2; $sum / 1024.0" | bc)
@@ -88,5 +107,8 @@ function ram() {
 }
 
 export LANG=en_US.UTF-8
+
+# yup
+alias bitch,=sudo
 
 #exec /usr/local/bin/ipython -noconfirm_exit -p sh
