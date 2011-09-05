@@ -30,23 +30,22 @@ source $ZSH/oh-my-zsh.sh
 # Customize to your needs...
 
 # Theme.
-PRE='%{$fg_bold[red]%}➜'
-HOSTINFO="%{$fg_bold[yellow]%} %n@%m"
-CURDIR='%{$fg_bold[green]%}%p %{$fg[cyan]%}%~ %{$fg_bold[blue]%}$(git_prompt_info)%{$fg_bold[blue]%} % %{$reset_color%}'
+PRE="%{$fg[red]%}➜"
+HOSTINFO="%{$fg[yellow]%} %n@%m"
+CURDIR='%{$fg[green]%}%p %~ %{$fg[blue]%}$(git_prompt_info)%{$fg[blue]%} % %{$reset_color%}'
 
 ZSH_THEME_GIT_PROMPT_PREFIX="git:(%{$fg[red]%}"
 ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%}"
 ZSH_THEME_GIT_PROMPT_DIRTY="%{$fg[blue]%}) %{$fg[yellow]%}✗%{$reset_color%}"
 ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg[blue]%})"
 
-ISMYMAC="`uname -a | grep paulmillr`"
-
 # Show hostname and username on remote shells.
-if [[ -z "$ISMYMAC" ]]; then
+if [[ -z "`uname -a | grep paulmillr`" ]]; then
   PROMPT="$PRE $HOSTINFO $CURDIR"
 else
   PROMPT="$PRE $CURDIR"
 fi
+
 
 export PATH=$PATH:/usr/local/share/python:/usr/local/Cellar/python3/3.2.1/bin
 
