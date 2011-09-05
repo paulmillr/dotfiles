@@ -32,7 +32,7 @@ source $ZSH/oh-my-zsh.sh
 # Theme.
 PRE='%{$fg_bold[red]%}➜'
 HOSTINFO="%{$fg_bold[yellow]%} %n@%m"
-CURDIR="%{$fg_bold[green]%}%p %{$fg[cyan]%}%~ %{$fg_bold[blue]%}$(git_prompt_info)%{$fg_bold[blue]%} % %{$reset_color%}"
+CURDIR='%{$fg_bold[green]%}%p %{$fg[cyan]%}%~ %{$fg_bold[blue]%}$(git_prompt_info)%{$fg_bold[blue]%} % %{$reset_color%}'
 
 ZSH_THEME_GIT_PROMPT_PREFIX="git:(%{$fg[red]%}"
 ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%}"
@@ -45,7 +45,7 @@ ISMYMAC="`uname -a | grep paulmillr`"
 if [[ -z "$ISMYMAC" ]]; then
   PROMPT="$PRE $HOSTINFO $CURDIR"
 else
-  PROMPT="$PRE $HOSTINFO $CURDIR"
+  PROMPT="$PRE $CURDIR"
 fi
 
 export PATH=$PATH:/usr/local/share/python:/usr/local/Cellar/python3/3.2.1/bin
