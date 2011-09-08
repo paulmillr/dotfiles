@@ -34,7 +34,7 @@ PRE="%{$fg[red]%}➜"
 HOSTINFO="%{$fg[yellow]%} %n@%m"
 CURDIR='%{$fg[green]%}%p %~ %{$fg[blue]%}$(git_prompt_info)%{$fg[blue]%} % %{$reset_color%}'
 
-ZSH_THEME_GIT_PROMPT_PREFIX="git:(%{$fg[red]%}"
+ZSH_THEME_GIT_PROMPT_PREFIX="git:(%{$fg[white]%}"
 ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%}"
 ZSH_THEME_GIT_PROMPT_DIRTY="%{$fg[blue]%}) %{$fg[yellow]%}✗%{$reset_color%}"
 ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg[blue]%})"
@@ -47,7 +47,10 @@ else
 fi
 
 
-export PATH=$PATH:/usr/local/share/python:/usr/local/Cellar/python3/3.2.1/bin
+export PATH="$PATH:\
+/usr/local/share/python:\
+/usr/local/Cellar/python3/3.2.1/bin:\
+/usr/local/Cellar/ruby/1.9.2-p290/bin"
 
 # Count code lines in some directory.
 # Example usage: `linecount .py .js .css`
