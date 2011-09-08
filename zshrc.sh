@@ -52,6 +52,8 @@ export PATH="$PATH:\
 /usr/local/Cellar/python3/3.2.1/bin:\
 /usr/local/Cellar/ruby/1.9.2-p290/bin"
 
+export LSCOLORS=ExGxFxDxCxHxHxCbCeEbEb
+
 # Count code lines in some directory.
 # Example usage: `linecount .py .js .css`
 function linecount() {
