@@ -1,0 +1,15 @@
+[user]
+  name = Paul Miller
+  email = paulmillr@me.com
+
+[alias]
+  last = cat-file commit HEAD
+
+[color]
+  ui = true
+
+[core]
+  editor = subl
+
+[format]
+  pretty = oneline

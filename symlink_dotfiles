@@ -1,11 +1,11 @@
-#!/bin/bash
+#!/bin/sh
 
 # Some code taken from github.com/penpen/dotfiles.
 
 DOTFILES="$HOME/Documents/code/dotfiles"
 BIN="/usr/local/bin"
 
-function link() {
+link() {
   old=$1
   new=$2
 
@@ -13,14 +13,19 @@ function link() {
   ln -s "$old" "$new"
 }
 
-function link_bin() {
+link_home() {
+  link "$DOTFILES/$1" "$HOME/$2"
+}
+
+link_bin() {
 	link "$DOTFILES/$1" "$BIN/$1"
 }
 
-link "$DOTFILES/zshrc.sh" "$HOME/.zshrc"
-link "$DOTFILES/gitignore" "$HOME/.gitignore"
-link "$DOTFILES/Textmate/" "$HOME/Library/Application Support/Textmate"
-link "$DOTFILES/ipythonrc" "$HOME/.ipython/ipythonrc"
+link_home zshrc.sh .zshrc
+link_home gitconfig .gitconfig
+link_home gitignore .gitignore
+link_home Textmate/ "Library/Application Support/Textmate"
+link_home ipythonrc .ipython/ipythonrc
 link_bin "backup_system"
 link_bin "start_python_project"
 link_bin "rewrite_git_history"
