@@ -2,7 +2,7 @@
 
 # A simple script for setting up OSX dev environment.
 
-CODEDIR=$HOME/Documents/code
+CODEDIR=$HOME/Development
 pushd .
 mkdir -p $CODEDIR
 cd $CODEDIR

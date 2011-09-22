@@ -3,3 +3,5 @@
 .svn
 .hg
 *.pyc
+*.sublime-project
+*.sublime-workspace

@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 
 # Path to your oh-my-zsh configuration.
-ZSH=$HOME/Documents/code/oh-my-zsh
+ZSH=$HOME/Development/oh-my-zsh
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
