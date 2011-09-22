@@ -1,9 +1,16 @@
 [user]
-  name = Paul Miller
-  email = paulmillr@me.com
+	name = Paul Miller
+	email = paulmillr@me.com
 
 [alias]
+  st = status
+  ci = commit
+  ls = ls-files
+
+  unstage = reset HEAD
   last = cat-file commit HEAD
+  fulllog = log --graph --decorate --pretty=oneline --abbrev-commit
+  lg = log -n 15 --graph --decorate --pretty=oneline --abbrev-commit
 
 [color]
   ui = true

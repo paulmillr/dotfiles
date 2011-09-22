@@ -2,7 +2,7 @@
 
 # Some code taken from github.com/penpen/dotfiles.
 
-DOTFILES="$HOME/Documents/code/dotfiles"
+DOTFILES="$HOME/Development/dotfiles"
 BIN="/usr/local/bin"
 
 link() {
