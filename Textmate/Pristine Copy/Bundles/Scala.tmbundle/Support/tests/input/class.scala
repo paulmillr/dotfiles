@@ -1,3 +1,0 @@
-class MyClass extends Any  {
-  
-}
