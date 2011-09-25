@@ -1,5 +1,7 @@
 #!/usr/bin/env zsh
 
+# TODO: set up python without sudo to homebrew folders.
+
 echo "Installing distribute for Python 3..."
   wget http://pypi.python.org/packages/source/d/distribute/distribute-0.6.19.tar.gz
   tar -zxvf distribute-0.6.19.tar.gz

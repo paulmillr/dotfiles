@@ -50,13 +50,18 @@ fi
 export PATH="$PATH:\
 /usr/local/share/python:\
 /usr/local/Cellar/python3/3.2.1/bin:\
-/usr/local/Cellar/ruby/1.9.2-p290/bin"
+/usr/local/Cellar/ruby/1.9.2-p290/bin:\
+$HOME/.cabal/bin"
 
 export LSCOLORS=ExGxFxDxCxHxHxCbCeEbEb
 
 # Count code lines in some directory.
 # Example usage: `linecount .py .js .css`
 function linecount() {
+  local total
+  local firstletter
+  local ext
+  local lines
   total=0
   for ext in $@; do
     firstletter=$(echo $ext | cut -c1-1)
@@ -73,6 +78,8 @@ function linecount() {
 
 # Start / stop / restart nginx.
 function nginx_() {
+  local pidfile
+  local pid
   if [[ $1 == "start" ]]; then
     sudo nginx
   elif [[ $1 == "stop" ]]; then
@@ -98,15 +105,24 @@ function scrshadow() {
 }
 
 function ram() {
-  if [ -z "$1" ]; then
+  local sum
+  local items
+  local app
+
+  app="$1"
+  if [ -z "$app" ]; then
     echo "First argument - pattern to grep from processes"
   else
     sum=0
-    for i in `ps aux|grep -i $1|awk "{print $6}"`; do
+    for i in `ps aux | grep -i "$app" | grep -v "grep" | awk '{print $6}'`; do
       sum=$(($i + $sum))
     done
     sum=$(echo "scale=2; $sum / 1024.0" | bc)
-    echo $1 uses ${fg[green]}${sum}${reset_color} MBs of RAM.
+    if [[ $sum != "0" ]]; then
+      echo "${fg[blue]}${app}${reset_color} uses ${fg[green]}${sum}${reset_color} MBs of RAM."
+    else
+      echo "There's no processes with pattern ${fg[blue]}'${app}'${reset_color} are running."
+    fi
   fi
 }
 
