@@ -46,8 +46,12 @@ else
   PROMPT="$PRE $CURDIR"
 fi
 
-
-export PATH="$PATH:\
+export PATH="\
+/usr/local/bin:\
+/usr/bin:/bin:\
+/usr/sbin:/sbin:\
+/usr/X11/bin:\
+/usr/texbin:\
 /usr/local/share/python:\
 /usr/local/Cellar/python3/3.2.1/bin:\
 /usr/local/Cellar/ruby/1.9.2-p290/bin:\
@@ -128,7 +132,20 @@ function ram() {
 
 export LANG=en_US.UTF-8
 
-# yup
+# Some aliases.
 alias bitch,=sudo
 
+alias devnode="$HOME/Development/node/out/Release/node"
+dev_coffee_dir="$HOME/Development/coffee-script/bin"
+dev_coffee_exec="$dev_coffee_dir/coffee"
+dev_coffee_cake="$dev_coffee_dir/cake"
+alias devcoffee="$dev_coffee_exec"
+alias devcake="$dev_coffee_cake"
+
+# ES6 (Harmony) proxy support.
+alias nodep="devnode --harmony_proxies"
+alias coffeep="nodep $dev_coffee_exec"
+alias cakep="nodep $dev_coffee_cake"
+
+# iPython as default shell.
 #exec /usr/local/bin/ipython -noconfirm_exit -p sh
