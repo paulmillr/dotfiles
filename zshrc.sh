@@ -48,13 +48,13 @@ fi
 
 export PATH="\
 /usr/local/bin:\
+$HOME/.rbenv/shims:\
 /usr/bin:/bin:\
 /usr/sbin:/sbin:\
 /usr/X11/bin:\
 /usr/texbin:\
 /usr/local/share/python:\
 /usr/local/Cellar/python3/3.2.1/bin:\
-/usr/local/Cellar/ruby/1.9.2-p290/bin:\
 $HOME/.cabal/bin"
 
 export LSCOLORS=ExGxFxDxCxHxHxCbCeEbEb
