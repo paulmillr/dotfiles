@@ -20,3 +20,5 @@
 
 [format]
   pretty = oneline
+[mergetool]
+	keepBackup = true
