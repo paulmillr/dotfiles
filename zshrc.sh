@@ -135,17 +135,5 @@ export LANG=en_US.UTF-8
 # Some aliases.
 alias bitch,=sudo
 
-alias devnode="$HOME/Development/node/out/Release/node"
-dev_coffee_dir="$HOME/Development/coffee-script/bin"
-dev_coffee_exec="$dev_coffee_dir/coffee"
-dev_coffee_cake="$dev_coffee_dir/cake"
-alias devcoffee="$dev_coffee_exec"
-alias devcake="$dev_coffee_cake"
-
-# ES6 (Harmony) proxy support.
-alias nodep="devnode --harmony_proxies"
-alias coffeep="nodep $dev_coffee_exec"
-alias cakep="nodep $dev_coffee_cake"
-
 # iPython as default shell.
 #exec /usr/local/bin/ipython -noconfirm_exit -p sh
