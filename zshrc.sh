@@ -46,6 +46,8 @@ else
   PROMPT="$PRE $CURDIR"
 fi
 
+
+# Add Ruby, Homebrew, custom Python2/3 & Haskell package dirs to PATH.
 export PATH="\
 /usr/local/bin:\
 $HOME/.rbenv/shims:\
@@ -54,7 +56,7 @@ $HOME/.rbenv/shims:\
 /usr/X11/bin:\
 /usr/texbin:\
 /usr/local/share/python:\
-/usr/local/Cellar/python3/3.2.1/bin:\
+/usr/local/share/python3:\
 $HOME/.cabal/bin"
 
 export LSCOLORS=ExGxFxDxCxHxHxCbCeEbEb
