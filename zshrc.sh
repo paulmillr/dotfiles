@@ -135,6 +135,7 @@ function ram() {
 export LANG=en_US.UTF-8
 
 # Some aliases.
+alias rm=trash
 alias bitch,=sudo
 
 # iPython as default shell.
