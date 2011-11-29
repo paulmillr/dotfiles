@@ -16,7 +16,7 @@
   ui = true
 
 [core]
-  editor = subl
+  editor = mate -w
 
 [format]
   pretty = oneline
