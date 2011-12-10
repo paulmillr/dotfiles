@@ -23,27 +23,21 @@ DISABLE_AUTO_UPDATE="true"
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git osx cloudapp brew django git github node npm pip textmate)
+plugins=(git osx brew git github node npm pip textmate nyan)
 
 source $ZSH/oh-my-zsh.sh
 
 # Customize to your needs...
 
 # Theme.
-PRE="%{$fg[red]%}➜"
-HOSTINFO="%{$fg[yellow]%} %n@%m"
-CURDIR='%{$fg[green]%}%p %~ %{$fg[blue]%}$(git_prompt_info)%{$fg[blue]%} % %{$reset_color%}'
-
-ZSH_THEME_GIT_PROMPT_PREFIX="git:(%{$fg[white]%}"
-ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%}"
-ZSH_THEME_GIT_PROMPT_DIRTY="%{$fg[blue]%}) %{$fg[yellow]%}✗%{$reset_color%}"
-ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg[blue]%})"
+HOSTINFO="%{$fg[yellow]%}%n@%m"
+CURDIR='%{$fg[green]%}%p%~ %{$fg[blue]%}$ %{$reset_color%}'
 
 # Show hostname and username on remote shells.
 if [[ -z "`uname -a | grep paulmillr`" ]]; then
-  PROMPT="$PRE $HOSTINFO $CURDIR"
+  PROMPT="$HOSTINFO $CURDIR"
 else
-  PROMPT="$PRE $CURDIR"
+  PROMPT="$CURDIR"
 fi
 
 
@@ -80,21 +74,6 @@ function linecount() {
     echo Lines of code for $ext: $lines
   done
   echo Total lines of code: $total
-}
-
-# Start / stop / restart nginx.
-function nginx_() {
-  local pidfile
-  local pid
-  if [[ $1 == "start" ]]; then
-    sudo nginx
-  elif [[ $1 == "stop" ]]; then
-    pidfile="/var/run/nginx.pid"
-    pid=`cat $pidfile`
-    sudo kill $pid
-  else
-    nginx_ stop && nginx_ start
-  fi
 }
 
 # Disable / enable screenshot shadow in OS X.
