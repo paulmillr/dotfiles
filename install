@@ -34,16 +34,8 @@ echo "Installing Homebrew..."
   brew update
 
 echo "Installing Homebrew packages..."
-  install MySQL
-  install SQLite
-  install Redis
-  install Memcached
-  install Python3
-  install WGet
-  install Node
-  install Coffee-script
-  install HTop
-  install tmux && source ~/.zshrc
+  install Redis Python Python3 WGet Node HTop GHC Haskell-platform Scala GnuPG Growlnotify Hub
+  source ~/.zshrc
 
 echo "Installing NPM..."
   curl http://npmjs.org/install.sh | sh
