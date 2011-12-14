@@ -31,7 +31,7 @@ source $ZSH/oh-my-zsh.sh
 
 # Theme.
 HOSTINFO="%{$fg[yellow]%}%n@%m"
-CURDIR='%{$fg[green]%}%p%~ %{$fg[blue]%}$ %{$reset_color%}'
+CURDIR='%{$fg[red]%}%p%~ %{$fg[red]%}$ %{$reset_color%}'
 
 # Show hostname and username on remote shells.
 if [[ -z "`uname -a | grep paulmillr`" ]]; then
@@ -53,7 +53,11 @@ $HOME/.rbenv/shims:\
 /usr/local/share/python3:\
 $HOME/.cabal/bin"
 
-export LSCOLORS=ExGxFxDxCxHxHxCbCeEbEb
+# LS colors for my theme (paulmillr.terminal).
+#export LSCOLORS=ExGxFxDxCxHxHxCbCeEbEb
+
+# Solarized light LS colors.
+export LSCOLORS=gxfxbEaEBxxEhEhBaDaCaD
 
 # Count code lines in some directory.
 # Example usage: `linecount .py .js .css`

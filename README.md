@@ -4,16 +4,13 @@ My personal dotfiles.
 ## Building system from scratch (reminder)
 
 - Install XCode.
-- Change default shell to ZSH: ```chsh -s /bin/zsh```
-- Clone this project (dotfiles) and run ```./install```
+- Change default shell to ZSH: `chsh -s /bin/zsh`.
+- Clone this project (dotfiles) and run `./install`.
 - Sync 1Password, Keychain, iPhoto, iDisk, iTunes, iCloud.
 - Clone GitHub packages.
 
-[How this looks](http://cl.ly/2Y2G003W2k1u111D3X27)
-
 ## License
-
-tl;dr: MIT
+The MIT license.
 
 Copyright (c) 2011 Paul Miller.
 

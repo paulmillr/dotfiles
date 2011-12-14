@@ -7,7 +7,7 @@ set -o errexit
 # you want to delete, e.g., git-delete-history path1 path2
  
 if [ $# -eq 0 ]; then
-    exit 0are still
+    exit 0
 fi
  
 # make sure we're at the root of git repo

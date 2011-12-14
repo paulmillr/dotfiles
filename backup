@@ -18,22 +18,13 @@ function backup() {
   cp -R "$APP_DIR/$1" "$BACKUP_DIR/"
   cp -R "$APP_DIR/1Password/1Password.agilekeychain" "$BACKUP_DIR/"
   cp -R "$LIB_DIR/Keychains" "$BACKUP_DIR/"
-  backup_dir "AddressBook"
-  backup_dir "Adobe"
   backup_dir "Tower"
   backup_dir "Transmission"
-  backup_dir "Transmit"
-  zip -r "$BACKUP_DIR/code.zip" "$DEV_DIR" > /dev/null
 }
 
 function restore() {
   cp -R "$BACKUP_DIR/1Password.agilekeychain" "$APP_DIR/1Password/"
   cp -R "$BACKUP_DIR/Keychains" "$LIB_DIR/"
-  restore_dir "AddressBook"
-  restore_dir "Adobe"
   restore_dir "Tower"
   restore_dir "Transmission"
-  restore_dir "Transmit"
-  #restore_dir "$DEV_DIR"
-  unzip "$BACKUP_DIR/code.zip" -d "$DEV_DIR" > /dev/null
 }

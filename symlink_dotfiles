@@ -25,8 +25,8 @@ link_home zshrc.sh .zshrc
 link_home gitconfig .gitconfig
 link_home gitignore .gitignore
 link_home Textmate/ "Library/Application Support/Textmate"
-link_home ipythonrc .ipython/ipythonrc
 link_bin "backup_system"
 link_bin "start_python_project"
 link_bin "rewrite_git_history"
 link_bin "symlink_dotfiles"
+link_bin "tag2utf"
