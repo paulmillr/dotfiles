@@ -12,6 +12,11 @@ function install() {
   brew install $1
 }
 
+echo "Enter new hostname of the machine"
+	read hostname
+	echo "Setting new hostname..."
+	scutil –set HostName "$hostname"
+
 echo "Checking for SSH key, generating one if it doesn't exist ..."
   [[ -f ~/.ssh/id_rsa.pub ]] || ssh-keygen -t rsa
 
@@ -20,8 +25,8 @@ echo "Copying public key to clipboard. Paste it into your Github account ..."
   open https://github.com/account/ssh
 
 echo "Configuring git..."
-  local $username=""
-  local $email=""
+  local username
+  local email
   echo "Enter your git username"
   read username
   echo "Enter your git email"
@@ -50,7 +55,10 @@ popd
 
 
 echo "OS X tweaking..."
-  echo "Disabling useless Safari page previews..."
-  defaults write com.apple.Safari DebugSnapshotsUpdatePolicy -int 2
+  #echo "Disabling useless Safari page previews..."
+  #defaults write com.apple.Safari DebugSnapshotsUpdatePolicy -int 2
   echo "Disabling warning dialogue on downloaded applications..."
   defaults write com.apple.LaunchServices LSQuarantine -bool NO
+	echo "Changing default screenshot location to ~/Downloads/..."
+	defaults write com.apple.screencapture location ~/Downloads/
+	killall SystemUIServer
