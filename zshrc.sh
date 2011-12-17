@@ -44,7 +44,7 @@ fi
 # Add Ruby, Homebrew, custom Python2/3 & Haskell package dirs to PATH.
 export PATH="\
 /usr/local/bin:\
-$HOME/.rbenv/shims:\
+/usr/local/Cellar/ruby/1.9.3-p0/bin:\
 /usr/bin:/bin:\
 /usr/sbin:/sbin:\
 /usr/X11/bin:\
