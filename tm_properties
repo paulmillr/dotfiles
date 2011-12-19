@@ -1,0 +1,56 @@
+# Basic Settings
+#
+fontName = "PragmataPro"
+fontSize = 13
+
+# Extra files to include
+#
+myExtraIncludes = ".tm_properties,.htaccess,.gitignore"
+fileBrowserGlob = "{*,$myExtraIncludes}"
+include = "{$include,$myExtraIncludes}"
+
+# Hide log, vendor and tmp directories from search popups.
+#
+myExtraExcludes = "log,vendor,tmp"
+excludeInFileChooser = "{$excludeInFileChooser,$myExtraExcludes}" 
+excludeInFolderSearch = "{$excludeInFolderSearch,$myExtraExcludes}" 
+
+# If you also want to hide them from your project manager pane, add
+# the following line to your project's local .tm_properties.
+#
+# excludeInBrowser      = "{$excludeInBrowser,log,vendor,tmp}" 
+
+
+# Configure git and hg
+#
+TM_HG = "/usr/local/bin/hg"
+TM_GIT = "/usr/bin/git"
+
+# Default editing configuration
+#
+softWrap = false
+softTabs = true
+tabSize = 4
+
+# File type specific configuration
+#
+[ text ]
+showInvisibles = true
+
+[ .git/COMMIT_EDITMSG ]
+spellChecking = true
+spellingLanguage = 'en'
+
+[ *.{icns,ico,jpg,jpeg,m4v,nib,pdf,png,psd,pyc,rtf,tif,tiff,xib} ]
+binary = true
+
+[ source ]
+softTabs = true
+tabSize = 2
+
+[ source.python ]
+softTabs = true
+tabSize = 4
+
+[ "{README,INSTALL,LICENSE,TODO}" ]
+fileType = "text.plain"
