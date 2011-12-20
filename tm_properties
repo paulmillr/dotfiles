@@ -28,7 +28,7 @@ TM_GIT = "/usr/bin/git"
 
 # Default editing configuration
 #
-softWrap = false
+softWrap = true
 softTabs = true
 tabSize = 4
 
