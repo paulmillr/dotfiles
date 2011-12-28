@@ -30,7 +30,7 @@ TM_GIT = "/usr/bin/git"
 #
 softWrap = true
 softTabs = true
-tabSize = 4
+tabSize = 2
 
 # File type specific configuration
 #
@@ -44,13 +44,12 @@ spellingLanguage = 'en'
 [ *.{icns,ico,jpg,jpeg,m4v,nib,pdf,png,psd,pyc,rtf,tif,tiff,xib} ]
 binary = true
 
-[ source ]
-softTabs = true
-tabSize = 2
-
 [ source.python ]
 softTabs = true
 tabSize = 4
+
+[ source.makefile ]
+softTabs = false
 
 [ "{README,INSTALL,LICENSE,TODO}" ]
 fileType = "text.plain"
