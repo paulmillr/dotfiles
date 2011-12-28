@@ -30,14 +30,14 @@ source $ZSH/oh-my-zsh.sh
 # Customize to your needs...
 
 # Theme.
-HOSTINFO="%{$fg[yellow]%}%n@%m"
-CURDIR='%{$fg[red]%}%p%~ %{$fg[red]%}$ %{$reset_color%}'
+hostinfo="%{$fg[yellow]%}%n@%m"
+curdir='%{$fg[red]%}%p%~ %{$fg[red]%}$ %{$reset_color%}'
 
 # Show hostname and username on remote shells.
 if [[ -z "`uname -a | grep paulmillr`" ]]; then
-  PROMPT="$HOSTINFO $CURDIR"
+  PROMPT="$hostinfo $curdir"
 else
-  PROMPT="$CURDIR"
+  PROMPT="$curdir"
 fi
 
 
@@ -60,8 +60,8 @@ $HOME/.cabal/bin"
 export LSCOLORS=gxfxbEaEBxxEhEhBaDaCaD
 
 # Count code lines in some directory.
-# Example usage: `linecount .py .js .css`
-function linecount() {
+# Example usage: `loc .py .js .css`
+function loc() {
   local total
   local firstletter
   local ext
@@ -75,9 +75,9 @@ function linecount() {
     lines=`find . -name "*$ext" -exec cat {} \; | wc -l`
     lines=${lines// /}
     total=$(($total + $lines))
-    echo Lines of code for $ext: $lines
+    echo "Lines of code for $ext: $lines"
   done
-  echo Total lines of code: $total
+  echo "Total lines of code: $total"
 }
 
 # Disable / enable screenshot shadow in OS X.
@@ -89,10 +89,13 @@ function scrshadow() {
     defaults write com.apple.screencapture disable-shadow -bool true 
     killall SystemUIServer
   else
-    echo Enter options: ON or OFF
+    echo "Enter options: ON or OFF"
   fi
 }
 
+# Show how much RAM application uses.
+# $ ram safari
+# # => safari uses 154.69 MBs of RAM.
 function ram() {
   local sum
   local items
@@ -115,9 +118,20 @@ function ram() {
   fi
 }
 
+function server() {
+  local port
+  port="$1"
+  if [ -z "$port" ]; then
+    port="8000"
+  fi
+  python -m SimpleHTTPServer $port
+}
+
 export LANG=en_US.UTF-8
 
 # Some aliases.
+alias l='ls -1a'
+alias ll='ls -1'
 alias rm=trash
 alias bitch,=sudo
 
