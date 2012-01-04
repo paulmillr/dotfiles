@@ -1,6 +1,6 @@
 [user]
 	name = Paul Miller
-	email = paulmillr@me.com
+	email = paul@paulmillr.com
 
 [alias]
   st = status
@@ -20,5 +20,6 @@
 
 [format]
   pretty = oneline
+
 [mergetool]
-	keepBackup = true
+  keepBackup = true
