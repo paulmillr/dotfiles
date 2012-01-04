@@ -40,6 +40,7 @@ else
   PROMPT="$curdir"
 fi
 
+export EDITOR="/usr/local/bin/mate -w"
 
 # Add Ruby, Homebrew, custom Python2/3 & Haskell package dirs to PATH.
 export PATH="\
