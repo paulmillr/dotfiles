@@ -76,9 +76,9 @@ function loc() {
     lines=`find . -name "*$ext" -exec cat {} \; | wc -l`
     lines=${lines// /}
     total=$(($total + $lines))
-    echo "Lines of code for $ext: $lines"
+    echo "Lines of code for ${fg[blue]}$ext${reset_color}: ${fg[green]}$lines${reset_color}"
   done
-  echo "Total lines of code: $total"
+  echo "${fg[blue]}Total${reset_color} lines of code: ${fg[green]}$total${reset_color}"
 }
 
 # Disable / enable screenshot shadow in OS X.
@@ -133,6 +133,7 @@ export LANG=en_US.UTF-8
 # Some aliases.
 alias l='ls -1a'
 alias ll='ls -1'
+alias remove='/bin/rm'
 alias rm=trash
 alias bitch,=sudo
 
