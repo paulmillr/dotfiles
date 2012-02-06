@@ -9,8 +9,9 @@
 
   unstage = reset HEAD
   last = cat-file commit HEAD
-  fulllog = log --graph --decorate --pretty=oneline --abbrev-commit
+  log = log --graph --decorate --pretty=oneline --abbrev-commit
   lg = log -n 15 --graph --decorate --pretty=oneline --abbrev-commit
+  commiters = !git log --pretty=format:\"%ae\" | sort | uniq -c | sort -r
 
 [color]
   ui = true
@@ -22,4 +23,4 @@
   pretty = oneline
 
 [mergetool]
-  keepBackup = true
+	keepBackup = true

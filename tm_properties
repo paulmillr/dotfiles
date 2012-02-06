@@ -45,11 +45,13 @@ spellingLanguage = 'en'
 binary = true
 
 [ source.python ]
-softTabs = true
 tabSize = 4
 
 [ source.makefile ]
 softTabs = false
+
+[ source.haskell ]
+tabSize = 4
 
 [ "{README,INSTALL,LICENSE,TODO}" ]
 fileType = "text.plain"
