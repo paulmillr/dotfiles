@@ -29,16 +29,25 @@ source $ZSH/oh-my-zsh.sh
 
 # Customize to your needs...
 
-# Theme.
-hostinfo="%{$fg[yellow]%}%n@%m"
-curdir='%{$fg[red]%}%p%~ %{$fg[red]%}$ %{$reset_color%}'
+# # Theme.
+# Theme 1.
+PROMPT='%{$fg[cyan]%}→%{$fg[green]%}%p %{$fg[green]%}%c %{$fg[cyan]%}$(git_prompt_info)%{$fg_bold[blue]%} % %{$reset_color%}'
 
-# Show hostname and username on remote shells.
-if [[ -z "`uname -a | grep paulmillr`" ]]; then
-  PROMPT="$hostinfo $curdir"
-else
-  PROMPT="$curdir"
-fi
+ZSH_THEME_GIT_PROMPT_PREFIX="(%{$fg[red]%}"
+ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%}"
+ZSH_THEME_GIT_PROMPT_DIRTY="%{$fg[blue]%}) %{$fg[yellow]%}✗%{$reset_color%}"
+ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg[cyan]%})"
+
+# Theme 2.
+# hostinfo="%{$fg[yellow]%}%n@%m"
+# curdir='%{$fg[red]%}%p%~ %{$fg[red]%}$ %{$reset_color%}'
+# 
+# # Show hostname and username on remote shells.
+# if [[ -z "`uname -a | grep paulmillr`" ]]; then
+#   PROMPT="$hostinfo $curdir"
+# else
+#   PROMPT="$curdir"
+# fi
 
 export EDITOR="/usr/local/bin/mate -w"
 
