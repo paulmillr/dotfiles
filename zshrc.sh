@@ -1,57 +1,41 @@
 #!/usr/bin/env zsh
 
-# Path to your oh-my-zsh configuration.
-ZSH=$HOME/Development/oh-my-zsh
+# Set the key mapping style to 'emacs' or 'vi'.
+zstyle ':omz:editor' keymap 'emacs'
 
-# Set name of the theme to load.
-# Look in ~/.oh-my-zsh/themes/
-# Optionally, if you set this to "random", it"ll load a random theme each
-# time that oh-my-zsh is loaded.
-# ZSH_THEME="robbyrussell"
+# Auto convert .... to ../..
+zstyle ':omz:editor' dot-expansion 'yes'
 
-# Set to this to use case-sensitive completion
-# CASE_SENSITIVE="true"
+# Set case-sensitivity for completion, history lookup, etc.
+zstyle ':omz:*:*' case-sensitive 'no'
 
-# Comment this out to disable weekly auto-update checks
-DISABLE_AUTO_UPDATE="true"
+# Color output (auto set to 'no' on dumb terminals).
+zstyle ':omz:*:*' color 'yes'
 
-# Uncomment following line if you want to disable colors in ls
-# DISABLE_LS_COLORS="true"
+# Auto set the tab and window titles.
+zstyle ':omz:terminal' auto-title 'yes'
 
-# Uncomment following line if you want to disable autosetting terminal title.
-# DISABLE_AUTO_TITLE="true"
+# Set the plugins to load (see $OMZ/plugins/).
+zstyle ':omz:load' plugin 'archive' 'git' 'node' 'osx' 'python' 'ruby' 'z'
 
-# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
-# Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git osx brew git github node npm pip textmate nyan)
+# Set the prompt theme to load.
+# Setting it to 'random' loads a random theme.
+# Auto set to 'off' on dumb terminals.
+zstyle ':omz:prompt' theme 'paulmillr'
 
-source $ZSH/oh-my-zsh.sh
+# This will make you shout: OH MY ZSHELL!
+source "$HOME/Development/oh-my-zsh/init.zsh"
 
 # Customize to your needs...
 
-# # Theme.
-# Theme 1.
-PROMPT='%{$fg[cyan]%}→%{$fg[green]%}%p %{$fg[green]%}%c %{$fg[cyan]%}$(git_prompt_info)%{$fg_bold[blue]%} % %{$reset_color%}'
+autoload colors
+colors
 
-ZSH_THEME_GIT_PROMPT_PREFIX="(%{$fg[red]%}"
-ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%}"
-ZSH_THEME_GIT_PROMPT_DIRTY="%{$fg[blue]%}) %{$fg[yellow]%}✗%{$reset_color%}"
-ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg[cyan]%})"
-
-# Theme 2.
-# hostinfo="%{$fg[yellow]%}%n@%m"
-# curdir='%{$fg[red]%}%p%~ %{$fg[red]%}$ %{$reset_color%}'
-# 
-# # Show hostname and username on remote shells.
-# if [[ -z "`uname -a | grep paulmillr`" ]]; then
-#   PROMPT="$hostinfo $curdir"
-# else
-#   PROMPT="$curdir"
-# fi
+# Solarized light LS colors.
+# export LSCOLORS=gxfxbEaEBxxEhEhBaDaCaD
 
 export EDITOR="/usr/local/bin/mate -w"
-
-# Add Ruby, Homebrew, custom Python2/3 & Haskell package dirs to PATH.
+export LANG=en_US.UTF-8
 export PATH="\
 /usr/local/bin:\
 /usr/local/Cellar/ruby/1.9.3-p0/bin:\
@@ -62,12 +46,6 @@ export PATH="\
 /usr/local/share/python:\
 /usr/local/share/python3:\
 $HOME/.cabal/bin"
-
-# LS colors for my theme (paulmillr.terminal).
-#export LSCOLORS=ExGxFxDxCxHxHxCbCeEbEb
-
-# Solarized light LS colors.
-export LSCOLORS=gxfxbEaEBxxEhEhBaDaCaD
 
 # Count code lines in some directory.
 # Example usage: `loc .py .js .css`
@@ -92,14 +70,19 @@ function loc() {
 
 # Disable / enable screenshot shadow in OS X.
 function scrshadow() {
-  if [[ $1 == "on" ]]; then
+  if [[ $1 == true ]]; then
     defaults delete com.apple.screencapture disable-shadow 
     killall SystemUIServer
-  elif [[ $1 == "off" ]]; then
+  elif [[ $1 == false ]]; then
     defaults write com.apple.screencapture disable-shadow -bool true 
     killall SystemUIServer
   else
-    echo "Enter options: ON or OFF"
+    local value="$(defaults read com.apple.screencapture disable-shadow 2> /dev/null)"
+    if [[ -z "$value" ]]; then
+      echo "Screen shadow is enabled"
+    else
+      echo "Screen shadow is disabled"
+    fi
   fi
 }
 
@@ -123,25 +106,24 @@ function ram() {
     if [[ $sum != "0" ]]; then
       echo "${fg[blue]}${app}${reset_color} uses ${fg[green]}${sum}${reset_color} MBs of RAM."
     else
-      echo "There's no processes with pattern ${fg[blue]}'${app}'${reset_color} are running."
+      echo "There's no processes with pattern '${fg[blue]}${app}${reset_color}' are running."
     fi
   fi
 }
 
 function server() {
-  local port
-  port="$1"
+  local port="$1"
   if [ -z "$port" ]; then
     port="8000"
   fi
   python -m SimpleHTTPServer $port
 }
 
-export LANG=en_US.UTF-8
+function proc() {
+  ps -ex | grep -i "$1"
+}
 
 # Some aliases.
-alias l='ls -1a'
-alias ll='ls -1'
 alias remove='/bin/rm'
 alias rm=trash
 alias bitch,=sudo
