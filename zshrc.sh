@@ -123,6 +123,10 @@ function proc() {
   ps -ex | grep -i "$1"
 }
 
+function convert_tags() {
+  python "$HOME/Development/dotfiles/tag2utf.py" "$1"
+}
+
 # Some aliases.
 alias remove='/bin/rm'
 alias rm=trash
