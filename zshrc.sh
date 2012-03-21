@@ -127,6 +127,10 @@ function convert_tags() {
   python "$HOME/Development/dotfiles/tag2utf.py" "$1"
 }
 
+function gitcipush() {
+  git commit -am "$1" && git push -u origin
+}
+
 # Some aliases.
 alias remove='/bin/rm'
 alias rm=trash
