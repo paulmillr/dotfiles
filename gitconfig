@@ -2,6 +2,9 @@
 	name = Paul Miller
 	email = paul@paulmillr.com
 
+[github]
+	user = paulmillr
+
 [alias]
   st = status
   ci = commit

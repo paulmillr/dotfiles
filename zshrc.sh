@@ -16,7 +16,7 @@ zstyle ':omz:*:*' color 'yes'
 zstyle ':omz:terminal' auto-title 'no'
 
 # Set the plugins to load (see $OMZ/plugins/).
-zstyle ':omz:load' plugin 'archive' 'git' 'node' 'osx' 'python' 'ruby' 'z'
+zstyle ':omz:load' plugin 'archive' 'git' 'node' 'osx' 'ruby' 'z'
 
 # Set the prompt theme to load.
 # Setting it to 'random' loads a random theme.
@@ -38,7 +38,7 @@ export EDITOR="/usr/local/bin/mate -w"
 export LANG=en_US.UTF-8
 export PATH="\
 /usr/local/bin:\
-/usr/local/Cellar/ruby/1.9.3-p0/bin:\
+$GEM_HOME/bin:\
 /usr/bin:/bin:\
 /usr/sbin:/sbin:\
 /usr/X11/bin:\
@@ -106,7 +106,7 @@ function ram() {
     if [[ $sum != "0" ]]; then
       echo "${fg[blue]}${app}${reset_color} uses ${fg[green]}${sum}${reset_color} MBs of RAM."
     else
-      echo "There's no processes with pattern '${fg[blue]}${app}${reset_color}' are running."
+      echo "There are no processes with pattern '${fg[blue]}${app}${reset_color}' are running."
     fi
   fi
 }
@@ -131,6 +131,3 @@ function convert_tags() {
 alias remove='/bin/rm'
 alias rm=trash
 alias bitch,=sudo
-
-# iPython as default shell.
-#exec /usr/local/bin/ipython -noconfirm_exit -p sh
