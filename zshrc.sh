@@ -16,7 +16,7 @@ zstyle ':omz:*:*' color 'yes'
 zstyle ':omz:terminal' auto-title 'no'
 
 # Set the plugins to load (see $OMZ/plugins/).
-zstyle ':omz:load' plugin 'archive' 'git' 'node' 'osx' 'ruby' 'z'
+zstyle ':omz:load' plugin 'archive' 'git' 'node' 'osx' 'python' 'ruby' 'z'
 
 # Set the prompt theme to load.
 # Setting it to 'random' loads a random theme.
