@@ -17,22 +17,12 @@ echo "Enter new hostname of the machine"
 	echo "Setting new hostname..."
 	scutil –set HostName "$hostname"
 
-echo "Checking for SSH key, generating one if it doesn't exist ..."
+echo "Checking for SSH key, generating one if it doesn't exist..."
   [[ -f ~/.ssh/id_rsa.pub ]] || ssh-keygen -t rsa
 
-echo "Copying public key to clipboard. Paste it into your Github account ..."
+echo "Copying public key to clipboard. Paste it into your Github account..."
   [[ -f ~/.ssh/id_rsa.pub ]] && cat ~/.ssh/id_rsa.pub | pbcopy
   open https://github.com/account/ssh
-
-echo "Configuring git..."
-  local username
-  local email
-  echo "Enter your git username"
-  read username
-  echo "Enter your git email"
-  read email
-  git config --global user.name $username
-  git config --global user.email $email
 
 echo "Installing Homebrew..."
   ruby -e "$(curl -fsSL https://gist.github.com/raw/323731/install_homebrew.rb)"
@@ -53,12 +43,11 @@ echo "Symlinking config files..."
 
 popd
 
-
 echo "OS X tweaking..."
-  #echo "Disabling useless Safari page previews..."
-  #defaults write com.apple.Safari DebugSnapshotsUpdatePolicy -int 2
-  echo "Disabling warning dialogue on downloaded applications..."
-  defaults write com.apple.LaunchServices LSQuarantine -bool NO
+  # echo "Disabling useless Safari page previews..."
+  # defaults write com.apple.Safari DebugSnapshotsUpdatePolicy -int 2
+  # echo "Disabling warning dialogue on downloaded applications..."
+  # defaults write com.apple.LaunchServices LSQuarantine -bool NO
 	echo "Changing default screenshot location to ~/Downloads/..."
 	defaults write com.apple.screencapture location ~/Downloads/
 	killall SystemUIServer

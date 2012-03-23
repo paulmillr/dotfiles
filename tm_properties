@@ -10,8 +10,7 @@ fileBrowserGlob = "{*,$myExtraIncludes}"
 include = "{$include,$myExtraIncludes}"
 
 # Hide log, vendor and tmp directories from search popups.
-#
-myExtraExcludes = "log,vendor,tmp"
+myExtraExcludes = "log,node_modules,vendor,tmp"
 excludeInFileChooser = "{$excludeInFileChooser,$myExtraExcludes}" 
 excludeInFolderSearch = "{$excludeInFolderSearch,$myExtraExcludes}" 
 
@@ -22,36 +21,36 @@ excludeInFolderSearch = "{$excludeInFolderSearch,$myExtraExcludes}"
 
 
 # Configure git and hg
-#
 TM_HG = "/usr/local/bin/hg"
 TM_GIT = "/usr/bin/git"
 
 # Default editing configuration
-#
 softWrap = true
 softTabs = true
 tabSize = 2
 
 # File type specific configuration
-#
-[ text ]
+[text]
 showInvisibles = true
 
-[ .git/COMMIT_EDITMSG ]
+[.git/COMMIT_EDITMSG]
 spellChecking = true
 spellingLanguage = 'en'
 
-[ *.{icns,ico,jpg,jpeg,m4v,nib,pdf,png,psd,pyc,rtf,tif,tiff,xib} ]
+[*.{icns,ico,jpg,jpeg,m4v,nib,pdf,png,psd,pyc,rtf,tif,tiff,xib}]
 binary = true
 
-[ source.python ]
-tabSize = 4
-
-[ source.makefile ]
+[source.plist.textmate.grammar]
 softTabs = false
 
-[ source.haskell ]
+[source.python]
 tabSize = 4
 
-[ "{README,INSTALL,LICENSE,TODO}" ]
+[source.makefile]
+softTabs = false
+
+[source.haskell]
+tabSize = 4
+
+["{README,INSTALL,LICENSE,TODO,CHANGELOG,COPYING}"]
 fileType = "text.plain"

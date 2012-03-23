@@ -71,7 +71,8 @@ action "Creating the layout"
     for X in "${PROJECT_NAME}" doc tmp test; do
         mkdir $X
     done
-    touch readme.md
+    touch CHANGELOG.md
+    touch README.md
     touch "${PROJECT_NAME}/__init__.py"
     cat <<END > "${PROJECT_NAME}/main.py"
 #!/usr/bin/env python
@@ -117,7 +118,7 @@ main()
 END
     chmod +x run
     cat <<END > LICENSE
-Copyright (c) 2011 Paul Miller
+Copyright (c) Paul Miller (http://paulmillr.com/)
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
 in the Software without restriction, including without limitation the rights
@@ -169,12 +170,12 @@ setup(
     ],
 
     author="Paul Miller",
-    author_email="paulmillr+opensource@me.com",
-    description="No description entered for ${PROJECT_NAME}",
-    url="http://paulmillr.com/${PROJECT_NAME}",
+    author_email="paul@paulmillr.com",
+    description="",
+    url="",
     license="MIT",
 
-    long_description=read("readme.md"),
+    long_description=read("README.md"),
     classifiers=[
         "Development Status :: 2 - Pre-Alpha",
         "Topic :: Utilities",
@@ -203,7 +204,7 @@ action "Initializing Git repository"
 /${PROJECT_NAME}.egg-info
 /tmp/
 END
-    git init -q && git add "${PROJECT_NAME}" test run setup.py MANIFEST.in readme.md LICENSE .gitignore \
+    git init -q && git add "${PROJECT_NAME}" test run setup.py MANIFEST.in CHANGELOG.md README.md LICENSE .gitignore \
 && success || failure
 
 # Return back to the original working directory
