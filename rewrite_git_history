@@ -7,13 +7,13 @@ set -o errexit
 # you want to delete, e.g., git-delete-history path1 path2
  
 if [ $# -eq 0 ]; then
-    exit 0
+  exit 0
 fi
  
 # make sure we're at the root of git repo
 if [ ! -d .git ]; then
-    echo "Error: must run this script from the root of a git repository"
-    exit 1
+  echo "Error: must run this script from the root of a git repository"
+  exit 1
 fi
  
 # remove all paths passed as arguments from the history of the repo

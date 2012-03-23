@@ -13,7 +13,7 @@ zstyle ':omz:*:*' case-sensitive 'no'
 zstyle ':omz:*:*' color 'yes'
 
 # Auto set the tab and window titles.
-zstyle ':omz:terminal' auto-title 'no'
+zstyle ':omz:terminal' auto-title 'yes'
 
 # Set the plugins to load (see $OMZ/plugins/).
 zstyle ':omz:load' plugin 'archive' 'git' 'node' 'osx' 'python' 'ruby' 'z'
@@ -31,6 +31,7 @@ source "$HOME/Development/oh-my-zsh/init.zsh"
 autoload colors
 colors
 
+# PS1="$fg[red]%d $"
 # Solarized light LS colors.
 # export LSCOLORS=gxfxbEaEBxxEhEhBaDaCaD
 
@@ -127,8 +128,35 @@ function convert_tags() {
   python "$HOME/Development/dotfiles/tag2utf.py" "$1"
 }
 
-function gitcipush() {
+function gitsync() {
   git commit -am "$1" && git push -u origin
+}
+
+function gitinit() {
+  local dirname
+  local repo
+  dirname="$1"
+  repo="$2"
+  if [[ -z "$repo" ]]; then
+    repo="git@github.com:paulmillr/$dirname"
+  fi
+  mkdir "$dirname"
+  cd "$dirname"
+  git init
+  touch "README.md"
+  git add "README.md"
+  git commit -m 'Initial commit.'
+  git remote add origin "$repo"
+  git push -u origin master
+}
+
+function mate() {
+  local dir
+  dir="$1"
+  if [[ -z "$dir" ]]; then
+    dir="."
+  fi
+  /usr/local/bin/mate $dir
 }
 
 # Some aliases.
