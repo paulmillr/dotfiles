@@ -1,10 +1,8 @@
 # Basic Settings
-#
 fontName = "PragmataPro"
 fontSize = 13
 
 # Extra files to include
-#
 myExtraIncludes = ".{gitignore,npmignore,travis.yml,htaccess}"
 fileBrowserGlob = "{*,$myExtraIncludes}"
 include = "{$include,$myExtraIncludes}"
@@ -52,5 +50,5 @@ softTabs = false
 [source.haskell]
 tabSize = 4
 
-["{README,INSTALL,LICENSE,TODO,CHANGELOG,COPYING}"]
+["{README,INSTALL,LICENSE,TODO,CHANGELOG,COPYING,AUTHORS}"]
 fileType = "text.plain"
