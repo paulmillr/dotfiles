@@ -9,12 +9,11 @@
   st = status
   ci = commit
 
-  cpush = !git commit -a -m '$1' && git push -u origin
-  summary = !sh -c 'git log --pretty=format:\"%ae\" | sort | uniq -c | sort -r'
-
   changelog = !sh "$HOME/Development/dotfiles/git-extras/git-changelog.sh"
-  release = !sh "$HOME/Development/dotfiles/git-extras/git-release.sh"
-  setup = !sh "$HOME/Development/dotfiles/git-extras/git-setup.sh"
+  cpush     = !sh "$HOME/Development/dotfiles/git-extras/git-cpush.sh"
+  release   = !sh "$HOME/Development/dotfiles/git-extras/git-release.sh"
+  setup     = !sh "$HOME/Development/dotfiles/git-extras/git-setup.sh"
+  summary   = !sh "$HOME/Development/dotfiles/git-extras/git-summary.sh"
 
 [color]
   ui = true

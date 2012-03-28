@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env sh
 
 CHANGELOG='CHANGELOG.md'
 DATE=`date +'%B %d, %Y'`
