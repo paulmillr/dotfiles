@@ -8,13 +8,13 @@
 [alias]
   st = status
   ci = commit
-  ls = ls-files
 
-  unstage = reset HEAD
-  last = cat-file commit HEAD
-  log = log --graph --decorate --pretty=oneline --abbrev-commit
-  lg = log -n 15 --graph --decorate --pretty=oneline --abbrev-commit
-  commiters = !git log --pretty=format:\"%ae\" | sort | uniq -c | sort -r
+  cpush = !sh -c 'git commit -a -m \"@{1}\" && git push -u origin'
+  summary = !sh -c 'git log --pretty=format:\"%ae\" | sort | uniq -c | sort -r'
+
+  changelog = !sh "$HOME/Development/dotfiles/git-extras/git-changelog.sh"
+  release = !sh "$HOME/Development/dotfiles/git-extras/git-release.sh"
+  setup = !sh "$HOME/Development/dotfiles/git-extras/git-setup.sh"
 
 [color]
   ui = true

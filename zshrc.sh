@@ -39,13 +39,15 @@ export EDITOR="/usr/local/bin/mate -w"
 export LANG=en_US.UTF-8
 export PATH="\
 /usr/local/bin:\
-$GEM_HOME/bin:\
-/usr/bin:/bin:\
-/usr/sbin:/sbin:\
-/usr/X11/bin:\
-/usr/texbin:\
+/usr/bin:\
+/bin:\
+/usr/sbin:\
+/sbin:\
+/Applications/Xcode.app/Contents/Developer/usr/bin:\
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin:\
 /usr/local/share/python:\
 /usr/local/share/python3:\
+$GEM_HOME/bin:\
 $HOME/.cabal/bin"
 
 # Count code lines in some directory.
@@ -93,9 +95,7 @@ function scrshadow() {
 function ram() {
   local sum
   local items
-  local app
-
-  app="$1"
+  local app="$1"
   if [ -z "$app" ]; then
     echo "First argument - pattern to grep from processes"
   else
@@ -121,42 +121,11 @@ function server() {
 }
 
 function proc() {
-  ps -ex | grep -i "$1"
+  ps -ex | grep -i "$1" | grep -v "grep"
 }
 
 function convert_tags() {
   python "$HOME/Development/dotfiles/tag2utf.py" "$1"
-}
-
-function gitsync() {
-  git commit -am "$1" && git push -u origin
-}
-
-function gitinit() {
-  local dirname
-  local repo
-  dirname="$1"
-  repo="$2"
-  if [[ -z "$repo" ]]; then
-    repo="git@github.com:paulmillr/$dirname"
-  fi
-  mkdir "$dirname"
-  cd "$dirname"
-  git init
-  touch "README.md"
-  git add "README.md"
-  git commit -m 'Initial commit.'
-  git remote add origin "$repo"
-  git push -u origin master
-}
-
-function mate() {
-  local dir
-  dir="$1"
-  if [[ -z "$dir" ]]; then
-    dir="."
-  fi
-  /usr/local/bin/mate $dir
 }
 
 # Some aliases.
