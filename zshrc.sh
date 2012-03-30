@@ -132,3 +132,7 @@ function convert_tags() {
 alias remove='/bin/rm'
 alias rm=trash
 alias bitch,=sudo
+
+dev="$HOME/Development/"
+brunch="$dev/brunch-extensions/"
+tm="$HOME/Library/Application Support/Avian/Bundles/"
