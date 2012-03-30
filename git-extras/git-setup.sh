@@ -12,8 +12,8 @@ repo="git@github.com:$user/$dirname"
 mkdir "$dirname" && \
   cd "$dirname" && \
   git init && \
-  touch "README.md" && \
-  git add "README.md" && \
+  touch "README.md" "CHANGELOG.md" ".gitignore" && \
+  git add "*" && \
   git commit -m 'Initial commit.' && \
   git remote add origin "$repo" && \
   git push -u origin master
