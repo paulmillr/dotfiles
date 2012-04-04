@@ -28,15 +28,8 @@ echo "Installing Homebrew..."
   ruby -e "$(curl -fsSL https://gist.github.com/raw/323731/install_homebrew.rb)"
   brew update
 
-echo "Installing Homebrew packages..."
-  install Redis Python Python3 WGet Node HTop GHC Haskell-platform Scala GnuPG Growlnotify Hub
-  source ~/.zshrc
-
 echo "Installing NPM..."
   curl http://npmjs.org/install.sh | sh
-
-echo "Installing python things..."
-  source install_python
 
 echo "Symlinking config files..."
   source symlink_dotfiles

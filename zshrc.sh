@@ -1,5 +1,8 @@
 #!/usr/bin/env zsh
 
+# Profiler.
+zmodload zsh/zprof
+
 # Set the key mapping style to 'emacs' or 'vi'.
 zstyle ':omz:editor' keymap 'emacs'
 
@@ -15,8 +18,14 @@ zstyle ':omz:*:*' color 'yes'
 # Auto set the tab and window titles.
 zstyle ':omz:terminal' auto-title 'yes'
 
-# Set the plugins to load (see $OMZ/plugins/).
-zstyle ':omz:load' plugin 'archive' 'git' 'node' 'osx' 'python' 'ruby' 'z'
+# Set the Zsh modules to load (man zshmodules).
+# zstyle ':omz:load' module 'attr' 'stat'
+
+# Set the Zsh functions to load (man zshcontrib).
+# zstyle ':omz:load' function 'zargs' 'zmv'
+
+# Set the plugins to load (browse plugins).
+zstyle ':omz:load' plugin 'archive' 'git' 'node' 'osx' 'ruby'
 
 # Set the prompt theme to load.
 # Setting it to 'random' loads a random theme.
@@ -26,15 +35,11 @@ zstyle ':omz:prompt' theme 'paulmillr'
 # This will make you shout: OH MY ZSHELL!
 source "$HOME/Development/oh-my-zsh/init.zsh"
 
-# Customize to your needs...
-
 autoload colors
 colors
 
-# PS1="$fg[red]%d $"
-# Solarized light LS colors.
-# export LSCOLORS=gxfxbEaEBxxEhEhBaDaCaD
-
+BROWSER=''
+unset BROWSER
 export EDITOR="/usr/local/bin/mate -w"
 export LANG=en_US.UTF-8
 export PATH="\
@@ -49,6 +54,18 @@ export PATH="\
 /usr/local/share/python3:\
 $GEM_HOME/bin:\
 $HOME/.cabal/bin"
+
+# Some aliases.
+alias remove='/bin/rm'
+alias rm=trash
+alias bitch,=sudo
+# Useful aliases already defined by oh-my-zsh:
+# l, ll, la, lr, _, duh, reload, extract
+
+# Commonly used directories.
+dev="$HOME/Development"
+brunch="$dev/brunch-extensions"
+tm="$HOME/Library/Application Support/Avian/Bundles"
 
 # Count code lines in some directory.
 # Example usage: `loc .py .js .css`
@@ -74,10 +91,10 @@ function loc() {
 # Disable / enable screenshot shadow in OS X.
 function scrshadow() {
   if [[ $1 == true ]]; then
-    defaults delete com.apple.screencapture disable-shadow 
+    defaults delete com.apple.screencapture disable-shadow
     killall SystemUIServer
   elif [[ $1 == false ]]; then
-    defaults write com.apple.screencapture disable-shadow -bool true 
+    defaults write com.apple.screencapture disable-shadow -bool true
     killall SystemUIServer
   else
     local value="$(defaults read com.apple.screencapture disable-shadow 2> /dev/null)"
@@ -125,14 +142,8 @@ function proc() {
 }
 
 function convert_tags() {
-  python "$HOME/Development/dotfiles/tag2utf.py" "$1"
+  python "$dev/dotfiles/tag2utf.py" "$1"
 }
 
-# Some aliases.
-alias remove='/bin/rm'
-alias rm=trash
-alias bitch,=sudo
-
-dev="$HOME/Development/"
-brunch="$dev/brunch-extensions/"
-tm="$HOME/Library/Application Support/Avian/Bundles/"
+# Profiler end.
+zprof
