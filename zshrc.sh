@@ -33,7 +33,7 @@ zstyle ':omz:module:terminal' auto-title 'yes'
 
 # Set the Oh My Zsh modules to load (browse modules).
 zstyle ':omz:load' omodule \
-  'environment' 'terminal' 'editor' 'completion' \
+  'environment' 'terminal' 'completion' \
   'history' 'directory' 'spectrum' 'alias' 'utility'\
   'archive' 'osx' 'node' 'ruby' 'prompt'
 
@@ -41,7 +41,6 @@ zstyle ':omz:load' omodule \
 # Setting it to 'random' loads a random theme.
 # Auto set to 'off' on dumb terminals.
 zstyle ':omz:module:prompt' theme 'paulmillr'
-# paulmillr
 
 # This will make you shout: OH MY ZSHELL!
 source "$OMZ/init.zsh"
@@ -49,32 +48,8 @@ source "$OMZ/init.zsh"
 autoload colors
 colors
 
-BROWSER=''
-unset BROWSER
 export EDITOR="/usr/local/bin/mate -w"
-export LANG=en_US.UTF-8
-export PATH="\
-/usr/local/bin:\
-/usr/bin:\
-/bin:\
-/usr/sbin:\
-/sbin:\
-/Applications/Xcode.app/Contents/Developer/usr/bin:\
-/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin:\
-/usr/local/share/python:\
-/usr/local/share/python3:\
-$GEM_HOME/bin:\
-$HOME/.cabal/bin"
-
-# Some aliases.
 alias rm=trash
-# Useful aliases already defined by oh-my-zsh:
-# l, ll, la, lr, _, duh, reload, extract
-
-# Commonly used directories.
-dev="$HOME/Development"
-brunch="$dev/brunch"
-tm="$HOME/Library/Application Support/Avian/Bundles"
 
 # Count code lines in some directory.
 # Example usage: `loc .py .js .css`
@@ -89,7 +64,7 @@ function loc() {
     if [[ firstletter != "." ]]; then
       ext=".$ext"
     fi
-    lines=`find . -name "*$ext" -exec cat {} \; | wc -l`
+    lines=`find-exec "*$ext" cat | wc -l`
     lines=${lines// /}
     total=$(($total + $lines))
     echo "Lines of code for ${fg[blue]}$ext${reset_color}: ${fg[green]}$lines${reset_color}"
@@ -136,14 +111,6 @@ function ram() {
       echo "There are no processes with pattern '${fg[blue]}${app}${reset_color}' are running."
     fi
   fi
-}
-
-function server() {
-  local port="$1"
-  if [ -z "$port" ]; then
-    port="8000"
-  fi
-  python -m SimpleHTTPServer $port
 }
 
 function proc() {
