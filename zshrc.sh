@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 
 # Profiler.
-zmodload zsh/zprof
+# zmodload zsh/zprof
 
 #
 # Sets Oh My Zsh options.
@@ -50,6 +50,12 @@ colors
 
 export EDITOR="/usr/local/bin/mate -w"
 alias rm=trash
+
+function each-file() {
+  for file in *; do
+    $1 $file
+  done
+}
 
 # Count code lines in some directory.
 # Example usage: `loc .py .js .css`
@@ -122,4 +128,4 @@ function convert_tags() {
 }
 
 # Profiler end.
-zprof
+# zprof
