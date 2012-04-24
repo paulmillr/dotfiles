@@ -50,6 +50,10 @@ colors
 
 export EDITOR="/usr/local/bin/mate -w"
 alias rm=trash
+alias lock='/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend'
+
+BROWSER=''
+unset BROWSER
 
 function each-file() {
   for file in *; do
