@@ -35,7 +35,7 @@ zstyle ':omz:module:terminal' auto-title 'yes'
 zstyle ':omz:load' omodule \
   'environment' 'terminal' 'completion' \
   'history' 'directory' 'spectrum' 'alias' 'utility'\
-  'archive' 'osx' 'node' 'ruby' 'prompt'
+  'archive' 'osx' 'node' 'python' 'ruby' 'prompt'
 
 # Set the prompt theme to load.
 # Setting it to 'random' loads a random theme.
@@ -48,9 +48,17 @@ source "$OMZ/init.zsh"
 autoload colors
 colors
 
+export PATH="$HOME/.rbenv/bin:$PATH"
 export EDITOR="/usr/local/bin/mate -w"
+# Commonly used directories.
+dev="$HOME/Development"
+brunch="$dev/brunch"
+tm="$HOME/Library/Application Support/Avian/Bundles"
+
 alias rm=trash
 alias lock='/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend'
+alias init_virtualenv='virtualenv venv -p /usr/local/bin/python --no-site-packages'
+alias activate_virtualenv='source venv/bin/activate'
 
 BROWSER=''
 unset BROWSER
