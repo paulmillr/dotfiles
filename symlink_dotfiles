@@ -2,27 +2,29 @@
 
 # Some code taken from github.com/penpen/dotfiles.
 
-DOTFILES="$HOME/Development/dotfiles"
-BIN="/usr/local/bin"
+dev="$HOME/Development"
+dotfiles="$dev/dotfiles"
+bin="/usr/local/bin"
 
 link() {
-  old=$1
-  new=$2
-
-  rm "$new"
-  ln -s "$old" "$new"
+  echo "Linking '$1' to '$2'"
+  rm $2
+  ln -s $1 $2
 }
 
 link_home() {
-  link "$DOTFILES/$1" "$HOME/$2"
+  link "$dotfiles/$1" "$HOME/$2"
 }
 
 link_bin() {
-	link "$DOTFILES/$1" "$BIN/$1"
+	link "$dotfiles/$1" "$bin/$1"
 }
 
 link_home zshrc.sh .zshrc
 link_home gitconfig .gitconfig
 link_home gitignore .gitignore
-link_home tm_properties .tm_properties
-link_home Textmate/ "Library/Application Support/Textmate"
+
+if [[ `uname` == 'Darwin' ]]; then
+  link_home tm_properties .tm_properties
+  link_home Textmate/ "Library/Application Support/Textmate"
+fi

@@ -2,7 +2,7 @@
 
 CHANGELOG='CHANGELOG.md'
 DATE=`date +'%B %d, %Y'`
-HEAD="## Project x.y.z ($DATE)"
+HEAD="# Project x.y.z ($DATE)"
 
 if test "$1" = "--list"; then
   version=`git for-each-ref refs/tags --sort="-*authordate" --format='%(refname)' \
