@@ -2,15 +2,10 @@
 
 # A simple script for setting up OSX dev environment.
 
-CODEDIR=$HOME/Development
+dev="$HOME/Development"
 pushd .
-mkdir -p $CODEDIR
-cd $CODEDIR
-
-function install() {
-  echo "Installing $1..."
-  brew install $1
-}
+mkdir -p $dev
+cd $dev
 
 echo "Enter new hostname of the machine"
 	read hostname
@@ -18,29 +13,31 @@ echo "Enter new hostname of the machine"
 	scutil –set HostName "$hostname"
 
 echo "Checking for SSH key, generating one if it doesn't exist..."
-  [[ -f ~/.ssh/id_rsa.pub ]] || ssh-keygen -t rsa
+  [[ -f '~/.ssh/id_rsa.pub' ]] || ssh-keygen -t rsa
 
 echo "Copying public key to clipboard. Paste it into your Github account..."
-  [[ -f ~/.ssh/id_rsa.pub ]] && cat ~/.ssh/id_rsa.pub | pbcopy
-  open https://github.com/account/ssh
+  [[ -f '~/.ssh/id_rsa.pub' ]] && cat '~/.ssh/id_rsa.pub' | pbcopy
+  open 'https://github.com/account/ssh'
 
-echo "Installing Homebrew..."
-  ruby -e "$(curl -fsSL https://gist.github.com/raw/323731/install_homebrew.rb)"
-  brew update
+if [[ `uname` == 'Darwin' ]]; then
+  echo "Installing Homebrew..."
+    ruby -e "$(curl -fsSL https://gist.github.com/raw/323731/install_homebrew.rb)"
+    brew update
 
-echo "Installing NPM..."
-  curl http://npmjs.org/install.sh | sh
+  echo "Installing NPM..."
+    curl http://npmjs.org/install.sh | sh
+
+  echo "OS X tweaking..."
+    # echo "Disabling useless Safari page previews..."
+    # defaults write com.apple.Safari DebugSnapshotsUpdatePolicy -int 2
+    # echo "Disabling warning dialogue on downloaded applications..."
+    # defaults write com.apple.LaunchServices LSQuarantine -bool NO
+  	echo "Changing default screenshot location to ~/Downloads/..."
+  	defaults write com.apple.screencapture location ~/Downloads/
+  	killall SystemUIServer
+fi
 
 echo "Symlinking config files..."
   source symlink_dotfiles
 
 popd
-
-echo "OS X tweaking..."
-  # echo "Disabling useless Safari page previews..."
-  # defaults write com.apple.Safari DebugSnapshotsUpdatePolicy -int 2
-  # echo "Disabling warning dialogue on downloaded applications..."
-  # defaults write com.apple.LaunchServices LSQuarantine -bool NO
-	echo "Changing default screenshot location to ~/Downloads/..."
-	defaults write com.apple.screencapture location ~/Downloads/
-	killall SystemUIServer

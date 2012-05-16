@@ -45,11 +45,11 @@ softTabs = false
 [source.python]
 tabSize = 4
 
-[source.makefile]
-softTabs = false
-
 [source.haskell]
 tabSize = 4
+
+[source.makefile]
+softTabs = false
 
 ["{README,INSTALL,LICENSE,TODO,CHANGELOG,COPYING,AUTHORS}"]
 fileType = "text.plain"

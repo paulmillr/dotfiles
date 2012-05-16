@@ -84,7 +84,11 @@ function find-exec() {
 }
 
 # Count code lines in some directory.
-# Example usage: `loc .py .js .css`
+# $ loc py js css
+# # => Lines of code for .py: 3781
+# # => Lines of code for .js: 3354
+# # => Lines of code for .css: 2970
+# # => Total lines of code: 10105
 function loc() {
   local total
   local firstletter
@@ -102,24 +106,6 @@ function loc() {
     echo "Lines of code for ${fg[blue]}$ext${reset_color}: ${fg[green]}$lines${reset_color}"
   done
   echo "${fg[blue]}Total${reset_color} lines of code: ${fg[green]}$total${reset_color}"
-}
-
-# Disable / enable screenshot shadow in OS X.
-function scrshadow() {
-  if [[ $1 == true ]]; then
-    defaults delete com.apple.screencapture disable-shadow
-    killall SystemUIServer
-  elif [[ $1 == false ]]; then
-    defaults write com.apple.screencapture disable-shadow -bool true
-    killall SystemUIServer
-  else
-    local value="$(defaults read com.apple.screencapture disable-shadow 2> /dev/null)"
-    if [[ -z "$value" ]]; then
-      echo "Screen shadow is enabled"
-    else
-      echo "Screen shadow is disabled"
-    fi
-  fi
 }
 
 # Show how much RAM application uses.
@@ -145,10 +131,14 @@ function ram() {
   fi
 }
 
+# Show process information & PID.
+# $ proc safari
+# # => 44371 ...
 function proc() {
   ps -ex | grep -i "$1" | grep -v "grep"
 }
 
+# Recursively convert mp3 tags in directory from CP1251 to UTF8.
 function convert_tags() {
   python "$dev/dotfiles/tag2utf.py" "$1"
 }

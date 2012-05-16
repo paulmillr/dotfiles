@@ -43,7 +43,7 @@ def needs_recoding(strings):
     """Recoding is needed for non-ASCII files."""
     for string in strings:
         for char in string:
-            if 256 > ord(char) > 127:
+            if 127 < ord(char) < 256:
                 return True
     return False
 
