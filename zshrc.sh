@@ -35,12 +35,12 @@ zstyle ':omz:module:terminal' auto-title 'yes'
 zstyle ':omz:load' omodule \
   'environment' 'terminal' 'completion' \
   'history' 'directory' 'spectrum' 'alias' 'utility'\
-  'archive' 'osx' 'node' 'python' 'ruby' 'prompt'
+  'archive' 'osx' 'node' 'python' 'ruby'
 
 # Set the prompt theme to load.
 # Setting it to 'random' loads a random theme.
 # Auto set to 'off' on dumb terminals.
-zstyle ':omz:module:prompt' theme 'paulmillr'
+# zstyle ':omz:module:prompt' theme 'off'
 
 # This will make you shout: OH MY ZSHELL!
 source "$OMZ/init.zsh"
@@ -57,16 +57,30 @@ tm="$HOME/Library/Application Support/Avian/Bundles"
 
 alias rm=trash
 alias lock='/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend'
-alias init_virtualenv='virtualenv venv -p /usr/local/bin/python --no-site-packages'
-alias activate_virtualenv='source venv/bin/activate'
+alias virtualenv_init='virtualenv venv -p /usr/local/bin/python --no-site-packages'
+alias virtualenv_activate='source venv/bin/activate'
 
 BROWSER=''
 unset BROWSER
+
+# Simple command line prompt in a form of
+# current-directory[@machine] $ 
+prompt='%F{cyan}%1~%f'
+# Show host name only on foreign machines.
+if [[ $HOST != 'macbook-paulmillr' ]]; then
+  prompt="$prompt%F{red}@%M"
+fi
+PROMPT="$prompt %(!.%B%F{red}#%f%b.%B%F{green}$%f%b) "
+SPROMPT='zsh: correct %F{red}%R%f to %F{green}%r%f [nyae]? '
 
 function each-file() {
   for file in *; do
     $1 $file
   done
+}
+
+function find-exec() {
+  find . -type f -iname "*${1:-}*" -exec "${2:-file}" '{}' \;
 }
 
 # Count code lines in some directory.
