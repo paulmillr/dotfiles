@@ -55,7 +55,7 @@ dev="$HOME/Development"
 brunch="$dev/brunch"
 tm="$HOME/Library/Application Support/Avian/Bundles"
 
-if [[ "$OSTYPE" != darwin* ]]; then
+if [[ "$OSTYPE" == darwin* ]]; then
   alias rm=trash
   alias lock='/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend'
   alias virtualenv_init='virtualenv venv -p /usr/local/bin/python --no-site-packages'
