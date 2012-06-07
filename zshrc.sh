@@ -55,10 +55,12 @@ dev="$HOME/Development"
 brunch="$dev/brunch"
 tm="$HOME/Library/Application Support/Avian/Bundles"
 
-alias rm=trash
-alias lock='/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend'
-alias virtualenv_init='virtualenv venv -p /usr/local/bin/python --no-site-packages'
-alias virtualenv_activate='source venv/bin/activate'
+if [[ "$OSTYPE" != darwin* ]]; then
+  alias rm=trash
+  alias lock='/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend'
+  alias virtualenv_init='virtualenv venv -p /usr/local/bin/python --no-site-packages'
+  alias virtualenv_activate='source venv/bin/activate'
+fi
 
 BROWSER=''
 unset BROWSER

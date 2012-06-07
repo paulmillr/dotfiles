@@ -1,6 +1,6 @@
 [user]
-  name = Paul Miller
-  email = paul@paulmillr.com
+	name = Paul Miller
+	email = paul@paulmillr.com
 
 [github]
   user = paulmillr
@@ -25,4 +25,4 @@
   pretty = oneline
 
 [mergetool]
-  keepBackup = true
+	keepBackup = true
