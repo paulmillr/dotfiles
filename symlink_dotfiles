@@ -3,7 +3,7 @@
 # Some code taken from github.com/penpen/dotfiles.
 
 dev="$HOME/Development"
-dotfiles="$dev/dotfiles"
+dotfiles="$dev/paulmillr/dotfiles"
 bin="/usr/local/bin"
 
 link() {

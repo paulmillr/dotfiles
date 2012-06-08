@@ -3,38 +3,23 @@
 *.err
 *.orig
 *.log
-*.rej
-*.swo
-*.swp
-*.vi
 *~
-*.sass-cache
 
 # OS or Editor folders
 .DS_Store
 .cache
-.project
-.settings
-.tmproj
-nbproject
-Thumbs.db
 Icon?
-
-# Dreamweaver added files
-_notes
-dwsync.xml
-
-# Komodo
-*.komodoproject
-.komodotools
 
 # Folders to ignore
 .hg
 .svn
-.CVS
-intermediate
-publish
-.idea
 
-*.sublime-project
-*.sublime-workspace
+# Node.js package manager
+/node_modules
+/npm-debug.log
+
+# Other stuff
+*.pyc
+/tmp
+
+# Project stuff
