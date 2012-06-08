@@ -1,6 +1,6 @@
 # Basic Settings
-fontName = "PragmataPro"
-fontSize = 13
+fontName = "Menlo"
+fontSize = 12
 
 # Extra files to include
 myExtraIncludes = ".{gitignore,npmignore,travis.yml,htaccess}"
