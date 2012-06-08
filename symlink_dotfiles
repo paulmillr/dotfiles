@@ -23,8 +23,3 @@ link_bin() {
 link_home zshrc.sh .zshrc
 link_home gitconfig .gitconfig
 link_home gitignore .gitignore
-
-if [[ `uname` == 'Darwin' ]]; then
-  link_home tm_properties .tm_properties
-  link_home Textmate/ "Library/Application Support/Textmate"
-fi
