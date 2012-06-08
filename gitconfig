@@ -1,6 +1,6 @@
 [user]
-	name = Paul Miller
-	email = paul@paulmillr.com
+  name = Paul Miller
+  email = paul@paulmillr.com
 
 [github]
   user = paulmillr
@@ -9,11 +9,13 @@
   st = status
   ci = commit
 
-  changelog = !sh "$HOME/Development/dotfiles/git-extras/git-changelog.sh"
-  cpush     = !sh "$HOME/Development/dotfiles/git-extras/git-cpush.sh"
-  release   = !sh "$HOME/Development/dotfiles/git-extras/git-release.sh"
-  setup     = !sh "$HOME/Development/dotfiles/git-extras/git-setup.sh"
-  summary   = !sh "$HOME/Development/dotfiles/git-extras/git-summary.sh"
+  changelog = !sh "$HOME/Development/paulmillr/dotfiles/git-extras/git-changelog.sh"
+  cpush     = !sh "$HOME/Development/paulmillr/dotfiles/git-extras/git-cpush.sh"
+  release   = !sh "$HOME/Development/paulmillr/dotfiles/git-extras/git-release.sh"
+  setup     = !sh "$HOME/Development/paulmillr/dotfiles/git-extras/git-setup.sh"
+  summary   = !sh "$HOME/Development/paulmillr/dotfiles/git-extras/git-summary.sh"
+  create-branch = !sh "$HOME/Development/paulmillr/dotfiles/git-extras/git-create-branch.sh"
+  delete-branch = !sh "$HOME/Development/paulmillr/dotfiles/git-extras/git-delete-branch.sh"
 
 [color]
   ui = true
@@ -25,4 +27,4 @@
   pretty = oneline
 
 [mergetool]
-	keepBackup = true
+  keepBackup = true

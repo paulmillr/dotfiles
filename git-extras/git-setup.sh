@@ -1,19 +1,19 @@
 #!/usr/bin/env sh
 
-dirname="$1"
-user="$2"
-repo=""
+repo="$1"
 
-if [[ -z "$user" ]]; then
-  user="paulmillr"
+if [[ -z "$repo" ]]; then
+  echo "Syntax: git setup user/project"
+  echo "Example: git setup paulmillr/ostio"
+  exit
 fi
-repo="git@github.com:$user/$dirname"
 
-mkdir "$dirname" && \
-  cd "$dirname" && \
+mkdir -p "$dev/$repo" && \
+  cd "$dev/$repo" && \
   git init && \
-  touch "README.md" "CHANGELOG.md" ".gitignore" && \
-  git add "*" && \
+  touch 'README.md' 'CHANGELOG.md' && \
+  cp "$HOME/.gitignore" '.gitignore' && \
+  git add "*" && git add '.gitignore' && \
   git commit -m 'Initial commit.' && \
-  git remote add origin "$repo" && \
+  git remote add origin "git@github.com:$repo" && \
   git push -u origin master
