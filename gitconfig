@@ -14,6 +14,7 @@
   release   = !sh "$HOME/Development/paulmillr/dotfiles/git-extras/git-release.sh"
   setup     = !sh "$HOME/Development/paulmillr/dotfiles/git-extras/git-setup.sh"
   summary   = !sh "$HOME/Development/paulmillr/dotfiles/git-extras/git-summary.sh"
+  add-upstream = !sh "$HOME/Development/paulmillr/dotfiles/git-extras/git-add-upstream.sh"
   create-branch = !sh "$HOME/Development/paulmillr/dotfiles/git-extras/git-create-branch.sh"
   delete-branch = !sh "$HOME/Development/paulmillr/dotfiles/git-extras/git-delete-branch.sh"
 

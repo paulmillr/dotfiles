@@ -3,15 +3,14 @@
 # Profiler.
 # zmodload zsh/zprof
 
+export PATH="/usr/local/bin:$PATH"
+
 #
 # Sets Oh My Zsh options.
 # 
 
 # Set the path to Oh My Zsh.
 export OMZ="$HOME/Development/oh-my-zsh"
-
-# Set the key mapping style to 'emacs' or 'vi'.
-zstyle ':omz:module:editor' keymap 'emacs'
 
 # Auto convert .... to ../..
 zstyle ':omz:module:editor' dot-expansion 'no'
@@ -29,51 +28,45 @@ zstyle ':omz:module:terminal' auto-title 'yes'
 # zstyle ':omz:load' zmodule 'attr' 'stat'
 
 # Set the Zsh functions to load (man zshcontrib).
-# zstyle ':omz:load' zfunction 'zargs' 'zmv'
+zstyle ':omz:load' zfunction 'zargs' 'zmv'
 
 # Set the Oh My Zsh modules to load (browse modules).
 zstyle ':omz:load' omodule \
-  'environment' 'terminal' 'completion' \
-  'history' 'directory' 'spectrum' 'alias' 'utility'\
+  'environment' 'terminal' 'history' \
+  'directory' 'spectrum' 'utility' \
+  'completion' 'prompt' 'syntax-highlighting' 'git' \
   'archive' 'osx' 'node' 'python' 'ruby'
 
 # Set the prompt theme to load.
 # Setting it to 'random' loads a random theme.
 # Auto set to 'off' on dumb terminals.
-zstyle ':omz:module:prompt' theme 'off'
+zstyle ':omz:module:prompt' theme 'sorin'
 
 # This will make you shout: OH MY ZSHELL!
 source "$OMZ/init.zsh"
 
-autoload colors
-colors
+autoload -U colors && colors
 
-export PATH="$HOME/.rbenv/bin:$PATH"
-export EDITOR="/usr/local/bin/choc -w"
+export EDITOR="/usr/local/bin/mate -w"
+
 # Commonly used directories.
 dev="$HOME/Development"
 brunch="$dev/brunch"
-tm="$HOME/Library/Application Support/Avian/Bundles"
+chaplin="$dev/chaplinjs"
+forks="$dev/forks"
+pm="$dev/paulmillr"
 
 if [[ "$OSTYPE" == darwin* ]]; then
   alias rm=trash
   alias lock='/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend'
-  alias virtualenv_init='virtualenv venv -p /usr/local/bin/python --no-site-packages'
-  alias virtualenv_activate='source venv/bin/activate'
+  alias venv-init='virtualenv venv -p /usr/local/bin/python --no-site-packages'
+  alias venv-activate='source venv/bin/activate'
+  tm="$HOME/Library/Application Support/Avian/Bundles"
+  export NODE_PATH='/usr/local/lib/node_modules'
 fi
 
 BROWSER=''
 unset BROWSER
-
-# Simple command line prompt in a form of
-# current-directory[@machine] $ 
-prompt='%F{cyan}%1~%f'
-# Show host name only on foreign machines.
-if [[ $HOST != 'macbook-paulmillr' ]]; then
-  prompt="$prompt%F{red}@%M"
-fi
-PROMPT="$prompt %(!.%B%F{red}#%f%b.%B%F{green}$%f%b) "
-SPROMPT='zsh: correct %F{red}%R%f to %F{green}%r%f [nyae]? '
 
 function each-file() {
   for file in *; do
@@ -141,7 +134,7 @@ function proc() {
 }
 
 # Recursively convert mp3 tags in directory from CP1251 to UTF8.
-function convert_tags() {
+function convert-tags() {
   python "$dev/dotfiles/tag2utf.py" "$1"
 }
 
