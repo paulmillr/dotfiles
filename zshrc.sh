@@ -24,28 +24,18 @@ zstyle ':omz:*:*' color 'yes'
 # Auto set the tab and window titles.
 zstyle ':omz:module:terminal' auto-title 'yes'
 
-# Set the Zsh modules to load (man zshmodules).
-# zstyle ':omz:load' zmodule 'attr' 'stat'
-
 # Set the Zsh functions to load (man zshcontrib).
-zstyle ':omz:load' zfunction 'zargs' 'zmv'
+zstyle ':omz:load' zfunction 'zmv'
 
 # Set the Oh My Zsh modules to load (browse modules).
 zstyle ':omz:load' omodule \
   'environment' 'terminal' 'history' \
   'directory' 'spectrum' 'utility' \
-  'completion' 'prompt' 'syntax-highlighting' 'git' \
+  'completion' 'syntax-highlighting' 'git' \
   'archive' 'osx' 'node' 'python' 'ruby'
-
-# Set the prompt theme to load.
-# Setting it to 'random' loads a random theme.
-# Auto set to 'off' on dumb terminals.
-zstyle ':omz:module:prompt' theme 'sorin'
 
 # This will make you shout: OH MY ZSHELL!
 source "$OMZ/init.zsh"
-
-autoload -U colors && colors
 
 export EDITOR="/usr/local/bin/mate -w"
 
@@ -56,11 +46,19 @@ chaplin="$dev/chaplinjs"
 forks="$dev/forks"
 pm="$dev/paulmillr"
 
+autoload -U colors && colors
+
+# Load and execute the prompt theming system.
+fpath=("$pm/dotfiles/terminal" $fpath)
+autoload -Uz promptinit && promptinit
+prompt 'paulmillr'
+
 if [[ "$OSTYPE" == darwin* ]]; then
   alias rm=trash
   alias lock='/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend'
   alias venv-init='virtualenv venv -p /usr/local/bin/python --no-site-packages'
   alias venv-activate='source venv/bin/activate'
+  alias tower='gittower'
   tm="$HOME/Library/Application Support/Avian/Bundles"
   export NODE_PATH='/usr/local/lib/node_modules'
 fi
