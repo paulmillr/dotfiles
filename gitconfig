@@ -27,5 +27,15 @@
 [format]
   pretty = oneline
 
+# URL shorthands
+[url "git@github.com:"]
+  insteadOf = "github://"
+  pushInsteadOf = "github://"
+  pushInsteadOf = "git://github.com/"
+[url "git@gist.github.com:"]
+  insteadOf = "gist://"
+  pushInsteadOf = "gist://"
+  pushInsteadOf = "git://gist.github.com/"
+
 [mergetool]
   keepBackup = true
