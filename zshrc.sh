@@ -1,8 +1,5 @@
 #!/usr/bin/env zsh
 
-# Profiler.
-# zmodload zsh/zprof
-
 export PATH="/usr/local/bin:$PATH"
 
 #
@@ -53,24 +50,29 @@ fpath=("$pm/dotfiles/terminal" $fpath)
 autoload -Uz promptinit && promptinit
 prompt 'paulmillr'
 
+pybrew="$HOME/.pythonbrew/etc/bashrc"
+[[ -s $pybrew ]] && source $pybrew
+
 if [[ "$OSTYPE" == darwin* ]]; then
   alias rm=trash
   alias lock='/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend'
   alias venv-init='virtualenv venv -p /usr/local/bin/python --no-site-packages'
   alias venv-activate='source venv/bin/activate'
-  alias tower='gittower'
+  alias tower='gittower -s'
+  function edit() {
+    cd $1
+    gittower -s .
+    mate .
+  }
+  function rssh() {
+    ssh -R 52698:localhost:52698 $1
+  }
   tm="$HOME/Library/Application Support/Avian/Bundles"
   export NODE_PATH='/usr/local/lib/node_modules'
 fi
 
 BROWSER=''
 unset BROWSER
-
-function each-file() {
-  for file in *; do
-    $1 $file
-  done
-}
 
 function find-exec() {
   find . -type f -iname "*${1:-}*" -exec "${2:-file}" '{}' \;
@@ -124,17 +126,7 @@ function ram() {
   fi
 }
 
-# Show process information & PID.
-# $ proc safari
-# # => 44371 ...
-function proc() {
-  ps -ex | grep -i "$1" | grep -v "grep"
-}
-
 # Recursively convert mp3 tags in directory from CP1251 to UTF8.
 function convert-tags() {
-  python "$dev/dotfiles/tag2utf.py" "$1"
+  python "$pm/dotfiles/tag2utf.py" "$1"
 }
-
-# Profiler end.
-# zprof
