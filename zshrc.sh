@@ -126,6 +126,11 @@ function ram() {
   fi
 }
 
+function compute() {
+  while true; do head -n 100 /dev/urandom; sleep .1; done \
+    | hexdump -C | grep "ca fe"
+}
+
 # Recursively convert mp3 tags in directory from CP1251 to UTF8.
 function convert-tags() {
   python "$pm/dotfiles/tag2utf.py" "$1"
