@@ -1,6 +1,8 @@
 # Dotfiles
 My personal dotfiles.
 
+![](http://f.cl.ly/items/2d0R2n292d0G1n381l0S/Screen%20Shot%202012-07-27%20at%206.37.33%20AM.png)
+
 ## Building system from scratch (reminder)
 
 * Install command line tools.
