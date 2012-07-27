@@ -17,9 +17,10 @@ link_home() {
 }
 
 link_bin() {
-	link "$dotfiles/$1" "$bin/$1"
+	link "$dotfiles/$1" "$bin/$2"
 }
 
 link_home zshrc.sh .zshrc
 link_home gitconfig .gitconfig
 link_home gitignore .gitignore
+link_bin ghpull.sh ghpull && chmod +x "$bin/ghpull"
