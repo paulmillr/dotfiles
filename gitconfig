@@ -14,9 +14,16 @@
   release   = !sh "$HOME/Development/paulmillr/dotfiles/git-extras/git-release.sh"
   setup     = !sh "$HOME/Development/paulmillr/dotfiles/git-extras/git-setup.sh"
   summary   = !sh "$HOME/Development/paulmillr/dotfiles/git-extras/git-summary.sh"
-  add-upstream = !sh "$HOME/Development/paulmillr/dotfiles/git-extras/git-add-upstream.sh"
-  create-branch = !sh "$HOME/Development/paulmillr/dotfiles/git-extras/git-create-branch.sh"
   delete-branch = !sh "$HOME/Development/paulmillr/dotfiles/git-extras/git-delete-branch.sh"
+  dopull = !sh "$HOME/Development/paulmillr/dotfiles/git-extras/git-dopull.sh"
+	switch = !legit switch \"$@\"
+	branches = !legit branches
+	sprout = !legit sprout \"$@\"
+	unpublish = !legit unpublish \"$@\"
+	harvest = !legit harvest \"$@\"
+	sync = !legit sync \"$@\"
+	publish = !legit publish \"$@\"
+	graft = !legit graft \"$@\"
 
 [color]
   ui = true

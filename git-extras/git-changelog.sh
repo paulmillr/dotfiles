@@ -2,7 +2,8 @@
 
 CHANGELOG='CHANGELOG.md'
 DATE=`date +'%B %d, %Y'`
-HEAD="# Project x.y.z ($DATE)"
+PROJECT=`cat $CHANGELOG | egrep '^# (\w+)' | sed -e 's/^# \([a-zA-Z]*\).*/\1/' | head -n 1`
+HEAD="# $PROJECT $1 ($DATE)"
 
 if test "$1" = "--list"; then
   version=`git for-each-ref refs/tags --sort="-*authordate" --format='%(refname)' \

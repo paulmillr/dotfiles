@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-# ghpull(1)
+# dopull(1)
 # =========
 
 # Script for automizing creating of pull requests from command line.
@@ -15,14 +15,14 @@
 #
 # Usage:
 #
-#     ghpull <original-user>/<original-repo> <topic-branch-name>
-#     ghpull paulmillr/ostio add-ie11-support
+#     git dopull <original-user>/<original-repo> <topic-branch-name>
+#     git dopull paulmillr/ostio add-ie11-support
 #
 # Workflow:
 #
-#     ghpull paulmillr/ostio add-ie11-support && cd ostio && $EDITOR ostio
+#     git dopull paulmillr/ostio add-ie11-support && $EDITOR .
 #     # edit stuff
-#     git commit -m 'Add stuff' && git push -u origin
+#     git commit -m 'Add stuff.' && git push -u origin
 #
 # (c) 2012 Paul Miller (paulmillr.com).
 # The script can be redistributed under the MIT License.

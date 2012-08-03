@@ -34,7 +34,7 @@ zstyle ':omz:load' omodule \
 # This will make you shout: OH MY ZSHELL!
 source "$OMZ/init.zsh"
 
-export EDITOR="/usr/local/bin/mate -w"
+export EDITOR="/usr/local/bin/mate"
 
 # Commonly used directories.
 dev="$HOME/Development"
