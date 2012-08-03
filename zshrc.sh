@@ -54,7 +54,8 @@ pybrew="$HOME/.pythonbrew/etc/bashrc"
 [[ -s $pybrew ]] && source $pybrew
 
 if [[ "$OSTYPE" == darwin* ]]; then
-  alias rm=trash
+  alias rm='trash'
+  alias pgrep='pgrep -fli'
   alias lock='/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend'
   alias venv-init='virtualenv venv -p /usr/local/bin/python --no-site-packages'
   alias venv-activate='source venv/bin/activate'
