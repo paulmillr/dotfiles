@@ -39,6 +39,7 @@ export EDITOR="/usr/local/bin/mate"
 # Commonly used directories.
 dev="$HOME/Development"
 brunch="$dev/brunch"
+bwc="$brunch/brunch/skeletons/brunch-with-chaplin"
 chaplin="$dev/chaplinjs"
 forks="$dev/forks"
 pm="$dev/paulmillr"
@@ -60,10 +61,13 @@ if [[ "$OSTYPE" == darwin* ]]; then
   alias venv-init='virtualenv venv -p /usr/local/bin/python --no-site-packages'
   alias venv-activate='source venv/bin/activate'
   alias tower='gittower -s'
-  function edit() {
+  function pretty() {
+    /usr/local/bin/pretty $1 | pbcopy
+  }
+  function cdedit() {
     cd $1
     gittower -s .
-    mate .
+    $EDITOR .
   }
   function rssh() {
     ssh -R 52698:localhost:52698 $1
@@ -77,6 +81,10 @@ unset BROWSER
 
 function find-exec() {
   find . -type f -iname "*${1:-}*" -exec "${2:-file}" '{}' \;
+}
+
+function edit() {
+  $EDITOR .
 }
 
 # Count code lines in some directory.
@@ -135,4 +143,11 @@ function compute() {
 # Recursively convert mp3 tags in directory from CP1251 to UTF8.
 function convert-tags() {
   python "$pm/dotfiles/tag2utf.py" "$1"
+}
+
+# Replace pygmentized code for github.
+function rpfg() {
+  sed -E -e :a -e '$!N; s/\n/<\/div><div class="line">/g; ta' \
+    | sed -e 's/<div class="highlight"><pre>/<div class="highlight"><pre><div class="line">/' \
+    | sed -e 's/<div class="line"><\/pre><\/div>/<\/pre><\/div>/'
 }
