@@ -1,11 +1,19 @@
 # Get hosts file at http://someonewhocares.org/hosts/
 # and append additions at the top of it.
 
-#<additions>
+#<useful>
+127.0.0.1 dev.ost.io
+#</useful>
+
+#<additional-spyware-sites>
 0.0.0.0 spylog.com
 0.0.0.0 counter.spylog.com
 0.0.0.0 openstat.net
 0.0.0.0 rs.mail.ru
 0.0.0.0 ad.mail.ru
 0.0.0.0 www.roulettebotplus.com
-#</additions>
+0.0.0.0 adforce.ru
+0.0.0.0 go.gamenet.ru
+0.0.0.0 www.directadvert.ru
+0.0.0.0 ad05f.ru
+#</additional-spyware-sites>
