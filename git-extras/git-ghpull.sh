@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-# dopull(1)
+# ghpull(1)
 # =========
 
 # Script for automizing creating of pull requests from command line.
@@ -15,12 +15,12 @@
 #
 # Usage:
 #
-#     git dopull <original-user>/<original-repo> <topic-branch-name>
-#     git dopull paulmillr/ostio add-ie11-support
+#     git ghpull <original-user>/<original-repo> <topic-branch-name>
+#     git ghpull paulmillr/ostio add-ie11-support
 #
 # Workflow:
 #
-#     git dopull paulmillr/ostio add-ie11-support && $EDITOR .
+#     git ghpull paulmillr/ostio add-ie11-support && $EDITOR .
 #     # edit stuff
 #     git commit -m 'Add stuff.' && git push -u origin
 #
@@ -38,6 +38,7 @@ owner=$1  # Owner of original repo.
 repo=$2  # Repository name (identical in forked and original variants).
 
 api='https://api.github.com'
+url="https://github.com/$user/$repo/pull/new/$owner:master...$user:$branch"
 
 fork() {
   echo "Forking repository..."
@@ -64,9 +65,8 @@ create_new_topic_branch() {
 }
 
 echo_url() {
-  echo 'Open URL in order to submit pull request:'
-  echo ''
-  echo "https://github.com/$user/$repo/pull/new/$owner:master...$user:$branch"
+  echo 'Edit the item, open URL in order to submit pull request:'
+  echo "cd $repo && edit . && open '$url'"
 }
 
 fork && clone && cd $repo \
