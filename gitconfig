@@ -1,6 +1,6 @@
 [user]
-  name = Paul Miller
-  email = paul@paulmillr.com
+	name = Paul Miller
+	email = paul@paulmillr.com
 
 [github]
   user = paulmillr
@@ -15,7 +15,8 @@
   setup     = !sh "$HOME/Development/paulmillr/dotfiles/git-extras/git-setup.sh"
   summary   = !sh "$HOME/Development/paulmillr/dotfiles/git-extras/git-summary.sh"
   delete-branch = !sh "$HOME/Development/paulmillr/dotfiles/git-extras/git-delete-branch.sh"
-  dopull = !sh "$HOME/Development/paulmillr/dotfiles/git-extras/git-dopull.sh"
+  ghpull = !sh "$HOME/Development/paulmillr/dotfiles/git-extras/git-ghpull.sh"
+  dopull = !sh "$HOME/Development/paulmillr/dotfiles/git-extras/git-ghpull.sh"
 	switch = !legit switch \"$@\"
 	branches = !legit branches
 	sprout = !legit sprout \"$@\"
@@ -45,4 +46,4 @@
   pushInsteadOf = "git://gist.github.com/"
 
 [mergetool]
-  keepBackup = true
+	keepBackup = true
