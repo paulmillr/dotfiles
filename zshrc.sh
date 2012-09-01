@@ -4,10 +4,10 @@ export PATH="/usr/local/bin:$PATH"
 
 #
 # Sets Oh My Zsh options.
-# 
+#
 
 # Set the path to Oh My Zsh.
-export OMZ="$HOME/Development/oh-my-zsh"
+export OMZ="$HOME/Development/prezto"
 
 # Auto convert .... to ../..
 zstyle ':omz:module:editor' dot-expansion 'no'
@@ -34,7 +34,7 @@ zstyle ':omz:load' omodule \
 # This will make you shout: OH MY ZSHELL!
 source "$OMZ/init.zsh"
 
-export EDITOR="/usr/local/bin/mate"
+export EDITOR="/usr/local/bin/subl"
 
 # Commonly used directories.
 dev="$HOME/Development"
@@ -55,6 +55,8 @@ pybrew="$HOME/.pythonbrew/etc/bashrc"
 [[ -s $pybrew ]] && source $pybrew
 
 if [[ "$OSTYPE" == darwin* ]]; then
+  alias c='pbcopy'
+  alias p='pbpaste'
   alias rm='trash'
   alias pgrep='pgrep -fli'
   alias lock='/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend'
@@ -84,7 +86,11 @@ function find-exec() {
 }
 
 function edit() {
-  $EDITOR .
+  local dir=$1
+  if [[ -z "$dir" ]]; then
+    dir='.'
+  fi
+  $EDITOR $dir
 }
 
 # Count code lines in some directory.

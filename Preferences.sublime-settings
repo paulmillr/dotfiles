@@ -1,0 +1,29 @@
+{
+  "color_scheme": "Packages/Monokai Dark.tmTheme",
+  "font_face": "PragmataPro",
+  "font_size": 12,
+  "tab_size": 2,
+  "word_wrap": true,
+  "wrap_width": 80,
+
+  "highlight_line": true,
+
+  "translate_tabs_to_spaces": true,
+	"ensure_newline_at_eof_on_save": true,
+	"save_on_focus_lost": true,
+	"trim_trailing_white_space_on_save": true,
+  "highlight_modified_tabs": true,
+
+  "bold_folder_labels": true,
+
+  "folder_exclude_patterns": [
+   ".git",
+   "log",
+   "tmp",
+   "node_modules"
+  ],
+
+  "file_exclude_patterns": [
+   ".DS_Store"
+  ]
+}
