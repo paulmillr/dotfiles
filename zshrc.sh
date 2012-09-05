@@ -74,7 +74,7 @@ if [[ "$OSTYPE" == darwin* ]]; then
   function rssh() {
     ssh -R 52698:localhost:52698 $1
   }
-  tm="$HOME/Library/Application Support/Avian/Bundles"
+  as="$HOME/Library/Application Support"
   export NODE_PATH='/usr/local/lib/node_modules'
 fi
 
