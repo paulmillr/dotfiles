@@ -1,29 +1,28 @@
 {
-  "color_scheme": "Packages/Monokai Dark.tmTheme",
-  "font_face": "PragmataPro",
-  "font_size": 12,
-  "tab_size": 2,
-  "word_wrap": true,
-  "wrap_width": 80,
-
-  "highlight_line": true,
-
-  "translate_tabs_to_spaces": true,
+	"bold_folder_labels": true,
+	"color_scheme": "Packages/PMThemes/NebulaPM.tmTheme",
 	"ensure_newline_at_eof_on_save": true,
+	"file_exclude_patterns":
+	[
+		".DS_Store"
+	],
+	"fold_buttons": false,
+	"folder_exclude_patterns":
+	[
+		".git",
+		"log",
+		"tmp",
+		"node_modules"
+	],
+	"font_face": "PragmataPro",
+	"font_size": 12.0,
+	"highlight_line": false,
+	"highlight_modified_tabs": true,
 	"save_on_focus_lost": true,
+	"tab_size": 2,
+	"theme": "Nil.sublime-theme",
+	"translate_tabs_to_spaces": true,
 	"trim_trailing_white_space_on_save": true,
-  "highlight_modified_tabs": true,
-
-  "bold_folder_labels": true,
-
-  "folder_exclude_patterns": [
-   ".git",
-   "log",
-   "tmp",
-   "node_modules"
-  ],
-
-  "file_exclude_patterns": [
-   ".DS_Store"
-  ]
+	"word_wrap": true,
+	"wrap_width": 80
 }
