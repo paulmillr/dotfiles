@@ -3,7 +3,7 @@ My personal dotfiles.
 
 ![](http://f.cl.ly/items/1w3B1Q041u2O1p2k1G1q/Screen%20Shot%202012-07-27%20at%206.40.43%20AM.png)
 
-![](http://api.cld.me/image/0M2D2p2O0R0n/Screen%20Shot%202012-09-06%20at%2010.57.44%20AM.png)
+![](http://f.cl.ly/items/1Z1H202e1x3i0U3Q3o3J/Screen%20Shot%202012-09-06%20at%202.38.47%20PM.png)
 
 ## Building system from scratch (reminder)
 
