@@ -1,18 +1,21 @@
 # Dotfiles
 My personal dotfiles.
 
-![](http://f.cl.ly/items/1w3B1Q041u2O1p2k1G1q/Screen%20Shot%202012-07-27%20at%206.40.43%20AM.png)
+![](http://f.cl.ly/items/1J3c2J2F0Y200i2D1T1J/Screen%20Shot%202012-09-06%20at%203.04.02%20PM.png)
 
 ![](http://f.cl.ly/items/1Z1H202e1x3i0U3Q3o3J/Screen%20Shot%202012-09-06%20at%202.38.47%20PM.png)
 
 ## Building system from scratch (reminder)
 
+* Install [PragmataPro](http://www.myfonts.com/fonts/fsd/pragmata-pro/) font.
 * Install command line tools.
+* Change Terminal.app theme to terminal/paulmillr.terminal.
+* Link sublime text settings.
 * Change default shell to ZSH: `chsh -s /bin/zsh`.
 * Clone:
-    * oh my zsh `git://github.com/paulmillr/oh-my-zsh.git`
+    * prezto (oh-my-zsh fork) `https://github.com/sorin-ionescu/prezto`
     * this project (dotfiles) and run `./install`
-    * GitHub packages
+    * GitHub packages 
 
 ## License
 Some code is taken from:
