@@ -1,6 +1,6 @@
 [user]
-	name = Paul Miller
-	email = paul@paulmillr.com
+  name = Paul Miller
+  email = paul@paulmillr.com
 
 [github]
   user = paulmillr
@@ -17,14 +17,15 @@
   delete-branch = !sh "$HOME/Development/paulmillr/dotfiles/git-extras/git-delete-branch.sh"
   ghpull = !sh "$HOME/Development/paulmillr/dotfiles/git-extras/git-ghpull.sh"
   dopull = !sh "$HOME/Development/paulmillr/dotfiles/git-extras/git-ghpull.sh"
-	switch = !legit switch \"$@\"
-	branches = !legit branches
-	sprout = !legit sprout \"$@\"
-	unpublish = !legit unpublish \"$@\"
-	harvest = !legit harvest \"$@\"
-	sync = !legit sync \"$@\"
-	publish = !legit publish \"$@\"
-	graft = !legit graft \"$@\"
+  cleanup = !ruby "$HOME/Development/paulmillr/dotfiles/git-extras/git-cleanup.rb"
+  switch = !legit switch \"$@\"
+  branches = !legit branches
+  sprout = !legit sprout \"$@\"
+  unpublish = !legit unpublish \"$@\"
+  harvest = !legit harvest \"$@\"
+  sync = !legit sync \"$@\"
+  publish = !legit publish \"$@\"
+  graft = !legit graft \"$@\"
 
 [color]
   ui = true
@@ -46,4 +47,4 @@
   pushInsteadOf = "git://gist.github.com/"
 
 [mergetool]
-	keepBackup = true
+  keepBackup = true
