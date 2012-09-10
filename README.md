@@ -1,5 +1,5 @@
 # Dotfiles
-My personal dotfiles.
+Colourful & robust OS X configuration files and utilities.
 
 ![](http://f.cl.ly/items/1J3c2J2F0Y200i2D1T1J/Screen%20Shot%202012-09-06%20at%203.04.02%20PM.png)
 
