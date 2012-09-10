@@ -3,7 +3,7 @@ Colourful & robust OS X configuration files and utilities.
 
 ![](http://f.cl.ly/items/1J3c2J2F0Y200i2D1T1J/Screen%20Shot%202012-09-06%20at%203.04.02%20PM.png)
 
-![](http://f.cl.ly/items/1Z1H202e1x3i0U3Q3o3J/Screen%20Shot%202012-09-06%20at%202.38.47%20PM.png)
+![](http://f.cl.ly/items/281u1D0j2W1J2m2U3W1b/Screen%20Shot%202012-09-09%20at%206.34.47%20PM.png)
 
 ## Features
 
