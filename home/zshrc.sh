@@ -2,37 +2,9 @@
 
 export PATH="/usr/local/bin:$PATH"
 
-#
-# Sets Oh My Zsh options.
-#
-
-# Set the path to Oh My Zsh.
-export OMZ="$HOME/Development/prezto"
-
-# Auto convert .... to ../..
-zstyle ':omz:module:editor' dot-expansion 'no'
-
-# Set case-sensitivity for completion, history lookup, etc.
-zstyle ':omz:*:*' case-sensitive 'no'
-
-# Color output (auto set to 'no' on dumb terminals).
-zstyle ':omz:*:*' color 'yes'
-
-# Auto set the tab and window titles.
-zstyle ':omz:module:terminal' auto-title 'yes'
-
-# Set the Zsh functions to load (man zshcontrib).
-zstyle ':omz:load' zfunction 'zmv'
-
-# Set the Oh My Zsh modules to load (browse modules).
-zstyle ':omz:load' omodule \
-  'environment' 'terminal' 'history' \
-  'directory' 'spectrum' 'utility' \
-  'completion' 'syntax-highlighting' 'git' \
-  'archive' 'osx' 'node' 'python' 'ruby'
-
-# This will make you shout: OH MY ZSHELL!
-source "$OMZ/init.zsh"
+if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
+  source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
+fi
 
 export EDITOR="/usr/local/bin/subl"
 
@@ -144,11 +116,6 @@ function ram() {
 function compute() {
   while true; do head -n 100 /dev/urandom; sleep .1; done \
     | hexdump -C | grep "ca fe"
-}
-
-# Recursively convert mp3 tags in directory from CP1251 to UTF8.
-function convert-tags() {
-  python "$pm/dotfiles/tag2utf.py" "$1"
 }
 
 # Replace pygmentized code for github.

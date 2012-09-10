@@ -1,5 +1,9 @@
 #!/usr/bin/env sh
 
+# Originally taked from
+# [visionmedia/git-extras](https://github.com/visionmedia/git-extras)
+# (MIT License).
+
 hook() {
   local hook=".git/hooks/$1.sh"
   if test -f $hook; then
