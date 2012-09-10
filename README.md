@@ -5,21 +5,33 @@ My personal dotfiles.
 
 ![](http://f.cl.ly/items/1Z1H202e1x3i0U3Q3o3J/Screen%20Shot%202012-09-06%20at%202.38.47%20PM.png)
 
+## Features
+
+Shell (zsh):
+
+* Auto-completion
+* Syntax highlighting
+* Automatic setting up of terminal tab / window title to current dir
+* `rm` moves file to the OS X trash
+* A bunch of useful functions:
+    * `extract archive.tar.bz` — unpack any archive (supports many extensions)
+    * `ram safari` — show app RAM usage
+    * `loc py coffee js html css` — count lines of code
+    in current dir in a colourful way.
+
 ## Building system from scratch (reminder)
 
 * Install [PragmataPro](http://www.myfonts.com/fonts/fsd/pragmata-pro/) font.
-* Install command line tools.
-* Change Terminal.app theme to terminal/paulmillr.terminal.
-* Link sublime text settings.
+* Install XCode & its Command Line Tools.
+* Change Terminal.app theme to `terminal/paulmillr.terminal`.
 * Change default shell to ZSH: `chsh -s /bin/zsh`.
+* Insert proper hosts from `etc/hosts` to system’s `/etc/hosts`.
+* Create `~/Development/`
 * Clone:
-    * prezto (oh-my-zsh fork) `https://github.com/sorin-ionescu/prezto`
-    * this project (dotfiles) and run `./install`
-    * GitHub packages 
+    * prezto (oh-my-zsh fork) `git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"`
+    * this project (dotfiles) and run `sh install.sh`
 
 ## License
-Some code is taken from:
-* [visionmedia/git-extras](https://github.com/visionmedia/git-extras) (MIT)
 
 The MIT license.
 

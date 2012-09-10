@@ -1,5 +1,9 @@
 #!/usr/bin/env sh
 
+# Originally taked from
+# [visionmedia/git-extras](https://github.com/visionmedia/git-extras)
+# (MIT License).
+
 CHANGELOG='CHANGELOG.md'
 DATE=`date +'%B %d, %Y'`
 PROJECT=`cat $CHANGELOG | egrep '^# (\w+)' | sed -e 's/^# \([a-zA-Z]*\).*/\1/' | head -n 1`
