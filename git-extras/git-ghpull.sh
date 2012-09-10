@@ -27,7 +27,7 @@
 # (c) 2012 Paul Miller (paulmillr.com).
 # The script can be redistributed under the MIT License.
 
-full_upstream_repo=$1  # Full repo name in format <user>/<repo>. 
+full_upstream_repo=$1  # Full repo name in format <user>/<repo>.
 branch="topics/$2"  # Topic branch name.
 
 user=$GITHUB_USERNAME

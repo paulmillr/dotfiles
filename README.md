@@ -18,6 +18,11 @@ Shell (zsh):
     * `ram safari` — show app RAM usage
     * `loc py coffee js html css` — count lines of code
     in current dir in a colourful way.
+* Neat git extras:
+    * Script that creates GitHub pull requests from command line simply.
+    * Script that cleans up merged git branches. Very useful if you’re doing
+    github pull requests.
+    * `git-release`, `git-changelog`, `git-setup` etc.
 
 ## Building system from scratch (reminder)
 
