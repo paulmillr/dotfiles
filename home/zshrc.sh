@@ -21,6 +21,7 @@ if [[ "$OSTYPE" == darwin* ]]; then
   alias venv-init='virtualenv venv -p /usr/local/bin/python --no-site-packages'
   alias venv-activate='source venv/bin/activate'
   alias tower='gittower -s'
+  alias sniff="sudo ngrep -d 'en1' -t '^(GET|POST) ' 'tcp and port 80'"
 
   function cdedit() {
     cd $1
