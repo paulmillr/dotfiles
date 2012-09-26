@@ -1,9 +1,9 @@
 #
 # Defines environment variables.
 #
-# Authors:
-#   Sorin Ionescu <sorin.ionescu@gmail.com>
-#
+
+privenv="$HOME/.private-env"
+[[ -f "$privenv" ]] && source $privenv
 
 #
 # Browser
@@ -50,10 +50,28 @@ fi
 typeset -gU cdpath fpath mailpath manpath path
 typeset -gUT INFOPATH infopath
 
+# Commonly used directories.
+dev="$HOME/Development"
+brunch="$dev/brunch"
+bwc="$brunch/brunch/skeletons/brunch-with-chaplin"
+chaplin="$dev/chaplinjs"
+forks="$dev/forks"
+pm="$dev/paulmillr"
+jum="$dev/mediasapiens/jum/jum/jum-client"
+as="$HOME/Library/Application Support"
+
 # Set the the list of directories that cd searches.
-# cdpath=(
-#   $cdpath
-# )
+cdpath=(
+  $cdpath
+  $dev
+  $brunch
+  $bwc
+  $chaplin
+  $forks
+  $pm
+  $jum
+  $as
+)
 
 # Set the list of directories that info searches for manuals.
 infopath=(
@@ -77,6 +95,8 @@ unset path_file
 # Set the list of directories that Zsh searches for programs.
 path=(
   /usr/local/{bin,sbin}
+  /usr/local/share/{python,python3}
+  /usr/local/share/npm/bin
   /usr/{bin,sbin}
   /{bin,sbin}
   $path

@@ -1,30 +1,16 @@
 #!/usr/bin/env zsh
 
-export PATH="/usr/local/bin:$PATH"
-
 if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 fi
 
-export EDITOR="/usr/local/bin/subl"
-
-# Commonly used directories.
-dev="$HOME/Development"
-brunch="$dev/brunch"
-bwc="$brunch/brunch/skeletons/brunch-with-chaplin"
-chaplin="$dev/chaplinjs"
-forks="$dev/forks"
-pm="$dev/paulmillr"
-
+export EDITOR='/usr/local/bin/subl'
 autoload -U colors && colors
 
 # Load and execute the prompt theming system.
 fpath=("$pm/dotfiles/terminal" $fpath)
 autoload -Uz promptinit && promptinit
 prompt 'paulmillr'
-
-pybrew="$HOME/.pythonbrew/etc/bashrc"
-[[ -s $pybrew ]] && source $pybrew
 
 if [[ "$OSTYPE" == darwin* ]]; then
   alias c='pbcopy'
@@ -35,18 +21,17 @@ if [[ "$OSTYPE" == darwin* ]]; then
   alias venv-init='virtualenv venv -p /usr/local/bin/python --no-site-packages'
   alias venv-activate='source venv/bin/activate'
   alias tower='gittower -s'
-  function pretty() {
-    /usr/local/bin/pretty $1 | pbcopy
-  }
+
   function cdedit() {
     cd $1
     gittower -s .
     $EDITOR .
   }
-  function rssh() {
+
+  function mate-ssh() {
     ssh -R 52698:localhost:52698 $1
   }
-  as="$HOME/Library/Application Support"
+
   export NODE_PATH='/usr/local/lib/node_modules'
 fi
 
