@@ -32,6 +32,14 @@ if [[ `uname` == 'Darwin' ]]; then
 
   echo 'Tweaking OS X...'
     source 'etc/osx.sh'
+
+  echo 'You will need to manually copy some OS X settings:'
+    # Wipes the default substitution list and creates a new blank one.
+    gprefs='~/Library/Preferences/.GlobalPreferences.plist'
+    # /usr/libexec/PlistBuddy -c 'Delete NSUserReplacementItems' $gprefs
+    # /usr/libexec/PlistBuddy -c 'Add NSUserReplacementItems array' $gprefs
+    # Merge text substitutions from previous backup.
+    # /usr/libexec/PlistBuddy -c "Merge $(pwd)/etc/osx-text-substitutions.plist NSUserReplacementItems" $gprefs
 fi
 
 echo 'Symlinking config files...'
