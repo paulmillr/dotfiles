@@ -13,7 +13,7 @@
   cpush     = !sh "$HOME/Development/paulmillr/dotfiles/git-extras/git-cpush.sh"
   release   = !sh "$HOME/Development/paulmillr/dotfiles/git-extras/git-release.sh"
   setup     = !zsh "$HOME/Development/paulmillr/dotfiles/git-extras/git-setup.sh"
-  summary   = !sh "$HOME/Development/paulmillr/dotfiles/git-extras/git-summary.sh"
+  summary   = !zsh "$HOME/Development/paulmillr/dotfiles/git-extras/git-summary.sh"
   delete-branch = !sh "$HOME/Development/paulmillr/dotfiles/git-extras/git-delete-branch.sh"
   ghpull = !sh "$HOME/Development/paulmillr/dotfiles/git-extras/git-ghpull.sh"
   dopull = !sh "$HOME/Development/paulmillr/dotfiles/git-extras/git-ghpull.sh"
