@@ -1,4 +1,4 @@
-#!/usr/bin/python    
+#!/usr/bin/env python
 import os.path
 import re
 import os
@@ -34,7 +34,7 @@ try:
 except:
     print "You need to install python-eyed3 package."
     print "You can get eyed3 here: http://eyed3.nicfit.net/"
-    sys.exit() 
+    sys.exit()
 
 mp3_file_name = re.compile(".*(mp3|MP3)$")
 
@@ -55,7 +55,7 @@ def pass_dir(rootdir):
     artists = []
     albums = []
     for song in os.listdir(rootdir):
-        if (os.path.isfile(os.path.join(rootdir, song)) 
+        if (os.path.isfile(os.path.join(rootdir, song))
             and mp3_file_name.match(song)):
             filename = os.path.join(rootdir,song)
             tag = eyeD3.Tag()
@@ -84,7 +84,7 @@ def pass_dir(rootdir):
         ask_user(tags, songs, titles, artists, albums)
 
 
-def get_tag_str(string): 
+def get_tag_str(string):
     """
        Gets the 1byte 8bits string, as writed in the tag,
        from the unicode, returned by tag.get*().
