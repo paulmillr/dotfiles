@@ -19,9 +19,10 @@ Shell (zsh):
     * `loc py coffee js html css` — count lines of code
     in current dir in a colourful way.
 * Neat git extras:
-    * Script that creates GitHub pull requests from command line simply.
-    * Script that cleans up merged git branches. Very useful if you’re doing
-    github pull requests.
+    * `git ghpull` — creates GitHub pull requests from command line simply.
+    * `git cleanup` — cleans up merged git branches. Very useful if
+    you’re doing github pull requests in separate branches.
+    * `git summary` — outputs commit email statistics.
     * `git-release`, `git-changelog`, `git-setup` etc.
 
 ## Building system from scratch (reminder)
