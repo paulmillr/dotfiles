@@ -19,8 +19,8 @@ git log --no-merges --pretty=format:"%ae" |\
     login="$login_domain[1]"
     domain="$login_domain[2]"
     total=$(($count + $total))
-    output="$output\n$fg[yellow]$count $fg[cyan]$login$reset_color@$domain"
+    output="$output\n$fg[red]$count $fg[blue]$login$reset_color@$domain"
   done
 
-echo "$fg[yellow]$total$reset_color commits totally:"
+echo "$fg[red]$total$reset_color commits totally:"
 echo $output

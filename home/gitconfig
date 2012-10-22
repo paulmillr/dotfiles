@@ -7,7 +7,11 @@
 
 [alias]
   st = status
+  std = !git status && git diff
   ci = commit
+
+  graph = log --graph
+  url = !git remote -v|sed "'s|.*git[:@]\\(.*\\).git.*|http://\\1|;s|m:|m/|'"|uniq|xargs open
 
   changelog = !sh "$HOME/Development/paulmillr/dotfiles/git-extras/git-changelog.sh"
   cpush     = !sh "$HOME/Development/paulmillr/dotfiles/git-extras/git-cpush.sh"
@@ -15,9 +19,11 @@
   setup     = !zsh "$HOME/Development/paulmillr/dotfiles/git-extras/git-setup.sh"
   summary   = !zsh "$HOME/Development/paulmillr/dotfiles/git-extras/git-summary.sh"
   delete-branch = !sh "$HOME/Development/paulmillr/dotfiles/git-extras/git-delete-branch.sh"
+
   ghpull = !sh "$HOME/Development/paulmillr/dotfiles/git-extras/git-ghpull.sh"
   dopull = !sh "$HOME/Development/paulmillr/dotfiles/git-extras/git-ghpull.sh"
   cleanup = !ruby "$HOME/Development/paulmillr/dotfiles/git-extras/git-cleanup.rb"
+
   switch = !legit switch \"$@\"
   branches = !legit branches
   sprout = !legit sprout \"$@\"
@@ -34,13 +40,20 @@
   editor = mate -w
 
 [format]
-  pretty = oneline
+  pretty = %Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset
+  graph = true
+
+[log]
+  abbrevCommit = true
 
 # URL shorthands
+# github://paulmillr/dotfiles
 [url "git@github.com:"]
   insteadOf = "github://"
   pushInsteadOf = "github://"
   pushInsteadOf = "git://github.com/"
+
+# gist://3928760
 [url "git@gist.github.com:"]
   insteadOf = "gist://"
   pushInsteadOf = "gist://"

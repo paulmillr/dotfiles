@@ -12,25 +12,38 @@ fpath=("$pm/dotfiles/terminal" $fpath)
 autoload -Uz promptinit && promptinit
 prompt 'paulmillr'
 
+# Useful global aliases.
+alias -g 'F'='| head -n'  # git log F 15
+alias -g 'L'='| tail -n'  # git log L 10
+
+# Some OS X-only stuff.
 if [[ "$OSTYPE" == darwin* ]]; then
+  # Short-cuts for copy-paste
   alias c='pbcopy'
   alias p='pbpaste'
+
+  # Remove all items safely, to Trash.
   alias rm='trash'
+
+  # Case-insensitive pgrep that outputs full path.
   alias pgrep='pgrep -fli'
+
+  # Lock current session and proceed to the login screen.
   alias lock='/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend'
+
+  # Python virtualenv shortcuts.
   alias venv-init='virtualenv venv -p /usr/local/bin/python --no-site-packages'
   alias venv-activate='source venv/bin/activate'
-  alias tower='gittower -s'
+
   alias sniff="sudo ngrep -d 'en1' -t '^(GET|POST) ' 'tcp and port 80'"
+
+  # Developer tools shortcuts.
+  alias tower='gittower -s'
 
   function cdedit() {
     cd $1
     gittower -s .
     $EDITOR .
-  }
-
-  function mate-ssh() {
-    ssh -R 52698:localhost:52698 $1
   }
 
   export NODE_PATH='/usr/local/lib/node_modules'
@@ -39,6 +52,9 @@ fi
 BROWSER=''
 unset BROWSER
 
+# Find files and exec commands at them.
+# $ find-exec .coffee cat | wc -l
+# # => 9762
 function find-exec() {
   find . -type f -iname "*${1:-}*" -exec "${2:-file}" '{}' \;
 }
@@ -104,7 +120,8 @@ function compute() {
     | hexdump -C | grep "ca fe"
 }
 
-# Replace pygmentized code for github.
+# Replace pygments output for github style stuff.
+# $ ./pygmentize < demo.ls -f html -l livescript | rpfg | pbcopy
 function rpfg() {
   sed -E -e :a -e '$!N; s/\n/<\/div><div class="line">/g; ta' \
     | sed -e 's/<div class="highlight"><pre>/<div class="highlight"><pre><div class="line">/' \
