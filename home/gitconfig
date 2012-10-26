@@ -15,6 +15,7 @@
 
   changelog = !sh "$HOME/Development/paulmillr/dotfiles/git-extras/git-changelog.sh"
   cpush     = !sh "$HOME/Development/paulmillr/dotfiles/git-extras/git-cpush.sh"
+  rstatus   = !zsh "$HOME/Development/paulmillr/dotfiles/git-extras/git-rstatus.sh"
   release   = !sh "$HOME/Development/paulmillr/dotfiles/git-extras/git-release.sh"
   setup     = !zsh "$HOME/Development/paulmillr/dotfiles/git-extras/git-setup.sh"
   summary   = !zsh "$HOME/Development/paulmillr/dotfiles/git-extras/git-summary.sh"
