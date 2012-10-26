@@ -13,12 +13,15 @@ autoload -Uz promptinit && promptinit
 prompt 'paulmillr'
 
 # Useful global aliases.
+alias -g 'H'='| head'     # git log H
+alias -g 'T'='| tail'     # git log T
 alias -g 'F'='| head -n'  # git log F 15
 alias -g 'L'='| tail -n'  # git log L 10
+alias -g 'C'='| wc -l'    # git log C
 
 # Some OS X-only stuff.
 if [[ "$OSTYPE" == darwin* ]]; then
-  # Short-cuts for copy-paste
+  # Short-cuts for copy-paste.
   alias c='pbcopy'
   alias p='pbpaste'
 
@@ -40,7 +43,7 @@ if [[ "$OSTYPE" == darwin* ]]; then
   # Developer tools shortcuts.
   alias tower='gittower -s'
 
-  function cdedit() {
+  function cded() {
     cd $1
     gittower -s .
     $EDITOR .
@@ -113,6 +116,10 @@ function ram() {
       echo "There are no processes with pattern '${fg[blue]}${app}${reset_color}' are running."
     fi
   fi
+}
+
+function stats() {
+  sort | uniq -c | sort -r
 }
 
 function compute() {
