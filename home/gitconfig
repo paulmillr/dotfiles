@@ -6,9 +6,9 @@
   user = paulmillr
 
 [alias]
-  st = status
-  std = !git status && git diff
+  st = status --short
   ci = commit
+  d = diff
 
   graph = log --graph
   url = !git remote -v|sed "'s|.*git[:@]\\(.*\\).git.*|http://\\1|;s|m:|m/|'"|uniq|xargs open
@@ -43,6 +43,9 @@
 [format]
   pretty = %Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset
   graph = true
+
+[advice]
+  statusHints = false
 
 [log]
   abbrevCommit = true
