@@ -8,6 +8,8 @@
 [alias]
   st = status --short
   ci = commit
+  ch = checkout
+  br = branch
   d = diff
 
   graph = log --graph
@@ -33,6 +35,9 @@
   sync = !legit sync \"$@\"
   publish = !legit publish \"$@\"
   graft = !legit graft \"$@\"
+
+[push]
+  default = simple
 
 [color]
   ui = true
