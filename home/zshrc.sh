@@ -45,7 +45,6 @@ if [[ "$OSTYPE" == darwin* ]]; then
 
   function cded() {
     cd $1
-    gittower -s .
     $EDITOR .
   }
 

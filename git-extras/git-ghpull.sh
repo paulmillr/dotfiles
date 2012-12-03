@@ -27,11 +27,20 @@
 # (c) 2012 Paul Miller (paulmillr.com).
 # The script can be redistributed under the MIT License.
 
+syntax="git ghpull <original-user>/<original-repo> <topic-branch-name>"
+err="Invalid syntax. Expected '$syntax'"
+enverr="You need to specify $GITHUB_USERNAME and $GITHUB_PASSWORD env vars"
+
 full_upstream_repo=$1  # Full repo name in format <user>/<repo>.
 branch="topics/$2"  # Topic branch name.
 
 user=$GITHUB_USERNAME
 password=$GITHUB_PASSWORD
+
+[[ -z "$1" ]] && echo $err && exit 1
+[[ -z "$2"  ]] && echo $err && exit 1
+[[ -z "$user" ]] && echo $enverr && exit 1
+[[ -z "$password" ]] && echo $enverr && exit 1
 
 set `echo $full_upstream_repo | tr '/' ' '`
 owner=$1  # Owner of original repo.
