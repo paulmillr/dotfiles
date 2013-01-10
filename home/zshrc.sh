@@ -12,6 +12,7 @@ fpath=("$pm/dotfiles/terminal" $fpath)
 autoload -Uz promptinit && promptinit
 prompt 'paulmillr'
 
+alias cl='clear'
 # Useful global aliases.
 alias -g 'H'='| head'     # git log H
 alias -g 'T'='| tail'     # git log T

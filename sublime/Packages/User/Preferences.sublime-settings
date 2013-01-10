@@ -18,6 +18,10 @@
 	"font_size": 12.0,
 	"highlight_line": false,
 	"highlight_modified_tabs": true,
+	"ignored_packages":
+	[
+		"Vintage"
+	],
 	"save_on_focus_lost": false,
 	"tab_size": 2,
 	"theme": "Nil.sublime-theme",
