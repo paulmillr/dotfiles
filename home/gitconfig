@@ -11,6 +11,7 @@
   ch = checkout
   br = branch
   d = diff
+  p = push -u origin
 
   graph = log --graph
   url = !git remote -v|sed "'s|.*git[:@]\\(.*\\).git.*|http://\\1|;s|m:|m/|'"|uniq|xargs open
@@ -43,7 +44,7 @@
   ui = true
 
 [core]
-  editor = mate -w
+  editor = subl
 
 [format]
   pretty = %Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset
