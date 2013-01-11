@@ -38,7 +38,7 @@
   graft = !legit graft \"$@\"
 
 [push]
-  default = simple
+  default = current
 
 [color]
   ui = true
