@@ -6,18 +6,20 @@
   user = paulmillr
 
 [alias]
-  st = status --short
+  br = branch
+  cb = "!sh -c 'git branch $1 && git ch $1' -"
   ci = commit
   ch = checkout
-  br = branch
+  cpush = "!sh -c 'git commit -a -m \"$1\" && git push -u origin' -"
+  ctb = "!sh -c 'git cb topics/$1' -"
   d = diff
-  p = push -u origin
+  st = status --short
 
   graph = log --graph
   url = !git remote -v|sed "'s|.*git[:@]\\(.*\\).git.*|http://\\1|;s|m:|m/|'"|uniq|xargs open
+  whois = "!sh -c 'git log -i -1 --pretty=\"format:%an <%ae>\n\" --author=\"$1\"' -"
 
   changelog = !sh "$HOME/Development/paulmillr/dotfiles/git-extras/git-changelog.sh"
-  cpush     = !sh "$HOME/Development/paulmillr/dotfiles/git-extras/git-cpush.sh"
   rstatus   = !zsh "$HOME/Development/paulmillr/dotfiles/git-extras/git-rstatus.sh"
   release   = !sh "$HOME/Development/paulmillr/dotfiles/git-extras/git-release.sh"
   setup     = !zsh "$HOME/Development/paulmillr/dotfiles/git-extras/git-setup.sh"
@@ -25,17 +27,8 @@
   delete-branch = !sh "$HOME/Development/paulmillr/dotfiles/git-extras/git-delete-branch.sh"
 
   ghpull = !sh "$HOME/Development/paulmillr/dotfiles/git-extras/git-ghpull.sh"
-  dopull = !sh "$HOME/Development/paulmillr/dotfiles/git-extras/git-ghpull.sh"
+  ghfork = !sh "$HOME/Development/paulmillr/dotfiles/git-extras/git-ghpull.sh"
   cleanup = !ruby "$HOME/Development/paulmillr/dotfiles/git-extras/git-cleanup.rb"
-
-  switch = !legit switch \"$@\"
-  branches = !legit branches
-  sprout = !legit sprout \"$@\"
-  unpublish = !legit unpublish \"$@\"
-  harvest = !legit harvest \"$@\"
-  sync = !legit sync \"$@\"
-  publish = !legit publish \"$@\"
-  graft = !legit graft \"$@\"
 
 [push]
   default = current
@@ -45,6 +38,7 @@
 
 [core]
   editor = subl
+  excludesfile = ~/.gitignore
 
 [format]
   pretty = %Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset
