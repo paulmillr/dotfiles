@@ -19,6 +19,7 @@ alias -g 'T'='| tail'     # git log T
 alias -g 'F'='| head -n'  # git log F 15
 alias -g 'L'='| tail -n'  # git log L 10
 alias -g 'C'='| wc -l'    # git log C
+alias -g 'SUM'='| (tr "\012" "+"; echo "0") | bc'
 
 # Some OS X-only stuff.
 if [[ "$OSTYPE" == darwin* ]]; then
