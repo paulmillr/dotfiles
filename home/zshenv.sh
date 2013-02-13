@@ -57,7 +57,6 @@ bwc="$brunch/brunch/skeletons/brunch-with-chaplin"
 chaplin="$dev/chaplinjs"
 forks="$dev/forks"
 pm="$dev/paulmillr"
-jum="$dev/mediasapiens/jum/jum/jum-client"
 as="$HOME/Library/Application Support"
 
 # Set the the list of directories that cd searches.
@@ -69,7 +68,6 @@ cdpath=(
   $chaplin
   $forks
   $pm
-  $jum
   $as
 )
 
