@@ -34,6 +34,18 @@ Shell (zsh):
 * `sublime` — sublime text 2 theme & settings
 * `terminal` — terminal theme & prompt
 
+## Installation
+
+Change shell to zsh, clone prezto, clone this repo to `~/Development/paulmillr/dotfiles`.
+
+```bash
+chsh -s /bin/zsh # or `sudo vim /etc/passwd`
+git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"
+dir="~/Development/dotfiles/paulmillr"
+mkdir -p $dir && cd $dir && git clone git://github.com/paulmillr/dotfiles.git
+cd dotfiles && sudo source bin/symlink-dotfiles.sh
+```
+
 ## Building system from scratch (reminder)
 
 * Install [PragmataPro](http://www.myfonts.com/fonts/fsd/pragmata-pro/) font.
