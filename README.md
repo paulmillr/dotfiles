@@ -1,11 +1,17 @@
 # Dotfiles
 Colourful & robust OS X configuration files and utilities.
 
+Installation is done with simple command set (see “building system from scratch” for setup of new system):
+
+```
+curl --silent https://raw.github.com/paulmillr/dotfiles/master/install.sh | sh
+```
+
+## Features
+
 ![](http://f.cl.ly/items/1J3c2J2F0Y200i2D1T1J/Screen%20Shot%202012-09-06%20at%203.04.02%20PM.png)
 
 ![](http://f.cl.ly/items/281u1D0j2W1J2m2U3W1b/Screen%20Shot%202012-09-09%20at%206.34.47%20PM.png)
-
-## Features
 
 Shell (zsh):
 
@@ -34,18 +40,6 @@ Shell (zsh):
 * `sublime` — sublime text 2 theme & settings
 * `terminal` — terminal theme & prompt
 
-## Installation
-
-Change shell to zsh, clone prezto, clone this repo to `~/Development/paulmillr/dotfiles`.
-
-```bash
-chsh -s /bin/zsh # or `sudo vim /etc/passwd`
-git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"
-dir="~/Development/dotfiles/paulmillr"
-mkdir -p $dir && cd $dir && git clone git://github.com/paulmillr/dotfiles.git
-cd dotfiles && sudo source bin/symlink-dotfiles.sh
-```
-
 ## Building system from scratch (reminder)
 
 * Install [PragmataPro](http://www.myfonts.com/fonts/fsd/pragmata-pro/) font.
@@ -56,7 +50,7 @@ cd dotfiles && sudo source bin/symlink-dotfiles.sh
 * Create `~/Development/`
 * Clone:
     * prezto (oh-my-zsh fork) `git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"`
-    * this project (dotfiles) and run `sh install.sh`
+    * this project (dotfiles) and run `sh bootstrap-new-system.sh`
 
 ## License
 
