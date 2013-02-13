@@ -1,3 +1,5 @@
+#!/bin/bash
+
 dev="$HOME/Development"
 dotfiles="$dev/paulmillr/dotfiles"
 bin="/usr/local/bin"
@@ -13,7 +15,7 @@ link() {
   from="$1"
   to="$2"
   echo "Linking '$from' to '$to'"
-  rm "$to"
+  rm --force "$to"
   ln -s "$from" "$to"
 }
 
