@@ -22,6 +22,7 @@ echo 'Copying public key to clipboard. Paste it into your Github account...'
   [[ -f '~/.ssh/id_rsa.pub' ]] && cat '~/.ssh/id_rsa.pub' | pbcopy
   open 'https://github.com/account/ssh'
 
+# If we on OS X, install homebrew and tweak system a bit.
 if [[ `uname` == 'Darwin' ]]; then
   which -s brew
   if [[ $? != 0 ]]; then

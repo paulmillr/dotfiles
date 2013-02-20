@@ -63,12 +63,6 @@ as="$HOME/Library/Application Support"
 cdpath=(
   $cdpath
   $dev
-  $brunch
-  $bwc
-  $chaplin
-  $forks
-  $pm
-  $as
 )
 
 # Set the list of directories that info searches for manuals.
