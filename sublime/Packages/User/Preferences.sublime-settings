@@ -1,32 +1,32 @@
 {
-  "bold_folder_labels": true,
-  "color_scheme": "Packages/PMThemes/NebulaPM.tmTheme",
-  "ensure_newline_at_eof_on_save": true,
-  "file_exclude_patterns":
-  [
-    ".DS_Store"
-  ],
-  "fold_buttons": false,
-  "folder_exclude_patterns":
-  [
-    ".git",
-    "log",
-    "tmp",
-    "node_modules"
-  ],
-  "font_face": "PragmataPro",
-  "font_size": 12.0,
-  "highlight_line": false,
-  "highlight_modified_tabs": true,
-  "ignored_packages":
-  [
-    "Vintage"
-  ],
-  "save_on_focus_lost": false,
-  "tab_size": 2,
-  "theme": "Nil.sublime-theme",
-  "translate_tabs_to_spaces": true,
-  "trim_trailing_white_space_on_save": true,
-  "word_wrap": true,
-  "wrap_width": 80
+	"bold_folder_labels": true,
+	"color_scheme": "Packages/PMThemes/NebulaPM.tmTheme",
+	"ensure_newline_at_eof_on_save": true,
+	"file_exclude_patterns":
+	[
+		".DS_Store"
+	],
+	"fold_buttons": false,
+	"folder_exclude_patterns":
+	[
+		".git",
+		"log",
+		"tmp",
+		"node_modules"
+	],
+	"font_face": "PT Mono",
+	"font_size": 12,
+	"highlight_line": false,
+	"highlight_modified_tabs": true,
+	"ignored_packages":
+	[
+		"Vintage"
+	],
+	"save_on_focus_lost": false,
+	"tab_size": 2,
+	"theme": "Nil.sublime-theme",
+	"translate_tabs_to_spaces": true,
+	"trim_trailing_white_space_on_save": true,
+	"word_wrap": true,
+	"wrap_width": 80
 }

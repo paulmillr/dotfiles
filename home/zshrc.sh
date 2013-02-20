@@ -19,7 +19,6 @@ alias -g 'T'='| tail'     # git log T
 alias -g 'F'='| head -n'  # git log F 15
 alias -g 'L'='| tail -n'  # git log L 10
 alias -g 'C'='| wc -l'    # git log C
-alias -g 'SUM'='| (tr "\012" "+"; echo "0") | bc'
 
 # Some OS X-only stuff.
 if [[ "$OSTYPE" == darwin* ]]; then
@@ -67,19 +66,20 @@ fi
 BROWSER=''
 unset BROWSER
 
-# Find files and exec commands at them.
-# $ find-exec .coffee cat | wc -l
-# # => 9762
-function find-exec() {
-  find . -type f -iname "*${1:-}*" -exec "${2:-file}" '{}' \;
-}
-
+# Opens file in EDITOR.
 function edit() {
   local dir=$1
   if [[ -z "$dir" ]]; then
     dir='.'
   fi
   $EDITOR $dir
+}
+
+# Find files and exec commands at them.
+# $ find-exec .coffee cat | wc -l
+# # => 9762
+function find-exec() {
+  find . -type f -iname "*${1:-}*" -exec "${2:-file}" '{}' \;
 }
 
 # Count code lines in some directory.
@@ -130,12 +130,39 @@ function ram() {
   fi
 }
 
+# Determines the max number of tweeple who saw some tweet.
+# If tweet x was retweeted by users A (500 followers) and B (10 followers),
+# influence would be 500 + 10 + x-authors-followers.
+# $ tweet-influence https://twitter.com/chaplinjs/status/303718187437015040
+# # => 11851
+function tweet-influence() {
+  url_or_id=$1
+  count=$(ruby -e "require 'twitter'; id = /\d{10,}/.match('$url_or_id')[0]; initial = Twitter.status(id)[:user][:followers_count]; retweets = Twitter.retweets(id).map(&:user).map(&:followers_count).inject(:+); puts initial + retweets")
+  echo ${fg[green]}${count}${reset_color}
+}
+
+
+# $ git log --no-merges --pretty=format:"%ae" | stats
+# 514 a@example.com
+# 200 b@example.com
 function stats() {
   sort | uniq -c | sort -r
 }
 
+
+# $ cat file
+# # => 501
+# # => 498
+# $ sum-lines < file
+# # => 999
+function sum-lines() {
+  echo $1 | (tr "\012" "+"; echo "0") | bc
+}
+
+
+# 4 lulz.
 function compute() {
-  while true; do head -n 100 /dev/urandom; sleep .1; done \
+  while true; do head -n 100 /dev/urandom; sleep 0.1; done \
     | hexdump -C | grep "ca fe"
 }
 

@@ -18,6 +18,7 @@
   graph = log --graph
   url = !git remote -v|sed "'s|.*git[:@]\\(.*\\).git.*|http://\\1|;s|m:|m/|'"|uniq|xargs open
   whois = "!sh -c 'git log -i -1 --pretty=\"format:%an <%ae>\n\" --author=\"$1\"' -"
+  discard = checkout -- .
 
   changelog = !sh "$HOME/Development/paulmillr/dotfiles/git-extras/git-changelog.sh"
   rstatus   = !zsh "$HOME/Development/paulmillr/dotfiles/git-extras/git-rstatus.sh"
