@@ -15,7 +15,7 @@
 		"node_modules"
 	],
 	"font_face": "PT Mono",
-	"font_size": 12,
+	"font_size": 11.5,
 	"highlight_line": false,
 	"highlight_modified_tabs": true,
 	"ignored_packages":

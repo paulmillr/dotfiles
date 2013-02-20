@@ -29,10 +29,13 @@
 
 syntax="git ghpull <original-user>/<original-repo> <topic-branch-name>"
 err="Invalid syntax. Expected '$syntax'"
-enverr="You need to specify $GITHUB_USERNAME and $GITHUB_PASSWORD env vars"
+enverr='You need to specify $GITHUB_USERNAME and $GITHUB_PASSWORD env vars'
 
 full_upstream_repo=$1  # Full repo name in format <user>/<repo>.
 branch="topics/$2"  # Topic branch name.
+
+[[ -z $GITHUB_PASSWORD ]] && echo "Enter GitHub password:" && \
+  GITHUB_PASSWORD=$(read -s)
 
 user=$GITHUB_USERNAME
 password=$GITHUB_PASSWORD
