@@ -39,6 +39,7 @@ if [[ "$OSTYPE" == darwin* ]]; then
   alias venv-init='virtualenv venv -p /usr/local/bin/python --no-site-packages'
   alias venv-activate='source venv/bin/activate'
 
+  # Sniff network info.
   alias sniff="sudo ngrep -d 'en1' -t '^(GET|POST) ' 'tcp and port 80'"
 
   # Developer tools shortcuts.
@@ -50,6 +51,14 @@ if [[ "$OSTYPE" == darwin* ]]; then
   }
 
   export NODE_PATH='/usr/local/lib/node_modules'
+
+  # Gets password from OS X Keychain.
+  # $ get-pass github
+  function get-pass() {
+    keychain="$HOME/Library/Keychains/login.keychain"
+    security -q find-generic-password -g -l $@ $keychain 2>&1 |\
+      awk -F\" '/password:/ {print $2}';
+  }
 fi
 
 # Burl: better curl shortcuts (https://github.com/visionmedia/burl).
