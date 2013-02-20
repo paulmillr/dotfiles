@@ -17,6 +17,10 @@ function prompt_paulmillr_precmd {
   unsetopt XTRACE KSH_ARRAYS
 }
 
+function list-files {
+  echo `script -q /dev/null ls -G . | tr -d '\r' | cat`
+}
+
 function get-vcs-info {
   local ref=$(git symbolic-ref HEAD 2> /dev/null)
   if [[ -z "$ref" ]]; then
@@ -33,6 +37,7 @@ function prompt_paulmillr_setup {
 
   autoload -Uz add-zsh-hook
   add-zsh-hook precmd get-vcs-info
+  add-zsh-hook chpwd list-files
   add-zsh-hook chpwd get-vcs-info
 
   zstyle ':omz:module:editor' completing '%B%F{red}...%f%b'
