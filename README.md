@@ -9,9 +9,9 @@ curl --silent https://raw.github.com/paulmillr/dotfiles/master/install.sh | sh
 
 ## Features
 
-![](http://f.cl.ly/items/1J3c2J2F0Y200i2D1T1J/Screen%20Shot%202012-09-06%20at%203.04.02%20PM.png)
+![](http://f.cl.ly/items/2S3M0l0V2N2g3M27470w/Screen%20Shot%202013-02-21%20at%209.25.01%20PM.png)
 
-![](http://f.cl.ly/items/281u1D0j2W1J2m2U3W1b/Screen%20Shot%202012-09-09%20at%206.34.47%20PM.png)
+![](http://f.cl.ly/items/091y1U3I3e3W0X0n3A2c/Screen%20Shot%202013-02-21%20at%209.24.16%20PM.png)
 
 Shell (zsh):
 
@@ -42,7 +42,7 @@ Shell (zsh):
 
 ## Building system from scratch (reminder)
 
-* Install [PragmataPro](http://www.myfonts.com/fonts/fsd/pragmata-pro/) font.
+* Install [PT Mono](http://www.paratype.com/public/) font.
 * Install XCode & its Command Line Tools.
 * Change Terminal.app theme to `terminal/paulmillr.terminal`.
 * Change default shell to ZSH: `chsh -s /bin/zsh`.
