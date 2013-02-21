@@ -172,7 +172,7 @@ function sum-lines() {
 
 # Shortcut for searching commands history.
 function hist() {
-  history 0 | grep $1
+  history 0 | grep $@
 }
 
 
