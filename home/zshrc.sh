@@ -159,6 +159,7 @@ function stats() {
 }
 
 
+# Takes lines and sums them.
 # $ cat file
 # # => 501
 # # => 498
@@ -166,6 +167,12 @@ function stats() {
 # # => 999
 function sum-lines() {
   echo $1 | (tr "\012" "+"; echo "0") | bc
+}
+
+
+# Shortcut for searching commands history.
+function hist() {
+  history 0 | grep $1
 }
 
 
