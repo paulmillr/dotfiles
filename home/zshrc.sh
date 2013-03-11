@@ -4,7 +4,6 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 fi
 
-export EDITOR='/usr/local/bin/subl'
 autoload -U colors && colors
 
 # Load and execute the prompt theming system.
@@ -12,7 +11,12 @@ fpath=("$pm/dotfiles/terminal" $fpath)
 autoload -Uz promptinit && promptinit
 prompt 'paulmillr'
 
+# Simple clear command.
 alias cl='clear'
+
+# Process grep should output full paths to binaries.
+alias pgrep='pgrep -fl'
+
 # Useful global aliases.
 alias -g 'H'='| head'     # git log H
 alias -g 'T'='| tail'     # git log T
@@ -43,7 +47,7 @@ if [[ "$OSTYPE" == darwin* ]]; then
   alias sniff="sudo ngrep -d 'en1' -t '^(GET|POST) ' 'tcp and port 80'"
 
   # Developer tools shortcuts.
-  alias tower='gittower --status'
+  alias t='gittower --status'
 
   function cded() {
     cd $1
@@ -78,11 +82,10 @@ unset BROWSER
 # Opens file in EDITOR.
 function edit() {
   local dir=$1
-  if [[ -z "$dir" ]]; then
-    dir='.'
-  fi
+  [[ -z "$dir" ]] && dir='.'
   $EDITOR $dir
 }
+alias e=edit
 
 # Find files and exec commands at them.
 # $ find-exec .coffee cat | wc -l
