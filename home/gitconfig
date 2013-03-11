@@ -8,14 +8,16 @@
 [alias]
   br = branch
   cb = "!sh -c 'git branch $1 && git ch $1' -"
+  ctb = "!sh -c 'git cb topics/$1' -"
+
   ci = commit
   ch = checkout
   cpush = "!sh -c 'git commit -a -m \"$1\" && git push -u origin' -"
-  ctb = "!sh -c 'git cb topics/$1' -"
   d = diff
   st = status --short
 
   graph = log --graph
+  last = log -n 10
   url = !git remote -v|sed "'s|.*git[:@]\\(.*\\).git.*|http://\\1|;s|m:|m/|'"|uniq|xargs open
   whois = "!sh -c 'git log -i -1 --pretty=\"format:%an <%ae>\n\" --author=\"$1\"' -"
   discard = checkout -- .

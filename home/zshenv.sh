@@ -1,38 +1,27 @@
-#
 # Defines environment variables.
-#
-
 privenv="$HOME/.private-env"
 [[ -f "$privenv" ]] && source $privenv
 
-#
-# Browser
-#
-
+# Browser.
+# --------
 if [[ "$OSTYPE" == darwin* ]]; then
   export BROWSER='open'
 fi
 
-#
-# Editors
-#
-
-export EDITOR='nano'
-export VISUAL='nano'
+# Editors.
+# --------
+export EDITOR='/usr/local/bin/subl'
+export VISUAL='/usr/local/bin/subl'
 export PAGER='less'
 
-#
-# Language
-#
-
+# Language.
+# ---------
 if [[ -z "$LANG" ]]; then
   eval "$(locale)"
 fi
 
-#
-# Less
-#
-
+# Less.
+# -----
 # Set the default Less options.
 # Mouse-wheel scrolling has been disabled by -X (disable screen clearing).
 # Remove -X and -F (exit if the content fits on one screen) to enable it.
@@ -43,10 +32,8 @@ if (( $+commands[lesspipe.sh] )); then
   export LESSOPEN='| /usr/bin/env lesspipe.sh %s 2>&-'
 fi
 
-#
-# Paths
-#
-
+# Paths.
+# ------
 typeset -gU cdpath fpath mailpath manpath path
 typeset -gUT INFOPATH infopath
 
@@ -62,7 +49,6 @@ as="$HOME/Library/Application Support"
 # Set the the list of directories that cd searches.
 cdpath=(
   $cdpath
-  $dev
 )
 
 # Set the list of directories that info searches for manuals.
@@ -99,10 +85,7 @@ for path_file in /etc/paths.d/*(.N); do
 done
 unset path_file
 
-#
-# Temporary Files
-#
-
+# Temporary Files.
 if [[ -d "$TMPDIR" ]]; then
   export TMPPREFIX="${TMPDIR%/}/zsh"
   if [[ ! -d "$TMPPREFIX" ]]; then
