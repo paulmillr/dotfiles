@@ -30,7 +30,8 @@ Shell (zsh):
     * `git cleanup` — clean up merged git branches. Very useful if
     you’re doing github pull requests in topic branches.
     * `git summary` — outputs commit email statistics.
-    * `git-release`, `git-changelog`, `git-setup` etc.
+    * `git-release` — save changes, tag commit. If used on node.js project, also push to npm.
+    * `git-changelog`, `git-setup` etc.
 
 ## Structure
 * `bin` — files that are symlinked to any directory with binaries in `$PATH`
@@ -43,6 +44,7 @@ Shell (zsh):
 ## Building system from scratch (reminder)
 
 * Install [PT Mono](http://www.paratype.com/public/) font.
+* Maybe install some [good colour schemes for Sublime](https://github.com/daylerees/colour-schemes)
 * Install XCode & its Command Line Tools.
 * Change Terminal.app theme to `terminal/paulmillr.terminal`.
 * Change default shell to ZSH: `chsh -s /bin/zsh`.
