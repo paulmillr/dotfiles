@@ -1,6 +1,6 @@
 {
 	"bold_folder_labels": true,
-	"color_scheme": "Packages/PMThemes/NebulaPM.tmTheme",
+	"color_scheme": "Packages/PMThemes/Darkside.tmTheme",
 	"ensure_newline_at_eof_on_save": true,
 	"file_exclude_patterns":
 	[

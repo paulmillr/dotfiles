@@ -47,7 +47,8 @@ if [[ "$OSTYPE" == darwin* ]]; then
   alias sniff="sudo ngrep -d 'en1' -t '^(GET|POST) ' 'tcp and port 80'"
 
   # Developer tools shortcuts.
-  alias t='gittower --status'
+  alias tower='gittower --status'
+  alias t='tower'
 
   function cded() {
     cd $1
