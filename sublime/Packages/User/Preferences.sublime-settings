@@ -1,6 +1,6 @@
 {
 	"bold_folder_labels": true,
-	"color_scheme": "Packages/PMThemes/Darkside.tmTheme",
+	"color_scheme": "Packages/PMThemes/NebulaPM.tmTheme",
 	"ensure_newline_at_eof_on_save": true,
 	"file_exclude_patterns":
 	[
@@ -14,7 +14,7 @@
 		"tmp",
 		"node_modules"
 	],
-	"font_face": "PT Mono",
+	"font_face": "Source Code Pro",
 	"font_size": 11.5,
 	"highlight_line": false,
 	"highlight_modified_tabs": true,

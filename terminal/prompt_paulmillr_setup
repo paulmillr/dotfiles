@@ -42,7 +42,7 @@ function prompt_paulmillr_setup {
 
   zstyle ':omz:module:editor' completing '%B%F{red}...%f%b'
 
-  PROMPT='%F{magenta}${SSH_TTY:+%n@%m }%F{cyan}%1~%f${vcs_info} %(!.%B%F{red}#%f%b.%B%F{green}❯%f%b) '
+  PROMPT='%F{yellow}%T %F{magenta}${SSH_TTY:+%n@%m }%F{cyan}%1~%f${vcs_info} %(!.%B%F{red}#%f%b.%B%F{green}❯%f%b) '
   RPROMPT='${editor_info[keymap]}${editor_info[overwrite]}%(?:: %F{red}⏎%f)${VIM:+" %B%F{green}V%f%b"}${git_info[rprompt]}'
   SPROMPT='zsh: correct %F{red}%R%f to %F{green}%r%f [nyae]? '
 }

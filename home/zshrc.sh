@@ -179,6 +179,15 @@ function hist() {
   history 0 | grep $@
 }
 
+# Execute commands for each file in current directory.
+function each() {
+  for dir in *; do
+    echo "${dir}:"
+    cd $dir
+    $@
+    cd ..
+  done
+}
 
 # 4 lulz.
 function compute() {
