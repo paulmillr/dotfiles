@@ -12,7 +12,8 @@
 
   ci = commit
   ch = checkout
-  cpush = "!sh -c 'git commit -a -m \"$1\" && git push -u origin' -"
+  fc = commit -am 'Initial commit.'
+  cpush = "!sh -c 'git commit -au -m \"$1\" && git push -u origin' -"
   d = diff
   st = status --short
 
@@ -21,6 +22,7 @@
   url = !git remote -v|sed "'s|.*git[:@]\\(.*\\).git.*|http://\\1|;s|m:|m/|'"|uniq|xargs open
   whois = "!sh -c 'git log -i -1 --pretty=\"format:%an <%ae>\n\" --author=\"$1\"' -"
   discard = checkout -- .
+  rmtag = "!sh -c 'git tag -d $1; git push origin :refs/tags/$1'"
 
   changelog = !sh "$HOME/Development/paulmillr/dotfiles/git-extras/git-changelog.sh"
   rstatus   = !zsh "$HOME/Development/paulmillr/dotfiles/git-extras/git-rstatus.sh"
