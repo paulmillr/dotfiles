@@ -189,6 +189,18 @@ function each() {
   done
 }
 
+# Compress files to one .tar.gz archive.
+function pack-tar() {
+  [[ -z "$1" ]] && echo "Usage: pack-tar file1 [file2...]" && exit 1
+  archive="archive.tar.gz"
+  tar -zcvf $archive $@
+}
+
+# Uncopress .tar.gz archive.
+function unpack-tar() {
+  tar -zxvf $1
+}
+
 # 4 lulz.
 function compute() {
   while true; do head -n 100 /dev/urandom; sleep 0.1; done \
