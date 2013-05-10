@@ -201,6 +201,13 @@ function unpack-tar() {
   tar -zxvf $1
 }
 
+# Launch jshint.
+function lint() {
+  location="$1"
+  [[ -z $location ]] && location='.'
+  jshint $location
+}
+
 # 4 lulz.
 function compute() {
   while true; do head -n 100 /dev/urandom; sleep 0.1; done \
