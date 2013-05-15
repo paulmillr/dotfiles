@@ -17,6 +17,9 @@ alias cl='clear'
 # Process grep should output full paths to binaries.
 alias pgrep='pgrep -fl'
 
+# JSHint short-cut.
+alias lint=jshint
+
 # Useful global aliases.
 alias -g 'H'='| head'     # git log H
 alias -g 'T'='| tail'     # git log T
@@ -30,7 +33,7 @@ if [[ "$OSTYPE" == darwin* ]]; then
   alias c='pbcopy'
   alias p='pbpaste'
 
-  # Remove all items safely, to Trash.
+  # Remove all items safely, to Trash (`brew install trash`).
   alias rm='trash'
 
   # Case-insensitive pgrep that outputs full path.
@@ -154,14 +157,12 @@ function tweet-influence() {
   echo ${fg[green]}${count}${reset_color}
 }
 
-
 # $ git log --no-merges --pretty=format:"%ae" | stats
 # 514 a@example.com
 # 200 b@example.com
 function stats() {
   sort | uniq -c | sort -r
 }
-
 
 # Takes lines and sums them.
 # $ cat file
@@ -172,7 +173,6 @@ function stats() {
 function sum-lines() {
   echo $1 | (tr "\012" "+"; echo "0") | bc
 }
-
 
 # Shortcut for searching commands history.
 function hist() {
@@ -199,13 +199,6 @@ function pack-tar() {
 # Uncopress .tar.gz archive.
 function unpack-tar() {
   tar -zxvf $1
-}
-
-# Launch jshint.
-function lint() {
-  location="$1"
-  [[ -z $location ]] && location='.'
-  jshint $location
 }
 
 # 4 lulz.

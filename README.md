@@ -30,7 +30,7 @@ Shell (zsh):
     * `git cleanup` — clean up merged git branches. Very useful if
     you’re doing github pull requests in topic branches.
     * `git summary` — outputs commit email statistics.
-    * `git-release` — save changes, tag commit. If used on node.js project, also push to npm.
+    * `git release` — save changes, tag commit. If used on node.js project, also push to npm.
     * `git-changelog`, `git-setup` etc.
 
 ## Structure
