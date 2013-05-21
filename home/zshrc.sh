@@ -189,6 +189,11 @@ function each() {
   done
 }
 
+# Pack files with zip and password.
+function zip-pass() {
+  zip -e $(basename $PWD).zip $@
+}
+
 # Compress files to one .tar.gz archive.
 function pack-tar() {
   [[ -z "$1" ]] && echo "Usage: pack-tar file1 [file2...]" && exit 1
