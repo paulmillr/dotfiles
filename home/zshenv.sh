@@ -39,10 +39,10 @@ typeset -gUT INFOPATH infopath
 
 # Commonly used directories.
 dev="$HOME/Development"
-brunch="$dev/brunch"
+br="$dev/brunch"
 bwc="$brunch/brunch/skeletons/brunch-with-chaplin"
-chaplin="$dev/chaplinjs"
-forks="$dev/forks"
+ch="$dev/chaplinjs"
+com="$dev/com"
 pm="$dev/paulmillr"
 as="$HOME/Library/Application Support"
 
