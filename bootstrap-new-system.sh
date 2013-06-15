@@ -29,21 +29,29 @@ if [[ `uname` == 'Darwin' ]]; then
     echo 'Installing Homebrew...'
       ruby <(curl -fsSkL raw.github.com/mxcl/homebrew/go)
       brew update
+      brew install htop mongodb mysql nginx node ruby
   fi
 
   echo 'Tweaking OS X...'
     source 'etc/osx.sh'
-
-  echo 'You will need to manually copy some OS X settings:'
-    # Wipes the default substitution list and creates a new blank one.
-    gprefs='~/Library/Preferences/.GlobalPreferences.plist'
-    # /usr/libexec/PlistBuddy -c 'Delete NSUserReplacementItems' $gprefs
-    # /usr/libexec/PlistBuddy -c 'Add NSUserReplacementItems array' $gprefs
-    # Merge text substitutions from previous backup.
-    # /usr/libexec/PlistBuddy -c "Merge $(pwd)/etc/osx-text-substitutions.plist NSUserReplacementItems" $gprefs
 fi
 
 echo 'Symlinking config files...'
   source 'bin/symlink-dotfiles.sh'
+
+echo 'Applying sublime config...'
+  st=$(pwd)/sublime/packages
+  as="$HOME/Application Support/Sublime Text 2/Packages"
+  asprefs="$as/User/Preferences.sublime-settings"
+  if [[ -z "$as" ]]; then
+    for theme in $st/Theme*; do
+      cp -r $theme $as
+    done
+    rm $asprefs
+    cp -r $st/pm-themes $as
+    ln -s "$st/User/Preferences.sublime-settings" $asprefs
+  else
+    echo "Install Sublime Text"
+  fi
 
 popd
