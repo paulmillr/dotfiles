@@ -40,7 +40,6 @@ typeset -gUT INFOPATH infopath
 # Commonly used directories.
 dev="$HOME/Development"
 br="$dev/brunch"
-bwc="$br/brunch/skeletons/brunch-with-chaplin"
 ch="$dev/chaplinjs"
 com="$dev/com"
 pm="$dev/paulmillr"

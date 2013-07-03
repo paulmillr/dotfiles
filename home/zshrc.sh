@@ -206,6 +206,26 @@ function unpack-tar() {
   tar -zxvf $1
 }
 
+# Shortens GitHub URLs.
+# By Sorin Ionescu <sorin.ionescu@gmail.com>
+function gitio() {
+  local url="$1"
+
+  if [[ "$url" == '-' ]]; then
+    read url <&0
+  fi
+
+  if [[ -z "$url" ]]; then
+    print "usage: $0 [ url | - ]" >&2
+  fi
+
+  if (( $+commands[curl] )); then
+    curl -s -i 'http://git.io' -F "url=$url" | grep 'Location:' | sed 's/Location: //'
+  else
+    print "$0: command not found: curl" >&2
+  fi
+}
+
 # 4 lulz.
 function compute() {
   while true; do head -n 100 /dev/urandom; sleep 0.1; done \
