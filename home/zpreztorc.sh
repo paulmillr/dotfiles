@@ -3,10 +3,10 @@
 #
 
 # Set the key mapping style to 'emacs' or 'vi'.
-zstyle ':prezto:module:editor' keymap 'emacs'
+# zstyle ':prezto:module:editor' keymap 'emacs'
 
 # Auto convert .... to ../..
-zstyle ':prezto:module:editor' dot-expansion 'no'
+# zstyle ':prezto:module:editor' dot-expansion 'no'
 
 # Set case-sensitivity for completion, history lookup, etc.
 zstyle ':prezto:*:*' case-sensitive 'no'
@@ -23,7 +23,7 @@ zstyle ':prezto:module:terminal' auto-title 'yes'
 # Set the Zsh functions to load (man zshcontrib).
 zstyle ':prezto:load' zfunction 'zargs' 'zmv'
 
-# Set the Prezto modules to load (browse modules).
+# Set the Prezto modules to load (browse ~/.zprezto/modules).
 # The order matters.
 zstyle ':prezto:load' pmodule \
   'environment' \
@@ -33,7 +33,6 @@ zstyle ':prezto:load' pmodule \
   'spectrum' \
   'utility' \
   'completion' \
-  'prompt' \
   'syntax-highlighting' \
   'git' \
   'archive' \
@@ -41,8 +40,3 @@ zstyle ':prezto:load' pmodule \
   'node' \
   'python' \
   'ruby'
-
-# Set the prompt theme to load.
-# Setting it to 'random' loads a random theme.
-# Auto set to 'off' on dumb terminals.
-zstyle ':prezto:module:prompt' theme 'off'
