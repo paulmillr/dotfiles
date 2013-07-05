@@ -4,7 +4,7 @@
 
 dev="$HOME/Development"
 pushd .
-mkdir --parents $dev
+mkdir -p $dev
 cd $dev
 
 echo 'Enter new hostname of the machine (e.g. macbook-paulmillr)'
