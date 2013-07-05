@@ -54,7 +54,8 @@ echo 'Applying sublime config...'
     echo "Install Sublime Text"
   fi
 
-echo 'Install apps:'
+open_apps() {
+  echo 'Install apps:'
   echo 'Firefox:'
   open http://www.mozilla.org/en-US/firefox/new/
   echo 'Dropbox:'
@@ -76,5 +77,11 @@ echo 'Install apps:'
   echo 'VLC:'
   open http://www.videolan.org/vlc/index.html
   echo 'Pixelmator!'
+}
+
+echo 'Should I give you links for system applications (e.g. Skype, Tower, VLC)?'
+echo 'n / y'
+read give_links
+[[ "$give_links" == 'y' ]] && open_apps
 
 popd
