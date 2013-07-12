@@ -210,20 +210,12 @@ function unpack-tar() {
 # By Sorin Ionescu <sorin.ionescu@gmail.com>
 function gitio() {
   local url="$1"
+  local code="$2"
 
-  if [[ "$url" == '-' ]]; then
-    read url <&0
-  fi
+  [[ -z "$url" ]] && print "usage: $0 url code" >&2 && exit
+  [[ -z "$code" ]] && print "usage: $0 url code" >&2 && exit
 
-  if [[ -z "$url" ]]; then
-    print "usage: $0 [ url | - ]" >&2
-  fi
-
-  if (( $+commands[curl] )); then
-    curl -s -i 'http://git.io' -F "url=$url" | grep 'Location:' | sed 's/Location: //'
-  else
-    print "$0: command not found: curl" >&2
-  fi
+  curl -s -i 'http://git.io' -F "url=$url" -F "code=$code"
 }
 
 # 4 lulz.
