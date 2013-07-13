@@ -2,7 +2,7 @@ echo 'You might need to change your default shell to zsh: `chsh -s /bin/zsh` (or
 
 git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"
 dir="$HOME/Development/paulmillr/dotfiles"
-mkdir --parents $dir
+mkdir -p $dir
 cd $dir
 git clone git://github.com/paulmillr/dotfiles.git
 cd dotfiles
