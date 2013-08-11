@@ -1,14 +1,13 @@
-#
-# My simple terminal theme.
+# Simple zsh prompt.
 #
 # dotfiles ❯ (default)
-# dotfiles git:master ❯ (in git repository)
-# root@serv dotfiles git:master ❯ (with SSH)
+# dotfiles master ❯ (in git repository)
+# root@serv dotfiles master ❯ (with SSH)
 #
-# Authors:
-#   Paul Miller
-#   Sorin Ionescu <sorin.ionescu@gmail.com>
+# * is prepended to git branch name if repo is dirty.
+# ❯ is green or red depending on previous command exit status.
 #
+# Author: Paul Miller (paulmillr.com)
 
 vcs_info=''
 
@@ -22,11 +21,12 @@ function list-files {
 }
 
 function get-vcs-info {
-  local ref=$(git symbolic-ref HEAD 2> /dev/null)
+  local ref=$(git symbolic-ref -q HEAD | sed -e 's|^refs/heads/||')
   if [[ -z "$ref" ]]; then
     vcs_info=''
   else
-    vcs_info=" %F{blue}git%f:%F{red}${ref#refs/heads/}%f"
+    st=`git diff --quiet --ignore-submodules HEAD &>/dev/null; [ $? -eq 1 ] && echo '*'`
+    vcs_info=" %F{blue}%F{magenta}${ref}${st}%f"
   fi
 }
 
@@ -40,10 +40,11 @@ function prompt_paulmillr_setup {
   add-zsh-hook chpwd list-files
   add-zsh-hook chpwd get-vcs-info
 
-  zstyle ':omz:module:editor' completing '%B%F{red}...%f%b'
+  # zstyle ':omz:module:editor' completing '%B%F{red}...%f%b'
 
-  PROMPT='%F{yellow}%T %F{magenta}${SSH_TTY:+%n@%m }%F{cyan}%1~%f${vcs_info} %(!.%B%F{red}#%f%b.%B%F{green}❯%f%b) '
-  RPROMPT='${editor_info[keymap]}${editor_info[overwrite]}%(?:: %F{red}⏎%f)${VIM:+" %B%F{green}V%f%b"}${git_info[rprompt]}'
+  PROMPT='%F{yellow}%T %F{magenta}${SSH_TTY:+%n@%m }%F{cyan}%1~%f${vcs_info}\
+%(!.%B%F{red}#%f%b.%B %(?.%F{green}.%F{red})❯%f%b) '
+  RPROMPT=''
   SPROMPT='zsh: correct %F{red}%R%f to %F{green}%r%f [nyae]? '
 }
 
