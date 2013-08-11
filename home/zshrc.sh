@@ -81,7 +81,7 @@ alias gc='git commit --message'
 alias gp='git push'
 alias gcp='git cpush'
 alias gcl='git clone'
-alias gl='git log --graph'
+alias gl='git log'
 
 # Dev short-cuts.
 alias bw='brunch watch'
