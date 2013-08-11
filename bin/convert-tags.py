@@ -63,8 +63,8 @@ def pass_dir(rootdir):
                 if not tag.link(filename):
                     # Something is wrong with the file.
                     continue
-            except Exception:
-                print "\n{}: error. Tag could be corrupted.\n".format(filename)
+            except Exception as e:
+                print "\n{}: error. Tag could be corrupted. {}\n".format(filename, e)
                 continue
             if needs_recoding([tag.getTitle(), tag.getArtist(), tag.getAlbum()]):
                 if not os.access(filename, os.W_OK):
