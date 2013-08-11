@@ -1,11 +1,10 @@
 {
 	"bold_folder_labels": true,
-	"color_scheme": "Packages/pm-themes/Tomorrow-Night-Bright.tmTheme",
+	"color_scheme": "Packages/pm-themes/Monokai Dark.tmTheme",
 	"ensure_newline_at_eof_on_save": true,
 	"file_exclude_patterns":
 	[
-		".DS_Store",
-		"*.map"
+		".DS_Store"
 	],
 	"fold_buttons": false,
 	"folder_exclude_patterns":
