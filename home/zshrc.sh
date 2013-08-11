@@ -69,6 +69,24 @@ if [[ "$OSTYPE" == darwin* ]]; then
   }
 fi
 
+# Git short-cuts.
+alias ga='git add'
+alias gr='git rm'
+alias gf='git fetch'
+alias gu='git pull'
+alias gs='git status --short'
+alias gd='git diff'
+alias gds='git diff --staged'
+alias gc='git commit --message'
+alias gp='git push'
+alias gcp='git cpush'
+alias gcl='git clone'
+alias gl='git log --graph'
+
+# Dev short-cuts.
+alias bw='brunch watch'
+alias bws='brunch watch --server'
+
 # Burl: better curl shortcuts (https://github.com/visionmedia/burl).
 if (( $+commands[burl] )); then
   alias GET='burl GET'
@@ -146,6 +164,10 @@ function ram() {
   fi
 }
 
+function size() {
+  du -sh "$@" 2>&1 | grep -v '^du:'
+}
+
 # Determines the max number of tweeple who saw some tweet.
 # If tweet x was retweeted by users A (500 followers) and B (10 followers),
 # influence would be 500 + 10 + x-authors-followers.
@@ -162,16 +184,6 @@ function tweet-influence() {
 # 200 b@example.com
 function stats() {
   sort | uniq -c | sort -r
-}
-
-# Takes lines and sums them.
-# $ cat file
-# # => 501
-# # => 498
-# $ sum-lines < file
-# # => 999
-function sum-lines() {
-  echo $1 | (tr "\012" "+"; echo "0") | bc
 }
 
 # Shortcut for searching commands history.
@@ -222,12 +234,4 @@ function gitio() {
 function compute() {
   while true; do head -n 100 /dev/urandom; sleep 0.1; done \
     | hexdump -C | grep "ca fe"
-}
-
-# Replace pygments output for github style stuff.
-# $ ./pygmentize < demo.ls -f html -l livescript | rpfg | pbcopy
-function rpfg() {
-  sed -E -e :a -e '$!N; s/\n/<\/div><div class="line">/g; ta' \
-    | sed -e 's/<div class="highlight"><pre>/<div class="highlight"><pre><div class="line">/' \
-    | sed -e 's/<div class="line"><\/pre><\/div>/<\/pre><\/div>/'
 }
