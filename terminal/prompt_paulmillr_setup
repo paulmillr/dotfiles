@@ -21,6 +21,9 @@ function list-files {
 }
 
 function get-vcs-info {
+  vcs_info=''
+  git rev-parse --is-inside-work-tree &>/dev/null || return
+
   local ref=$(git symbolic-ref -q HEAD | sed -e 's|^refs/heads/||')
   if [[ -z "$ref" ]]; then
     vcs_info=''
