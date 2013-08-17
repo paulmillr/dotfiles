@@ -206,16 +206,14 @@ function zip-pass() {
   zip -e $(basename $PWD).zip $@
 }
 
-# Compress files to one .tar.gz archive.
-function pack-tar() {
-  [[ -z "$1" ]] && echo "Usage: pack-tar file1 [file2...]" && exit 1
-  archive="archive.tar.gz"
-  tar -zcvf $archive $@
+# pgpe john@example.com < file
+function pgpe() {
+  gpg --armor --encrypt --recipient $1
 }
 
-# Uncopress .tar.gz archive.
-function unpack-tar() {
-  tar -zxvf $1
+# pgpd < file
+function pgpd() {
+  gpg --decrypt
 }
 
 # Shortens GitHub URLs.
