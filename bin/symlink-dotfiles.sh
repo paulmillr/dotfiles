@@ -22,7 +22,7 @@ link() {
 for location in home/*; do
   file="${location##*/}"
   file="${file%.*}"
-  link "$dotfiles/$location" "$HOME/.$file"
+  link "$dotfiles/$location" "$HOME/$file"
 done
 
 for location in bin/*; do
