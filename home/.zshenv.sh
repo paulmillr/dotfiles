@@ -36,6 +36,7 @@ fi
 # ------
 typeset -gU cdpath fpath mailpath manpath path
 typeset -gUT INFOPATH infopath
+export PATH="$HOME/.bin:$PATH"
 
 # Commonly used directories.
 dev="$HOME/Development"

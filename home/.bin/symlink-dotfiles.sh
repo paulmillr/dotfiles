@@ -2,7 +2,7 @@
 
 dev="$HOME/Development"
 dotfiles="$dev/paulmillr/dotfiles"
-bin="/usr/local/bin"
+bin="$HOME/.bin"
 
 if [[ -d "$dotfiles" ]]; then
   echo "Symlinking dotfiles from $dotfiles"
@@ -23,12 +23,6 @@ for location in home/*; do
   file="${location##*/}"
   file="${file%.*}"
   link "$dotfiles/$location" "$HOME/$file"
-done
-
-for location in bin/*; do
-  file="${location##*/}"
-  file="${file%.*}"
-  link "$dotfiles/$location" "$bin/$file"
 done
 
 if [[ `uname` == 'Darwin' ]]; then
