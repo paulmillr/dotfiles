@@ -77,6 +77,7 @@ alias gu='git pull'
 alias gs='git status --short'
 alias gd='git diff'
 alias gds='git diff --staged'
+alias gdisc='git discard'
 alias gc='git commit --message'
 alias gp='git push'
 alias gcp='git cpush'
@@ -84,8 +85,11 @@ alias gcl='git clone'
 alias gl='git log'
 
 # Dev short-cuts.
+alias bbo='brunch build --optimize'
 alias bw='brunch watch'
 alias bws='brunch watch --server'
+
+alias phps='nohup env - $E sh -c "php-cgi -b 127.0.0.1:9211" &> /dev/null'
 
 # Burl: better curl shortcuts (https://github.com/visionmedia/burl).
 if (( $+commands[burl] )); then
