@@ -1,5 +1,9 @@
 #!/usr/bin/env sh
 
+# git-release(1)
+# Usage:
+# git release 1.5.2
+
 # Originally taked from
 # [visionmedia/git-extras](https://github.com/visionmedia/git-extras)
 # (MIT License).
