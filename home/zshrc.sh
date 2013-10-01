@@ -85,9 +85,11 @@ alias gcl='git clone'
 alias gl='git log'
 
 # Dev short-cuts.
+alias bb='brunch build'
 alias bbo='brunch build --optimize'
 alias bw='brunch watch'
 alias bws='brunch watch --server'
+alias jk='jekyll serve --watch' # lol jk
 
 alias phps='nohup env - $E sh -c "php-cgi -b 127.0.0.1:9211" &> /dev/null'
 
