@@ -86,7 +86,7 @@ alias gl='git log'
 
 # Dev short-cuts.
 alias bb='brunch build'
-alias bbo='brunch build --optimize'
+alias bbo='brunch build --production'
 alias bw='brunch watch'
 alias bws='brunch watch --server'
 alias jk='jekyll serve --watch' # lol jk
