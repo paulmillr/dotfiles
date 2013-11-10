@@ -17,6 +17,9 @@ alias cl='clear'
 # Process grep should output full paths to binaries.
 alias pgrep='pgrep -fl'
 
+# Disable sertificate check for wget.
+alias wget='wget --no-check-certificate'
+
 # JSHint short-cut.
 alias lint=jshint
 
