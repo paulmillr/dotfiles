@@ -11,17 +11,24 @@ fpath=("$pm/dotfiles/terminal" $fpath)
 autoload -Uz promptinit && promptinit
 prompt 'paulmillr'
 
+# ==================================================================
+# = Aliases =
+# ==================================================================
+
 # Simple clear command.
 alias cl='clear'
 
 # Process grep should output full paths to binaries.
-alias pgrep='pgrep -fl'
+alias pgrep='pgrep -fli'
 
 # Disable sertificate check for wget.
 alias wget='wget --no-check-certificate'
 
 # JSHint short-cut.
 alias lint=jshint
+
+# Faster NPM for europeans.
+alias npme='pm --registry http://registry.npmjs.eu'
 
 # Useful global aliases.
 alias -g 'H'='| head'     # git log H
@@ -55,21 +62,6 @@ if [[ "$OSTYPE" == darwin* ]]; then
   # Developer tools shortcuts.
   alias tower='gittower --status'
   alias t='tower'
-
-  function cded() {
-    cd $1
-    $EDITOR .
-  }
-
-  export NODE_PATH='/usr/local/lib/node_modules'
-
-  # Gets password from OS X Keychain.
-  # $ get-pass github
-  function get-pass() {
-    keychain="$HOME/Library/Keychains/login.keychain"
-    security -q find-generic-password -g -l $@ $keychain 2>&1 |\
-      awk -F\" '/password:/ {print $2}';
-  }
 fi
 
 # Git short-cuts.
@@ -109,6 +101,25 @@ fi
 
 BROWSER=''
 unset BROWSER
+
+export NODE_PATH='/usr/local/lib/node_modules'
+
+# ==================================================================
+# = Functions =
+# ==================================================================
+
+function cded() {
+  cd $1
+  $EDITOR .
+}
+
+# Gets password from OS X Keychain.
+# $ get-pass github
+function get-pass() {
+  keychain="$HOME/Library/Keychains/login.keychain"
+  security -q find-generic-password -g -l $@ $keychain 2>&1 |\
+    awk -F\" '/password:/ {print $2}';
+}
 
 # Opens file in EDITOR.
 function edit() {

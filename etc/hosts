@@ -6,14 +6,17 @@
 #</useful>
 
 #<additional-spyware-sites>
-0.0.0.0 spylog.com
-0.0.0.0 counter.spylog.com
-0.0.0.0 openstat.net
-0.0.0.0 rs.mail.ru
-0.0.0.0 ad.mail.ru
-0.0.0.0 www.roulettebotplus.com
-0.0.0.0 adforce.ru
-0.0.0.0 go.gamenet.ru
-0.0.0.0 www.directadvert.ru
-0.0.0.0 ad05f.ru
+0.0.0.1 spylog.com
+0.0.0.1 counter.spylog.com
+0.0.0.1 openstat.net
+0.0.0.1 rs.mail.ru
+0.0.0.1 ad.mail.ru
+0.0.0.1 www.roulettebotplus.com
+0.0.0.1 adforce.ru
+0.0.0.1 go.gamenet.ru
+0.0.0.1 www.directadvert.ru
+0.0.0.1 ad05f.ru
+0.0.0.1 mg.dt00.net
+0.0.0.1 zeobit.com
+0.0.0.1 mackeeperapp.zeobit.com
 #</additional-spyware-sites>
