@@ -28,7 +28,7 @@ alias wget='wget --no-check-certificate'
 alias lint=jshint
 
 # Faster NPM for europeans.
-alias npme='pm --registry http://registry.npmjs.eu'
+alias npme='npm --registry http://registry.npmjs.eu'
 
 # Useful global aliases.
 alias -g 'H'='| head'     # git log H
