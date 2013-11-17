@@ -14,6 +14,7 @@ echo 'Enter new hostname of the machine (e.g. macbook-paulmillr)'
   compname=$(sudo scutil --get HostName | tr '-' '.')
   echo "Setting computer name to $compname"
   scutil --set ComputerName "$compname"
+  sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string "$compname"
 
 echo 'Checking for SSH key, generating one if it does not exist...'
   [[ -f '~/.ssh/id_rsa.pub' ]] || ssh-keygen -t rsa
@@ -41,7 +42,7 @@ echo 'Symlinking config files...'
 
 echo 'Applying sublime config...'
   st=$(pwd)/sublime/packages
-  as="$HOME/Application Support/Sublime Text 2/Packages"
+  as="$HOME/Application Support/Sublime Text 3/Packages"
   asprefs="$as/User/Preferences.sublime-settings"
   if [[ -d "$as" ]]; then
     for theme in $st/Theme*; do
@@ -62,8 +63,6 @@ open_apps() {
   open https://www.dropbox.com
   echo 'Chrome:'
   open https://www.google.com/intl/en/chrome/browser/
-  echo 'Last.fm:'
-  open http://www.last.fm/download
   echo 'Sequel Pro:'
   open http://www.sequelpro.com
   echo 'Skype:'
