@@ -42,7 +42,7 @@ defaults write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
 defaults write com.apple.universalaccess closeViewScrollWheelToggle -bool true
 
 # Disable auto-correct
-defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
+# defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
 
 ###############################################################################
 # SSD-specific tweaks                                                         #
@@ -153,10 +153,10 @@ sudo mdutil -E / > /dev/null
 # ========
 
 # Use a modified version of the Pro theme by default in Terminal.app
-open "$pm/dotfiles/terminal/paulmillr.terminal"
-sleep 1 # Wait a bit to make sure the theme is loaded
-defaults write com.apple.terminal 'Default Window Settings' -string 'paulmillr'
-defaults write com.apple.terminal 'Startup Window Settings' -string 'paulmillr'
+# open "$pm/dotfiles/terminal/paulmillr.terminal"
+# sleep 1 # Wait a bit to make sure the theme is loaded
+# defaults write com.apple.terminal 'Default Window Settings' -string 'paulmillr'
+# defaults write com.apple.terminal 'Startup Window Settings' -string 'paulmillr'
 
 # Transmission
 # ============

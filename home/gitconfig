@@ -1,6 +1,6 @@
 [user]
-  name = Paul Miller
-  email = paul@paulmillr.com
+	name = Paul Miller
+	email = paul@paulmillr.com
 
 [github]
   user = paulmillr
@@ -24,16 +24,16 @@
   discard = checkout -- .
   rmtag = "!sh -c 'git tag -d $1; git push origin :refs/tags/$1'"
 
-  changelog = !sh "$HOME/Development/paulmillr/dotfiles/git-extras/git-changelog.sh"
-  rstatus   = !zsh "$HOME/Development/paulmillr/dotfiles/git-extras/git-rstatus.sh"
-  release   = !sh "$HOME/Development/paulmillr/dotfiles/git-extras/git-release.sh"
-  setup     = !zsh "$HOME/Development/paulmillr/dotfiles/git-extras/git-setup.sh"
-  summary   = !zsh "$HOME/Development/paulmillr/dotfiles/git-extras/git-summary.sh"
-  delete-branch = !sh "$HOME/Development/paulmillr/dotfiles/git-extras/git-delete-branch.sh"
+  changelog = !sh "$HOME/Developer/paulmillr/dotfiles/git-extras/git-changelog.sh"
+  rstatus   = !zsh "$HOME/Developer/paulmillr/dotfiles/git-extras/git-rstatus.sh"
+  release   = !sh "$HOME/Developer/paulmillr/dotfiles/git-extras/git-release.sh"
+  setup     = !zsh "$HOME/Developer/paulmillr/dotfiles/git-extras/git-setup.sh"
+  summary   = !zsh "$HOME/Developer/paulmillr/dotfiles/git-extras/git-summary.sh"
+  delete-branch = !sh "$HOME/Developer/paulmillr/dotfiles/git-extras/git-delete-branch.sh"
 
-  ghpull = !sh "$HOME/Development/paulmillr/dotfiles/git-extras/git-ghpull.sh"
-  ghfork = !sh "$HOME/Development/paulmillr/dotfiles/git-extras/git-ghpull.sh"
-  cleanup = !ruby "$HOME/Development/paulmillr/dotfiles/git-extras/git-cleanup.rb"
+  ghpull = !sh "$HOME/Developer/paulmillr/dotfiles/git-extras/git-ghpull.sh"
+  ghfork = !sh "$HOME/Developer/paulmillr/dotfiles/git-extras/git-ghpull.sh"
+  cleanup = !ruby "$HOME/Developer/paulmillr/dotfiles/git-extras/git-cleanup.rb"
 
 [push]
   default = current

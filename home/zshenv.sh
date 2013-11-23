@@ -38,7 +38,7 @@ typeset -gU cdpath fpath mailpath manpath path
 typeset -gUT INFOPATH infopath
 
 # Commonly used directories.
-dev="$HOME/Development"
+dev="$HOME/Developer"
 br="$dev/brunch"
 ch="$dev/chaplinjs"
 com="$dev/com"
@@ -73,6 +73,7 @@ unset path_file
 export PYTHONPATH=/usr/local/lib/python2.7/site-packages
 path=(
   /usr/local/{bin,sbin}
+  /usr/local/opt/ruby/bin
   /usr/local/lib/python2.7/site-packages
   /usr/local/share/npm/bin
   /usr/{bin,sbin}
