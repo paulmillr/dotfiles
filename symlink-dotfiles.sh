@@ -19,16 +19,10 @@ link() {
   ln -s "$from" "$to"
 }
 
-for location in home/*; do
+for location in $(find home -name '.*'); do
   file="${location##*/}"
-  file="${file%.*}"
-  link "$dotfiles/$location" "$HOME/.$file"
-done
-
-for location in bin/*; do
-  file="${location##*/}"
-  file="${file%.*}"
-  link "$dotfiles/$location" "$bin/$file"
+  file="${file%.sh}"
+  link "$dotfiles/$location" "$HOME/$file"
 done
 
 if [[ `uname` == 'Darwin' ]]; then
