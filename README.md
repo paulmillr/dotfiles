@@ -32,6 +32,8 @@ Shell (zsh):
     * `git summary` — outputs commit email statistics.
     * `git release` — save changes, tag commit. If used on node.js project, also push to npm.
     * `git-changelog`, `git-setup` etc.
+* [homesick](https://github.com/technicalpickles/homesick) /
+  [homeshick](https://github.com/andsens/homeshick)-compatible
 
 ## Structure
 * `bin` — files that are symlinked to any directory with binaries in `$PATH`
