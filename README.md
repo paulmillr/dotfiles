@@ -9,9 +9,9 @@ curl --silent https://raw.github.com/paulmillr/dotfiles/master/install.sh | sh
 
 ## Features
 
-![](http://f.cl.ly/items/2j1l392D1i1K0n0e241b/Screen%20Shot%202013-08-11%20at%2014.53.05.png)
+![](https://f.cloud.github.com/assets/574696/1608018/3ffd422c-54c0-11e3-9cc8-b8c4871a763e.png)
 
-![](http://f.cl.ly/items/1M2n3z3N0b0a0A3A262f/Screen%20Shot%202013-08-11%20at%2014.51.27.png)
+![](https://f.cloud.github.com/assets/574696/1608019/42dccae4-54c0-11e3-9f4f-def428e77067.png)
 
 Shell (zsh):
 
