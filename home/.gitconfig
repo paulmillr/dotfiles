@@ -56,16 +56,16 @@
   abbrevCommit = true
 
 # URL shorthands
-# github://paulmillr/dotfiles
+# gh:paulmillr/dotfiles
 [url "git@github.com:"]
-  insteadOf = "github://"
-  pushInsteadOf = "github://"
+  insteadOf = "gh:"
+  pushInsteadOf = "gh:"
   pushInsteadOf = "git://github.com/"
 
-# gist://3928760
+# gist:3928760
 [url "git@gist.github.com:"]
-  insteadOf = "gist://"
-  pushInsteadOf = "gist://"
+  insteadOf = "gist:"
+  pushInsteadOf = "gist:"
   pushInsteadOf = "git://gist.github.com/"
 
 [mergetool]

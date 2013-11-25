@@ -24,7 +24,7 @@
 	],
 	"save_on_focus_lost": false,
 	"tab_size": 2,
-	"theme": "Nexus.sublime-theme",
+	"theme": "Nil.sublime-theme",
 	"translate_tabs_to_spaces": true,
 	"trim_trailing_white_space_on_save": true,
 	"word_wrap": true
