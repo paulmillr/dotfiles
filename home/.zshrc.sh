@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 
 if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
-  source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
+  # source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 fi
 
 autoload -U colors && colors
@@ -17,9 +17,6 @@ prompt 'paulmillr'
 
 # Simple clear command.
 alias cl='clear'
-
-# Process grep should output full paths to binaries.
-alias pgrep='pgrep -fli'
 
 # Disable sertificate check for wget.
 alias wget='wget --no-check-certificate'
@@ -62,9 +59,16 @@ if [[ "$OSTYPE" == darwin* ]]; then
   # Developer tools shortcuts.
   alias tower='gittower --status'
   alias t='tower'
+
+  # Process grep should output full paths to binaries.
+  alias pgrep='pgrep -fli'
+else
+  # Process grep should output full paths to binaries.
+  alias pgrep='pgrep -fl'
 fi
 
 # Git short-cuts.
+alias g='git'
 alias ga='git add'
 alias gr='git rm'
 alias gf='git fetch'
@@ -74,6 +78,7 @@ alias gd='git diff'
 alias gds='git diff --staged'
 alias gdisc='git discard'
 alias gc='git commit --message'
+alias gca='git commit --amend'
 alias gp='git push'
 alias gcp='git cpush'
 alias gcl='git clone'
@@ -99,10 +104,8 @@ if (( $+commands[burl] )); then
   alias OPTIONS='burl OPTIONS'
 fi
 
-BROWSER=''
-unset BROWSER
-
-export NODE_PATH='/usr/local/lib/node_modules'
+# Lists the ten most used commands.
+alias history-stat="history 0 | awk '{print \$2}' | sort | uniq -c | sort -n -r | head"
 
 # ==================================================================
 # = Functions =
@@ -111,6 +114,28 @@ export NODE_PATH='/usr/local/lib/node_modules'
 function cded() {
   cd $1
   $EDITOR .
+}
+
+# Show man page in Preview.app.
+# $ manp cd
+function manp {
+  local page
+  if (( $# > 0 )); then
+    for page in "$@"; do
+      man -t "$page" | open -f -a Preview
+    done
+  else
+    print 'What manual page do you want?' >&2
+  fi
+}
+
+# Show current Finder directory.
+function finder {
+  osascript 2>/dev/null <<EOF
+    tell application "Finder"
+      return POSIX path of (target of window 1 as alias)
+    end tell
+EOF
 }
 
 # Gets password from OS X Keychain.
@@ -246,6 +271,11 @@ function gitio() {
   [[ -z "$code" ]] && print "usage: $0 url code" >&2 && exit
 
   curl -s -i 'http://git.io' -F "url=$url" -F "code=$code"
+}
+
+# Monitor IO in real-time (open files etc).
+function openfiles() {
+  sudo dtrace -n 'syscall::open*:entry { printf("%s %s",execname,copyinstr(arg0)); }'
 }
 
 # 4 lulz.

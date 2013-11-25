@@ -26,17 +26,12 @@ zstyle ':prezto:load' zfunction 'zargs' 'zmv'
 # Set the Prezto modules to load (browse ~/.zprezto/modules).
 # The order matters.
 zstyle ':prezto:load' pmodule \
-  'environment' \
-  'terminal' \
-  'history' \
-  'directory' \
-  'spectrum' \
-  'utility' \
   'completion' \
-  'syntax-highlighting' \
-  'git' \
-  'archive' \
-  'osx' \
+  'directory' \
+  'environment' \
+  'history' \
   'node' \
-  'python' \
-  'ruby'
+  'spectrum' \
+  'syntax-highlighting' \
+  'terminal' \
+  'utility'
