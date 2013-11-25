@@ -22,6 +22,7 @@ Shell (zsh):
 * A bunch of useful functions:
     * `extract archive.tar.bz` — unpack any archive (supports many extensions)
     * `ram safari` — show app RAM usage
+    * `openfiles` — real-time disk usage monitoring with `dtrace`.
     * `loc py coffee js html css` — count lines of code
     in current dir in a colourful way.
 * Neat git extras:
