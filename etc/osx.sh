@@ -28,7 +28,7 @@ defaults write com.apple.screencapture location "$HOME/Downloads/"
 # =====
 
 # Disable the sound effects on boot
-sudo nvram SystemAudioVolume=" "
+sudo nvram SystemAudioVolume=0
 
 # Trackpad, mouse, keyboard, Bluetooth accessories, and input
 # ===========================================================
@@ -37,6 +37,7 @@ sudo nvram SystemAudioVolume=" "
 defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool true
 defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
 defaults write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
+sudo defaults write com.apple.AppleMultitouchTrackpad Clicking 1
 
 # Use scroll gesture with the Ctrl (^) modifier key to zoom
 defaults write com.apple.universalaccess closeViewScrollWheelToggle -bool true

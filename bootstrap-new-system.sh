@@ -31,11 +31,17 @@ if [[ `uname` == 'Darwin' ]]; then
     echo 'Installing Homebrew...'
       ruby -e "$(curl -fsSL https://raw.github.com/mxcl/homebrew/go)"
       brew update
-      brew install htop mongodb mysql nginx node ruby
+      brew install htop mysql nginx node ruby
   fi
 
   echo 'Tweaking OS X...'
     source 'etc/osx.sh'
+
+  # http://github.com/sindresorhus/quick-look-plugins
+  echo 'Installing Quick Look plugins...'
+    brew tap phinze/homebrew-cask
+    brew install brew-cask
+    brew cask install suspicious-package quicklook-json qlmarkdown qlstephen qlcolorcode
 fi
 
 echo 'Symlinking config files...'
