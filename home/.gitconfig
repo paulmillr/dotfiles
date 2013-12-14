@@ -31,7 +31,8 @@
   summary   = !zsh "$HOME/Developer/paulmillr/dotfiles/git-extras/git-summary.sh"
   delete-branch = !sh "$HOME/Developer/paulmillr/dotfiles/git-extras/git-delete-branch.sh"
 
-  ghpull = !sh "$HOME/Developer/paulmillr/dotfiles/git-extras/git-ghpull.sh"
+  pr = "!f() { git fetch -fu origin refs/pull/$1/head:pr/$1; } ; f"
+
   ghfork = !sh "$HOME/Developer/paulmillr/dotfiles/git-extras/git-ghpull.sh"
   cleanup = !ruby "$HOME/Developer/paulmillr/dotfiles/git-extras/git-cleanup.rb"
 

@@ -27,7 +27,7 @@ Shell (zsh):
     in current dir in a colourful way.
 * Neat git extras:
     * Opinionated `git log`, `git graph`
-    * `git ghpull` — create GitHub pull requests from command line simply.
+    * `git pr` for fetching pull request branches
     * `git cleanup` — clean up merged git branches. Very useful if
     you’re doing github pull requests in topic branches.
     * `git summary` — outputs commit email statistics.
