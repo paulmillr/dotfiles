@@ -27,7 +27,8 @@ Shell (zsh):
     in current dir in a colourful way.
 * Neat git extras:
     * Opinionated `git log`, `git graph`
-    * `git pr` for fetching pull request branches
+    * `gcp` for fast `git commit -m ... && git push`
+    * `git pr <pull-req> [origin]` for fetching pull request branches
     * `git cleanup` — clean up merged git branches. Very useful if
     you’re doing github pull requests in topic branches.
     * `git summary` — outputs commit email statistics.
@@ -46,7 +47,7 @@ Shell (zsh):
 
 ## Building system from scratch (reminder)
 
-* Install [PT Mono](http://www.paratype.com/public/) font.
+* Install Source Code Pro font.
 * Install XCode & its Command Line Tools.
 * Change Terminal.app theme to `terminal/paulmillr.terminal`.
 * Change default shell to ZSH: `chsh -s /bin/zsh`.

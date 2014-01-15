@@ -49,10 +49,6 @@ if [[ "$OSTYPE" == darwin* ]]; then
   # Lock current session and proceed to the login screen.
   alias lock='/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend'
 
-  # Python virtualenv shortcuts.
-  alias venv-init='virtualenv venv -p /usr/local/bin/python --no-site-packages'
-  alias venv-activate='source venv/bin/activate'
-
   # Sniff network info.
   alias sniff="sudo ngrep -d 'en1' -t '^(GET|POST) ' 'tcp and port 80'"
 
@@ -102,12 +98,18 @@ alias gl='git log --no-merges'
 
 # Dev short-cuts.
 alias bb='brunch build'
-alias bbo='brunch build --production'
+alias bbp='brunch build --production'
+alias dbb="DEBUG='brunch:*' brunch build"
+alias dbw="DEBUG='brunch:*' brunch watch"
 alias bw='brunch watch'
 alias bws='brunch watch --server'
 alias jk='jekyll serve --watch' # lol jk
+alias serve='http-serve'
 
-alias phps='nohup env - $E sh -c "php-cgi -b 127.0.0.1:9211" &> /dev/null'
+# Nginx short-cuts.
+alias ngup='sudo nginx'
+alias ngstop='sudo nginx -s stop'
+alias ngres='ngdown && ngstop'
 
 # Burl: better curl shortcuts (https://github.com/visionmedia/burl).
 if (( $+commands[burl] )); then
@@ -126,12 +128,6 @@ alias history-stat="history 0 | awk '{print \$2}' | sort | uniq -c | sort -n -r 
 # ==================================================================
 # = Functions =
 # ==================================================================
-
-function cded() {
-  cd $1
-  $EDITOR .
-}
-
 # Show man page in Preview.app.
 # $ manp cd
 function manp {
@@ -169,6 +165,16 @@ function edit() {
   $EDITOR $dir
 }
 alias e=edit
+
+# Execute commands for each file in current directory.
+function each() {
+  for dir in *; do
+    echo "${dir}:"
+    cd $dir
+    $@
+    cd ..
+  done
+}
 
 # Find files and exec commands at them.
 # $ find-exec .coffee cat | wc -l
@@ -229,17 +235,6 @@ function size() {
   du -sh "$@" 2>&1 | grep -v '^du:'
 }
 
-# Determines the max number of tweeple who saw some tweet.
-# If tweet x was retweeted by users A (500 followers) and B (10 followers),
-# influence would be 500 + 10 + x-authors-followers.
-# $ tweet-influence https://twitter.com/chaplinjs/status/303718187437015040
-# # => 11851
-function tweet-influence() {
-  url_or_id=$1
-  count=$(ruby -e "require 'twitter'; id = /\d{10,}/.match('$url_or_id')[0]; initial = Twitter.status(id)[:user][:followers_count]; retweets = Twitter.retweets(id).map(&:user).map(&:followers_count).inject(:+); puts initial + retweets")
-  echo ${fg[green]}${count}${reset_color}
-}
-
 # $ git log --no-merges --pretty=format:"%ae" | stats
 # 514 a@example.com
 # 200 b@example.com
@@ -252,21 +247,6 @@ function hist() {
   history 0 | grep $@
 }
 
-# Execute commands for each file in current directory.
-function each() {
-  for dir in *; do
-    echo "${dir}:"
-    cd $dir
-    $@
-    cd ..
-  done
-}
-
-# Pack files with zip and password.
-function zip-pass() {
-  zip -e $(basename $PWD).zip $@
-}
-
 # pgpe john@example.com < file
 function pgpe() {
   gpg --armor --encrypt --recipient $1
@@ -277,8 +257,7 @@ function pgpd() {
   gpg --decrypt
 }
 
-# Shortens GitHub URLs.
-# By Sorin Ionescu <sorin.ionescu@gmail.com>
+# Shortens GitHub URLs. By Sorin Ionescu <sorin.ionescu@gmail.com>
 function gitio() {
   local url="$1"
   local code="$2"
