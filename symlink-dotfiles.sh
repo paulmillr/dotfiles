@@ -2,7 +2,6 @@
 
 dev="$HOME/Developer"
 dotfiles="$dev/paulmillr/dotfiles"
-bin="/usr/local/bin"
 
 if [[ -d "$dotfiles" ]]; then
   echo "Symlinking dotfiles from $dotfiles"
