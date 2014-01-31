@@ -97,19 +97,27 @@ alias gch='git checkout'
 alias gl='git log --no-merges'
 
 # Dev short-cuts.
+
+# Brunch.
 alias bb='brunch build'
 alias bbp='brunch build --production'
 alias dbb="DEBUG='brunch:*' brunch build"
 alias dbw="DEBUG='brunch:*' brunch watch"
 alias bw='brunch watch'
 alias bws='brunch watch --server'
+
+# Package managers.
+alias bi='bower install'
+alias bis='bower install --save'
+alias ni='npm install'
+alias nis='npm install --save'
+
 alias jk='jekyll serve --watch' # lol jk
-alias serve='http-serve'
+alias serve='python -m SimpleHTTPServer'
 
 # Nginx short-cuts.
 alias ngup='sudo nginx'
 alias ngstop='sudo nginx -s stop'
-alias ngres='ngdown && ngstop'
 
 # Burl: better curl shortcuts (https://github.com/visionmedia/burl).
 if (( $+commands[burl] )); then
