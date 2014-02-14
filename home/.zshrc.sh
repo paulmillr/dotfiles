@@ -255,14 +255,14 @@ function hist() {
   history 0 | grep $@
 }
 
-# pgpe john@example.com < file
-function pgpe() {
-  gpg --armor --encrypt --recipient $1
+# aes-enc file.zip
+function aes-enc() {
+  openssl enc -aes-256-cbc -e -in $1 -out "$1.aes"
 }
 
-# pgpd < file
-function pgpd() {
-  gpg --decrypt
+# aes-dec file.zip.aes
+function aes-dec() {
+  openssl enc -aes-256-cbc -d -in $1 -out "${1%.*}"
 }
 
 # Shortens GitHub URLs. By Sorin Ionescu <sorin.ionescu@gmail.com>
@@ -285,4 +285,11 @@ function openfiles() {
 function compute() {
   while true; do head -n 100 /dev/urandom; sleep 0.1; done \
     | hexdump -C | grep "ca fe"
+}
+
+# Load 8 cores at once.
+function maxcpu() {
+  dn=/dev/null
+  yes > $dn & yes > $dn & yes > $dn & yes > $dn &
+  yes > $dn & yes > $dn & yes > $dn & yes > $dn &
 }
