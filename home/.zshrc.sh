@@ -293,3 +293,10 @@ function maxcpu() {
   yes > $dn & yes > $dn & yes > $dn & yes > $dn &
   yes > $dn & yes > $dn & yes > $dn & yes > $dn &
 }
+
+function retry() {
+  echo Retrying "$@"
+  $@
+  sleep 1
+  retry $@
+}

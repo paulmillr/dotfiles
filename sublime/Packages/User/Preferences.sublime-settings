@@ -1,6 +1,6 @@
 {
 	"bold_folder_labels": true,
-	"color_scheme": "Packages/pm-themes/Darkside.tmTheme",
+	"color_scheme": "Packages/pm-themes/Monokai Dark.tmTheme",
 	"ensure_newline_at_eof_on_save": true,
 	"file_exclude_patterns":
 	[
@@ -14,7 +14,7 @@
 		"tmp",
 		"node_modules"
 	],
-	"font_face": "Monaco",
+	"font_face": "Source Code Pro",
 	"font_size": 12,
 	"highlight_line": false,
 	"highlight_modified_tabs": true,
@@ -23,8 +23,9 @@
 		"Vintage"
 	],
 	"save_on_focus_lost": false,
+	"side_bar_width": 210,
 	"tab_size": 2,
-	"theme": "Nil.sublime-theme",
+	"theme": "Spacegray.sublime-theme",
 	"translate_tabs_to_spaces": true,
 	"trim_trailing_white_space_on_save": true,
 	"word_wrap": true
