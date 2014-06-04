@@ -117,7 +117,7 @@ alias serve='python -m SimpleHTTPServer'
 
 # Nginx short-cuts.
 alias ngup='sudo nginx'
-alias ngstop='sudo nginx -s stop'
+alias ngdown='sudo nginx -s stop'
 
 # Burl: better curl shortcuts (https://github.com/visionmedia/burl).
 if (( $+commands[burl] )); then
@@ -240,27 +240,36 @@ function ram() {
 }
 
 function size() {
-  du -sh "$@" 2>&1 | grep -v '^du:'
+  # du -sh "$@" 2>&1 | grep -v '^du:' | sort -nr
+  du -shck "$@" | sort -rn | awk '
+      function human(x) {
+          s="kMGTEPYZ";
+          while (x>=1000 && length(s)>1)
+              {x/=1024; s=substr(s,2)}
+          return int(x+0.5) substr(s,1,1)
+      }
+      {gsub(/^[0-9]+/, human($1)); print}'
 }
 
 # $ git log --no-merges --pretty=format:"%ae" | stats
-# 514 a@example.com
-# 200 b@example.com
+# # => 514 a@example.com
+# # => 200 b@example.com
 function stats() {
   sort | uniq -c | sort -r
 }
 
 # Shortcut for searching commands history.
+# hist git
 function hist() {
   history 0 | grep $@
 }
 
-# aes-enc file.zip
+# $ aes-enc file.zip
 function aes-enc() {
   openssl enc -aes-256-cbc -e -in $1 -out "$1.aes"
 }
 
-# aes-dec file.zip.aes
+# $ aes-dec file.zip.aes
 function aes-dec() {
   openssl enc -aes-256-cbc -d -in $1 -out "${1%.*}"
 }
@@ -294,6 +303,7 @@ function maxcpu() {
   yes > $dn & yes > $dn & yes > $dn & yes > $dn &
 }
 
+# $ retry ping google.com
 function retry() {
   echo Retrying "$@"
   $@
