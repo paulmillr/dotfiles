@@ -28,11 +28,7 @@ alias lint=jshint
 alias npme='npm --registry http://registry.npmjs.eu'
 
 # Useful global aliases.
-alias -g 'H'='| head'     # git log H
-alias -g 'T'='| tail'     # git log T
-alias -g 'F'='| head -n'  # git log F 15
-alias -g 'L'='| tail -n'  # git log L 10
-alias -g 'C'='| wc -l'    # git log C
+alias -g 'GR'='| grep -i'
 
 # Some OS X-only stuff.
 if [[ "$OSTYPE" == darwin* ]]; then
@@ -111,6 +107,7 @@ alias bi='bower install'
 alias bis='bower install --save'
 alias ni='npm install'
 alias nis='npm install --save'
+alias nibi='npm install && bower install'
 
 alias jk='jekyll serve --watch' # lol jk
 alias serve='python -m SimpleHTTPServer'
@@ -118,6 +115,9 @@ alias serve='python -m SimpleHTTPServer'
 # Nginx short-cuts.
 alias ngup='sudo nginx'
 alias ngdown='sudo nginx -s stop'
+alias ngre='sudo nginx -s stop && sudo nginx'
+alias nglog='tail -f /usr/local/opt/nginx/logs/access.log'
+alias ngerr='tail -f /usr/local/opt/nginx/logs/error.log'
 
 # Burl: better curl shortcuts (https://github.com/visionmedia/burl).
 if (( $+commands[burl] )); then
