@@ -49,8 +49,8 @@ if [[ "$OSTYPE" == darwin* ]]; then
   alias sniff="sudo ngrep -d 'en1' -t '^(GET|POST) ' 'tcp and port 80'"
 
   # Developer tools shortcuts.
-  alias tower='gittower --status'
-  alias t='tower'
+  alias tower='gittower .'
+  alias t='gittower .'
 
   # Process grep should output full paths to binaries.
   alias pgrep='pgrep -fli'
@@ -91,6 +91,9 @@ function gcp() {
 alias gcl='git clone'
 alias gch='git checkout'
 alias gl='git log --no-merges'
+# own git workflow in hy origin with Tower
+alias gsync='git pull origin master && git push hy master'
+
 
 # Dev short-cuts.
 

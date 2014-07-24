@@ -1,6 +1,6 @@
 {
 	"bold_folder_labels": true,
-	"color_scheme": "Packages/pm-themes/glacier.tmTheme",
+	"color_scheme": "Packages/Theme - Glacier/glacier.tmTheme",
 	"ensure_newline_at_eof_on_save": true,
 	"file_exclude_patterns":
 	[
@@ -16,7 +16,7 @@
 		"tmp",
 		"node_modules"
 	],
-	"font_face": "Source Code Pro",
+	"font_face": "Monaco",
 	"font_size": 12,
 	"highlight_line": false,
 	"highlight_modified_tabs": true,
