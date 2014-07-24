@@ -28,7 +28,7 @@ defaults write com.apple.screencapture location "$HOME/Downloads/"
 # =====
 
 # Disable the sound effects on boot
-sudo nvram SystemAudioVolume=0
+# sudo nvram SystemAudioVolume=0
 
 # Trackpad, mouse, keyboard, Bluetooth accessories, and input
 # ===========================================================
