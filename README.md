@@ -53,9 +53,7 @@ Shell (zsh):
 * Change default shell to ZSH: `chsh -s /bin/zsh`.
 * Insert proper hosts from `etc/hosts` to system’s `/etc/hosts`.
 * Create `~/Development/`
-* Clone:
-    * prezto (oh-my-zsh fork) `git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"`
-    * this project (dotfiles) and run `sh bootstrap-new-system.sh`
+* Clone this project (dotfiles) and run `sh bootstrap-new-system.sh`
 
 ## License
 

@@ -1,13 +1,18 @@
 #!/usr/bin/env zsh
 
-if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
-  source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
-fi
+curr="$pm/dotfiles"
+
+# Load main files.
+# echo "Load start\t" $(gdate "+%s-%N")
+source "$curr/terminal/startup.sh"
+source "$curr/terminal/completion.sh"
+source "$curr/terminal/highlight.sh"
+# echo "Load end\t" $(gdate "+%s-%N")
 
 autoload -U colors && colors
 
 # Load and execute the prompt theming system.
-fpath=("$pm/dotfiles/terminal" $fpath)
+fpath=("$curr/terminal" $fpath)
 autoload -Uz promptinit && promptinit
 prompt 'paulmillr'
 
