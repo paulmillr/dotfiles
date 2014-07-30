@@ -155,9 +155,9 @@ alias history-stat="history 0 | awk '{print \$2}' | sort | uniq -c | sort -n -r 
 #
 
 # Return if requirements are not found.
-if [[ "$TERM" == 'dumb' ]]; then
-  return 1
-fi
+# if [[ "$TERM" == 'dumb' ]]; then
+#   return 1
+# fi
 
 typeset -gA FX FG BG
 
@@ -225,9 +225,9 @@ unset color{s,} index
 #
 
 # Return if requirements are not found.
-if [[ "$TERM" == (dumb|linux|*bsd*) ]]; then
-  return 1
-fi
+# if [[ "$TERM" == (dumb|linux|*bsd*) ]]; then
+#   return 1
+# fi
 
 # Sets the terminal or terminal multiplexer window title.
 function set-window-title {
@@ -331,15 +331,15 @@ then
 fi
 
 # Set up non-Apple terminals.
-if zstyle -t ':prezto:module:terminal' auto-title \
-  && ( ! [[ -n "$STY" || -n "$TMUX" ]] )
-then
-  # Sets the tab and window titles before the prompt is displayed.
-  add-zsh-hook precmd _terminal-set-titles-with-path
+# if zstyle -t ':prezto:module:terminal' auto-title \
+#   && ( ! [[ -n "$STY" || -n "$TMUX" ]] )
+# then
+#   # Sets the tab and window titles before the prompt is displayed.
+#   add-zsh-hook precmd _terminal-set-titles-with-path
 
-  # Sets the tab and window titles before command execution.
-  add-zsh-hook preexec _terminal-set-titles-with-command
-fi
+#   # Sets the tab and window titles before command execution.
+#   add-zsh-hook preexec _terminal-set-titles-with-command
+# fi
 
 
 #
@@ -534,15 +534,5 @@ function psu {
 
 
 function diff {
-  if zstyle -t ':prezto:module:utility:diff' color; then
-    if (( $+commands[colordiff] )); then
-      command diff --unified "$@" | colordiff --difftype diffu
-    elif (( $+commands[git] )); then
-      git --no-pager diff --color=auto --no-ext-diff --no-index "$@"
-    else
-      command diff --unified "$@"
-    fi
-  else
-    command diff --unified "$@"
-  fi
+  git --no-pager diff --color=auto --no-ext-diff --no-index "$@"
 }

@@ -5,6 +5,7 @@ curr="$pm/dotfiles"
 # Load main files.
 # echo "Load start\t" $(gdate "+%s-%N")
 source "$curr/terminal/startup.sh"
+# echo "$curr/terminal/startup.sh"
 source "$curr/terminal/completion.sh"
 source "$curr/terminal/highlight.sh"
 # echo "Load end\t" $(gdate "+%s-%N")
@@ -124,8 +125,8 @@ alias serve='python -m SimpleHTTPServer'
 alias ngup='sudo nginx'
 alias ngdown='sudo nginx -s stop'
 alias ngre='sudo nginx -s stop && sudo nginx'
-alias nglog='tail -f /usr/local/opt/nginx/logs/access.log'
-alias ngerr='tail -f /usr/local/opt/nginx/logs/error.log'
+alias nglog='tail -f /usr/local/var/log/nginx/access.log'
+alias ngerr='tail -f /usr/local/var/log/nginx/error.log'
 
 # Burl: better curl shortcuts (https://github.com/visionmedia/burl).
 if (( $+commands[burl] )); then
@@ -197,6 +198,11 @@ function each() {
 # # => 9762
 function find-exec() {
   find . -type f -iname "*${1:-}*" -exec "${2:-file}" '{}' \;
+}
+
+# Better find(1)
+function ff() {
+  find . -iname "*${1:-}*"
 }
 
 # Count code lines in some directory.
