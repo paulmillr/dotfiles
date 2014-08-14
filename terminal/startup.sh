@@ -10,9 +10,6 @@ zstyle ':prezto:*:*' case-sensitive 'no'
 # Color output (auto set to 'no' on dumb terminals).
 zstyle ':prezto:*:*' color 'yes'
 
-# Auto set the tab and window titles.
-zstyle ':prezto:module:terminal' auto-title 'yes'
-
 #
 # Sets directory options and defines directory aliases.
 #
@@ -306,29 +303,33 @@ function _terminal-set-terminal-app-proxy-icon {
 autoload -Uz add-zsh-hook
 
 # Set up the Apple Terminal.
-if [[ "$TERM_PROGRAM" == 'Apple_Terminal' ]] \
-  && ( ! [[ -n "$STY" || -n "$TMUX" || -n "$DVTM" ]] )
-then
-  # Sets the Terminal.app current working directory before the prompt is
-  # displayed.
-  add-zsh-hook precmd _terminal-set-terminal-app-proxy-icon
+function term() {
+  if [[ "$TERM_PROGRAM" == 'Apple_Terminal' ]] \
+    && ( ! [[ -n "$STY" || -n "$TMUX" || -n "$DVTM" ]] )
+  then
+    # Sets the Terminal.app current working directory before the prompt is
+    # displayed.
+    add-zsh-hook precmd _terminal-set-terminal-app-proxy-icon
 
-  # Unsets the Terminal.app current working directory when a terminal
-  # multiplexer or remote connection is started since it can no longer be
-  # updated, and it becomes confusing when the directory displayed in the title
-  # bar is no longer synchronized with real current working directory.
-  function _terminal-unset-terminal-app-proxy-icon {
-    if [[ "${2[(w)1]:t}" == (screen|tmux|dvtm|ssh|mosh) ]]; then
-      _terminal-set-terminal-app-proxy-icon ' '
-    fi
-  }
-  add-zsh-hook preexec _terminal-unset-terminal-app-proxy-icon
+    # Unsets the Terminal.app current working directory when a terminal
+    # multiplexer or remote connection is started since it can no longer be
+    # updated, and it becomes confusing when the directory displayed in the title
+    # bar is no longer synchronized with real current working directory.
+    function _terminal-unset-terminal-app-proxy-icon {
+      if [[ "${2[(w)1]:t}" == (screen|tmux|dvtm|ssh|mosh) ]]; then
+        _terminal-set-terminal-app-proxy-icon ' '
+      fi
+    }
+    add-zsh-hook preexec _terminal-unset-terminal-app-proxy-icon
 
-  # Do not set the tab and window titles in Terminal.app since it sets the tab
-  # title to the currently running process by default and the current working
-  # directory is set separately.
-  return
-fi
+    # Do not set the tab and window titles in Terminal.app since it sets the tab
+    # title to the currently running process by default and the current working
+    # directory is set separately.
+    return
+  fi
+}
+
+term
 
 # Set up non-Apple terminals.
 # if zstyle -t ':prezto:module:terminal' auto-title \
@@ -350,11 +351,6 @@ fi
 #   Suraj N. Kurapati <sunaku@gmail.com>
 #   Sorin Ionescu <sorin.ionescu@gmail.com>
 #
-
-# Checks if a name is a command, function, or alias.
-function is-callable {
-  (( $+commands[$1] )) || (( $+functions[$1] )) || (( $+aliases[$1] ))
-}
 
 # Correct commands.
 setopt CORRECT
@@ -405,7 +401,11 @@ alias pu='pushd'
 alias rm="${aliases[rm]:-rm} -i"
 alias type='type -a'
 
-# ls
+# Checks if a name is a command, function, or alias.
+function is-callable {
+  (( $+commands[$1] )) || (( $+functions[$1] )) || (( $+aliases[$1] ))
+}
+
 if is-callable 'dircolors'; then
   # GNU Core Utilities
   alias ls='ls --group-directories-first'
@@ -505,21 +505,6 @@ function mkdcd {
 # Changes to a directory and lists its contents.
 function cdls {
   builtin cd "$argv[-1]" && ls "${(@)argv[1,-2]}"
-}
-
-# Pushes an entry onto the directory stack and lists its contents.
-function pushdls {
-  builtin pushd "$argv[-1]" && ls "${(@)argv[1,-2]}"
-}
-
-# Pops an entry off the directory stack and lists its contents.
-function popdls {
-  builtin popd "$argv[-1]" && ls "${(@)argv[1,-2]}"
-}
-
-# Prints columns 1 2 3 ... n.
-function slit {
-  awk "{ print ${(j:,:):-\$${^@}} }"
 }
 
 # Finds files and executes a command on them.
