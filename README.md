@@ -15,6 +15,7 @@ curl --silent https://raw.githubusercontent.com/paulmillr/dotfiles/master/instal
 
 Shell (zsh):
 
+* **NO DEPENDENCIES!**
 * Auto-completion
 * Syntax highlighting
 * Automatic setting up of terminal tab / window title to current dir
