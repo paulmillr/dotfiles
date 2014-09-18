@@ -1,6 +1,6 @@
 {
 	"bold_folder_labels": true,
-	"color_scheme": "Packages/Theme - Glacier/glacier.tmTheme",
+	"color_scheme": "Packages/Theme - Brogrammer/brogrammer.tmTheme",
 	"ensure_newline_at_eof_on_save": true,
 	"file_exclude_patterns":
 	[
@@ -16,7 +16,7 @@
 		"tmp",
 		"node_modules"
 	],
-	"font_face": "Monaco",
+	"font_face": "Input Mono",
 	"font_size": 12,
 	"highlight_line": false,
 	"highlight_modified_tabs": true,
@@ -27,7 +27,7 @@
 	"save_on_focus_lost": false,
 	"side_bar_width": 210,
 	"tab_size": 2,
-	"theme": "Glacier.sublime-theme",
+	"theme": "Brogrammer.sublime-theme",
 	"translate_tabs_to_spaces": true,
 	"trim_trailing_white_space_on_save": true,
 	"word_wrap": true
