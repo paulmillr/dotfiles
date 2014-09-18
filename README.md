@@ -35,6 +35,7 @@ Shell (zsh):
     you’re doing github pull requests in topic branches.
     * `git summary` — outputs commit email statistics.
     * `git release` — save changes, tag commit. If used on node.js project, also push to npm.
+    * `git url` - opens GitHub repo for current git repo.
     * `git-changelog`, `git-setup` etc.
 * [homesick](https://github.com/technicalpickles/homesick) /
   [homeshick](https://github.com/andsens/homeshick)-compatible
