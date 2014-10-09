@@ -27,6 +27,8 @@ Shell (zsh):
     * `loc py coffee js html css` — count lines of code
     in current dir in a colourful way.
     * `ff file-name-or-pattern` - fast recursive search for a file name in directories.
+    * `curl http://site/v1/api.json | json` - pretty-print JSON
+    * `aes-enc`, `aes-dec` - safely encrypt files.
 * Neat git extras:
     * Opinionated `git log`, `git graph`
     * `gcp` for fast `git commit -m ... && git push`
