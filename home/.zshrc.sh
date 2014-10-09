@@ -128,6 +128,12 @@ alias ngre='sudo nginx -s stop && sudo nginx'
 alias nglog='tail -f /usr/local/var/log/nginx/access.log'
 alias ngerr='tail -f /usr/local/var/log/nginx/error.log'
 
+# Checks whether connection is up.
+alias net='ping ya.ru'
+
+# Pretty print json
+alias json='python -m json.tool'
+
 # Burl: better curl shortcuts (https://github.com/visionmedia/burl).
 if (( $+commands[burl] )); then
   alias GET='burl GET'
@@ -323,4 +329,11 @@ function retry() {
   $@
   sleep 1
   retry $@
+}
+
+# Open curr dir in preview.app.
+function preview() {
+  local item=$1
+  [[ -z "$item" ]] && item='.'
+  open $1 -a 'Preview'
 }
