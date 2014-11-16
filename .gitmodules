@@ -4,3 +4,9 @@
 [submodule "sublime/Packages/Theme - Nil"]
 	path = sublime/Packages/Theme - Nil
 	url = git@github.com:nilium/st2-nil-theme.git
+[submodule "terminal/completion"]
+	path = terminal/completion
+	url = https://github.com/zsh-users/zsh-completions.git
+[submodule "terminal/highlight"]
+	path = terminal/highlight
+	url = https://github.com/zsh-users/zsh-syntax-highlighting.git
