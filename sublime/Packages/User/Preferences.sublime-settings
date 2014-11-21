@@ -16,8 +16,8 @@
 		"tmp",
 		"node_modules"
 	],
-	"font_face": "Input Mono",
-	"font_size": 12,
+	"font_face": "Source Code Pro",
+	"font_size": 13,
 	"highlight_line": false,
 	"highlight_modified_tabs": true,
 	"ignored_packages":
