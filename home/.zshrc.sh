@@ -70,9 +70,11 @@ alias g='git'
 alias ga='git add'
 alias gr='git rm'
 
-alias gf='git fetch'
-alias gu='git pull'
-alias gup='git pull && git push'
+alias gf='git fetch origin'
+alias gu='git pull origin'
+alias gup='git pull origin && git push origin'
+alias ghu='git pull hy master'
+alias ghp='git push hy master'
 
 alias gs='git status --short'
 alias gd='git diff'
@@ -121,6 +123,9 @@ alias nibi='npm install && bower install'
 alias jk='jekyll serve --watch' # lol jk
 alias serve='python -m SimpleHTTPServer'
 
+# Ruby.
+alias bex='bundle exec'
+
 # Nginx short-cuts.
 alias ngup='sudo nginx'
 alias ngdown='sudo nginx -s stop'
@@ -129,7 +134,7 @@ alias nglog='tail -f /usr/local/var/log/nginx/access.log'
 alias ngerr='tail -f /usr/local/var/log/nginx/error.log'
 
 # Checks whether connection is up.
-alias net='ping ya.ru'
+alias net="ping ya.ru | grep -E --only-match --color=never '[0-9\.]+ ms'"
 
 # Pretty print json
 alias json='python -m json.tool'
