@@ -59,6 +59,7 @@ Shell (zsh):
 * Insert proper hosts from `etc/hosts` to system’s `/etc/hosts`.
 * Create `~/Development/`
 * Clone this project (dotfiles **RECURSIVELY** `--recursive`) and run `sh bootstrap-new-system.sh`
+* Download [Sublime icon](https://dribbble.com/shots/1827862-Yosemite-Sublime-Text-Icon)
 
 ## License
 
