@@ -33,9 +33,6 @@ alias lint=jshint
 # Faster NPM for europeans.
 alias npme='npm --registry http://registry.npmjs.eu'
 
-# Useful global aliases.
-alias -g 'GR'='| grep -i'
-
 # Some OS X-only stuff.
 if [[ "$OSTYPE" == darwin* ]]; then
   # Short-cuts for copy-paste.
@@ -98,6 +95,8 @@ function gcp() {
 }
 alias gcl='git clone'
 alias gch='git checkout'
+alias gbr='git branch'
+alias gbrd='git branch -D'
 alias gl='git log --no-merges'
 # own git workflow in hy origin with Tower
 alias gsync='git pull origin master && git push hy master'
@@ -108,8 +107,6 @@ alias gsync='git pull origin master && git push hy master'
 # Brunch.
 alias bb='brunch build'
 alias bbp='brunch build --production'
-alias dbb="DEBUG='brunch:*' brunch build"
-alias dbw="DEBUG='brunch:*' brunch watch"
 alias bw='brunch watch'
 alias bws='brunch watch --server'
 
@@ -119,11 +116,14 @@ alias bis='bower install --save'
 alias ni='npm install'
 alias nis='npm install --save'
 alias nibi='npm install && bower install'
+alias nibir='rm -rf {bower_components,node_modules} && npm install && bower install'
+alias ns='npm search'
 
 alias jk='jekyll serve --watch' # lol jk
 alias serve='python -m SimpleHTTPServer'
 
 # Ruby.
+alias bx='bundle exec'
 alias bex='bundle exec'
 
 # Nginx short-cuts.
@@ -197,7 +197,7 @@ alias e=edit
 # Execute commands for each file in current directory.
 function each() {
   for dir in *; do
-    echo "${dir}:"
+    # echo "${dir}:"
     cd $dir
     $@
     cd ..
