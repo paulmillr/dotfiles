@@ -1,12 +1,11 @@
 {
 	"bold_folder_labels": true,
-	"color_scheme": "Packages/Theme - Brogrammer/brogrammer.tmTheme",
+	"color_scheme": "Packages/Seti_UI/Scheme/Seti.tmTheme",
 	"ensure_newline_at_eof_on_save": true,
 	"file_exclude_patterns":
 	[
 		".DS_Store",
-		"*.map",
-		"*.min.js"
+		"*.map"
 	],
 	"fold_buttons": false,
 	"folder_exclude_patterns":
@@ -16,18 +15,19 @@
 		"tmp",
 		"node_modules"
 	],
-	"font_face": "Source Code Pro",
+	"font_face": "Input Serif",
 	"font_size": 13,
-	"highlight_line": false,
+	"highlight_line": true,
 	"highlight_modified_tabs": true,
 	"ignored_packages":
 	[
 		"Vintage"
 	],
+	"line_numbers": false,
 	"save_on_focus_lost": false,
-	"side_bar_width": 210,
+	"side_bar_width": 220,
 	"tab_size": 2,
-	"theme": "Brogrammer.sublime-theme",
+	"theme": "Tech49.sublime-theme",
 	"translate_tabs_to_spaces": true,
 	"trim_trailing_white_space_on_save": true,
 	"word_wrap": true
