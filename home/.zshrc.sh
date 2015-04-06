@@ -21,6 +21,8 @@ prompt 'paulmillr'
 # = Aliases =
 # ==================================================================
 
+alias -g f10='| head -n 10'
+alias -g l10='| tail -n 10'
 # Simple clear command.
 alias cl='clear'
 
@@ -264,6 +266,7 @@ function ram() {
   fi
 }
 
+# $ size dir1 file2.js
 function size() {
   # du -sh "$@" 2>&1 | grep -v '^du:' | sort -nr
   du -shck "$@" | sort -rn | awk '
@@ -298,6 +301,32 @@ function aes-enc() {
 function aes-dec() {
   openssl enc -aes-256-cbc -d -in $1 -out "${1%.*}"
 }
+
+# Converts a.mkv to a.m4v.
+function mkv2mp4() {
+  for file in "$@"; do
+    ffmpeg -i $file -map 0 -c copy "${file%.*}.m4v"
+  done
+}
+
+function mkv2mp4_c() {
+  for file in "$@"; do
+    ffmpeg -i $file -map 0:0 -map 0:2 -map 0:4 -c copy -c:s mov_text "${file%.*}.m4v"
+  done
+}
+
+# Adds subs from a.srt to a.m4v.
+function addsubs() {
+  for file in "$@"; do
+    local raw="${file%.*}"
+    local old="$raw.m4v"
+    local new="$raw-sub.m4v"
+    ffmpeg -i $old -i $file -map 0 -map 1 -c copy -c:s mov_text $new
+    mv $new $old
+    rm $file
+  done
+}
+
 
 # Shortens GitHub URLs. By Sorin Ionescu <sorin.ionescu@gmail.com>
 function gitio() {
