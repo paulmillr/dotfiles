@@ -15,7 +15,7 @@
 		"tmp",
 		"node_modules"
 	],
-	"font_face": "Input Serif",
+	"font_face": "PT Mono",
 	"font_size": 13,
 	"highlight_line": true,
 	"highlight_modified_tabs": true,
