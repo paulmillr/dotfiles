@@ -69,11 +69,11 @@ alias g='git'
 alias ga='git add'
 alias gr='git rm'
 
-alias gf='git fetch origin'
-alias gu='git pull origin'
-alias gup='git pull origin && git push origin'
-alias ghu='git pull hy master'
-alias ghp='git push hy master'
+alias gf='git fetch'
+alias gu='git pull'
+alias gup='git pull && git push'
+alias ghu='git pull hy'
+alias ghp='git push hy'
 
 alias gs='git status --short'
 alias gd='git diff'
@@ -101,7 +101,6 @@ alias gbr='git branch'
 alias gbrd='git branch -D'
 alias gl='git log --no-merges'
 # own git workflow in hy origin with Tower
-alias gsync='git pull origin master && git push hy master'
 
 
 # Dev short-cuts.
