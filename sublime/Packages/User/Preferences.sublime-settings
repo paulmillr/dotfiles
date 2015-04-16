@@ -1,6 +1,7 @@
 {
 	"bold_folder_labels": true,
-	"color_scheme": "Packages/Seti_UI/Scheme/Seti.tmTheme",
+	"color_scheme": "Packages/Color Scheme - Default/Monokai.tmTheme",
+	"draw_indent_guides": false,
 	"ensure_newline_at_eof_on_save": true,
 	"file_exclude_patterns":
 	[
@@ -15,8 +16,8 @@
 		"tmp",
 		"node_modules"
 	],
-	"font_face": "PT Mono",
-	"font_size": 13,
+	"font_face": "Source Code Pro",
+	"font_size": 14,
 	"highlight_line": true,
 	"highlight_modified_tabs": true,
 	"ignored_packages":
