@@ -52,7 +52,7 @@ Shell (zsh):
 
 ## Building system from scratch (reminder)
 
-* Install Source Code Pro font.
+* Install "Source Code Pro" font.
 * Install XCode & its Command Line Tools.
 * Change Terminal.app theme to `terminal/paulmillr.terminal`.
 * Change default shell to ZSH: `chsh -s /bin/zsh`.
@@ -60,6 +60,7 @@ Shell (zsh):
 * Create `~/Development/`
 * Clone this project (dotfiles **RECURSIVELY** `--recursive`) and run `sh bootstrap-new-system.sh`
 * Download [Sublime icon](https://dribbble.com/shots/1827862-Yosemite-Sublime-Text-Icon)
+* Install Sublime packages with Package Control: "Seti UI"
 
 ## License
 
