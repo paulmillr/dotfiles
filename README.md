@@ -59,7 +59,7 @@ Shell (zsh):
 * Insert proper hosts from `etc/hosts` to system’s `/etc/hosts`.
 * Create `~/Development/`
 * Clone this project (dotfiles **RECURSIVELY** `--recursive`) and run `sh bootstrap-new-system.sh`
-* Download the Yosemite style [Sublime Text icon](https://dribbble.com/shots/1827862-Yosemite-Sublime-Text-Icon) (instructions on usage are included in download)
+* Download the Yosemite style [Sublime Text icon](https://dribbble.com/shots/1840393-Sublime-Text-Yosemite-Icon?list=searches&tag=sublime_text) (instructions on usage are included in download)
 * Install Sublime packages with Package Control: "Seti UI"
 
 ## License
