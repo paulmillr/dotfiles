@@ -98,6 +98,7 @@ function gcp() {
 alias gcl='git clone'
 alias gch='git checkout'
 alias gbr='git branch'
+alias gbrcl='git checkout --orphan'
 alias gbrd='git branch -D'
 alias gl='git log --no-merges'
 # own git workflow in hy origin with Tower
@@ -111,6 +112,8 @@ alias bbp='brunch build --production'
 alias bw='brunch watch'
 alias bws='brunch watch --server'
 
+alias nr='npm run'
+
 # Package managers.
 alias bi='bower install'
 alias bis='bower install --save'
@@ -121,7 +124,9 @@ alias nibir='rm -rf {bower_components,node_modules} && npm install && bower inst
 alias ns='npm search'
 
 alias jk='jekyll serve --watch' # lol jk
-alias serve='python -m SimpleHTTPServer'
+# alias serve='python -m SimpleHTTPServer'
+alias serve='http-server' # npm install http-server
+alias server='http-server'
 
 # Ruby.
 alias bx='bundle exec'
@@ -308,9 +313,21 @@ function mkv2mp4() {
   done
 }
 
-function mkv2mp4_c() {
+function mkv2mp4_1() {
   for file in "$@"; do
-    ffmpeg -i $file -map 0:0 -map 0:2 -map 0:4 -c copy -c:s mov_text "${file%.*}.m4v"
+    ffmpeg -i $file -map 0:0 -map 0:1 -c copy -c:s mov_text "${file%.*}.m4v"
+  done
+}
+
+function mkv2mp4_2() {
+  for file in "$@"; do
+    ffmpeg -i $file -map 0:0 -map 0:2 -c copy -c:s mov_text "${file%.*}.m4v"
+  done
+}
+
+function mkv2mp4_3() {
+  for file in "$@"; do
+    ffmpeg -i $file -map 0:0 -map 0:3 -c copy -c:s mov_text "${file%.*}.m4v"
   done
 }
 
