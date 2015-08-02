@@ -1,6 +1,7 @@
 {
 	"bold_folder_labels": true,
-	"color_scheme": "Packages/Color Scheme - Default/Monokai.tmTheme",
+	"caret_style": "phase",
+	"color_scheme": "Packages/Theme - Brogrammer/brogrammer.tmTheme",
 	"draw_indent_guides": false,
 	"ensure_newline_at_eof_on_save": true,
 	"file_exclude_patterns":
@@ -8,7 +9,7 @@
 		".DS_Store",
 		"*.map"
 	],
-	"fold_buttons": false,
+	"fold_buttons": true,
 	"folder_exclude_patterns":
 	[
 		".git",
@@ -16,19 +17,21 @@
 		"tmp",
 		"node_modules"
 	],
-	"font_face": "Source Code Pro",
-	"font_size": 14,
+	"font_face": "Hermit",
+	"font_size": 13,
 	"highlight_line": true,
 	"highlight_modified_tabs": true,
 	"ignored_packages":
 	[
 		"Vintage"
 	],
-	"line_numbers": false,
+	"line_numbers": true,
+	"old_color_scheme": "Packages/Theme - Brogrammer/brogrammer.tmTheme",
+	"old_theme": "Tech49.sublime-theme",
 	"save_on_focus_lost": false,
 	"side_bar_width": 220,
 	"tab_size": 2,
-	"theme": "Tech49.sublime-theme",
+	"theme": "Hero Dark.sublime-theme",
 	"translate_tabs_to_spaces": true,
 	"trim_trailing_white_space_on_save": true,
 	"word_wrap": true
