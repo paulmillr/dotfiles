@@ -23,7 +23,7 @@ function list-files {
        echo `script -q /dev/null ls -G . | tr -d '\r' | cat`
        ;;
      *)
-       echo `script -q /dev/null ls --color=auto . | tr -d '\r' | cat`
+       echo `script -q /dev/null ls . | tr -d '\r' | cat`
        ;;
   esac
 }
