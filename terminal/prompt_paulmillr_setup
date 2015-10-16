@@ -17,7 +17,11 @@ function prompt_paulmillr_precmd {
 }
 
 function list-files {
-  echo `script -q /dev/null ls -G . | tr -d '\r' | cat`
+  if zstyle -t ':prezto:module:utility:ls' color; then
+    echo `script -q /dev/null ls -G . | tr -d '\r' | cat`
+  else
+    echo `script -q /dev/null ls . | tr -d '\r' | cat`
+  fi
 }
 
 function get-vcs-info {
