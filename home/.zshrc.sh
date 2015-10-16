@@ -21,6 +21,7 @@ prompt 'paulmillr'
 # = Aliases =
 # ==================================================================
 
+alias -g f2='| head -n 2'
 alias -g f10='| head -n 10'
 alias -g l10='| tail -n 10'
 # Simple clear command.

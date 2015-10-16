@@ -1,7 +1,8 @@
 {
+	"always_show_minimap_viewport": true,
 	"bold_folder_labels": true,
 	"caret_style": "phase",
-	"color_scheme": "Packages/Theme - Brogrammer/brogrammer.tmTheme",
+	"color_scheme": "Packages/Theme - Tech49/Tech49.tmTheme",
 	"draw_indent_guides": false,
 	"ensure_newline_at_eof_on_save": true,
 	"file_exclude_patterns":
@@ -18,6 +19,10 @@
 		"node_modules"
 	],
 	"font_face": "Hermit",
+	"font_options":
+	[
+		"gray_antialias"
+	],
 	"font_size": 13,
 	"highlight_line": true,
 	"highlight_modified_tabs": true,
@@ -25,9 +30,17 @@
 	[
 		"Vintage"
 	],
+	"indent_guide_options":
+	[
+		"draw_normal",
+		"draw_active"
+	],
 	"line_numbers": true,
-	"old_color_scheme": "Packages/Theme - Brogrammer/brogrammer.tmTheme",
-	"old_theme": "Tech49.sublime-theme",
+	"line_padding_bottom": 1,
+	"line_padding_top": 1,
+	"material_theme_accent_purple": true,
+	"material_theme_disable_fileicons": true,
+	"material_theme_small_statusbar": true,
 	"save_on_focus_lost": false,
 	"side_bar_width": 220,
 	"tab_size": 2,
