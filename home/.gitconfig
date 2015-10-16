@@ -45,6 +45,7 @@
 [core]
   editor = subl
   excludesfile = ~/.gitignore
+  #pager = diff-highlight | less -r
 
 [format]
   pretty = %Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset
@@ -75,3 +76,5 @@
 	templatedir = ~/.git_template
 [ghi]
 	token = !security find-internet-password -a paulmillr -s github.com -l 'ghi token' -w
+[pull]
+	rebase = true
