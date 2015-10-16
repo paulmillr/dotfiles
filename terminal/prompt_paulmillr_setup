@@ -16,12 +16,16 @@ function prompt_paulmillr_precmd {
   unsetopt XTRACE KSH_ARRAYS
 }
 
+platform="$(uname -s)"
 function list-files {
-  if zstyle -t ':prezto:module:utility:ls' color; then
-    echo `script -q /dev/null ls -G . | tr -d '\r' | cat`
-  else
-    echo `script -q /dev/null ls . | tr -d '\r' | cat`
-  fi
+  case "$platform" in
+     Darwin)
+       echo `script -q /dev/null ls -G . | tr -d '\r' | cat`
+       ;;
+     *)
+       echo `script -q /dev/null ls --color=auto . | tr -d '\r' | cat`
+       ;;
+  esac
 }
 
 function get-vcs-info {
