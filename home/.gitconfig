@@ -13,7 +13,6 @@
   ci = commit
   ch = checkout
   fc = commit -am 'Initial commit.'
-  cpush = "!sh -c 'git commit -au -m \"$1\" && git push -u origin' -"
   d = diff
   st = status --short
 
@@ -37,7 +36,7 @@
   cleanup = !ruby "$HOME/Developer/paulmillr/dotfiles/git-extras/git-cleanup.rb"
 
 [push]
-  default = current
+  default = simple
 
 [color]
   ui = true

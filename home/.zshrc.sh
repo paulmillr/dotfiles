@@ -89,6 +89,14 @@ function gca() {
   args=$@
   git commit --amend -m "$args"
 }
+function cherry() {
+  args=$@
+  for commit in "$@"; do
+    echo $commit
+    git cherry-pick -n "$commit"
+  done
+}
+alias gcher='cherry'
 
 alias gp='git push'
 
@@ -132,6 +140,7 @@ alias server='http-server'
 # Ruby.
 alias bx='bundle exec'
 alias bex='bundle exec'
+alias migr='bundle exec rake db:migrate'
 
 # Nginx short-cuts.
 alias ngup='sudo nginx'
