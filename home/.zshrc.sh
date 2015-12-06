@@ -110,6 +110,10 @@ alias gbr='git branch'
 alias gbrcl='git checkout --orphan'
 alias gbrd='git branch -D'
 alias gl='git log --no-merges'
+function commits() {
+  git log $1 --oneline --reverse | cut -d' ' -f 1 | tr '\n' ' '
+}
+
 # own git workflow in hy origin with Tower
 
 
@@ -128,7 +132,7 @@ alias bi='bower install'
 alias bis='bower install --save'
 alias ni='npm install'
 alias nis='npm install --save'
-alias nibi='npm install && bower install'
+alias nibi='npm install & bower install'
 alias nibir='rm -rf {bower_components,node_modules} && npm install && bower install'
 alias ns='npm search'
 
