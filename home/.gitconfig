@@ -18,6 +18,7 @@
 
   graph = log --graph
   last = log -n 10
+  commits = "!sh -c 'git log $1 --oneline | cut -d\" \" -f 1 | tr \"\n\" \" \"'"
   url = !git remote -v|sed "'s|.*git[:@]\\(.*\\).git.*|http://\\1|;s|m:|m/|'"|uniq|xargs open
   whois = "!sh -c 'git log -i -1 --pretty=\"format:%an <%ae>\n\" --author=\"$1\"' -"
   discard = checkout -- .
