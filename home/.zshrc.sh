@@ -79,6 +79,7 @@ alias ghp='git push hy'
 alias gs='git status --short'
 alias gd='git diff'
 alias gds='git diff --staged'
+alias gdn='git diff --name-only'
 alias gdisc='git discard'
 
 function gc() {
@@ -122,8 +123,8 @@ function commits() {
 # Brunch.
 alias bb='brunch build'
 alias bbp='brunch build --production'
-alias bw='brunch watch'
-alias bws='brunch watch --server'
+alias bw='brunch w'
+alias bws='brunch w --server'
 
 alias nr='npm run'
 

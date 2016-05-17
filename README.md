@@ -7,6 +7,14 @@ Installation is done with simple command set (see “building system from scratc
 curl --silent https://raw.githubusercontent.com/paulmillr/dotfiles/master/install.sh | sh
 ```
 
+## Additional steps
+
+1. Create `~/Developer/`
+2. Change default shell to ZSH: `chsh -s /bin/zsh`.
+3. Install XCode.
+4. Install [Hermit](https://pcaro.es/p/hermit/#downloads) font.
+5. Change Terminal.app theme to `terminal/paulmillr.terminal` (Settings -> Profiles -> Press gear -> Import).
+
 ## Features
 
 ![](https://cloud.githubusercontent.com/assets/574696/3210643/80f11554-eed7-11e3-8c8f-5509bc304fc7.png)
@@ -52,12 +60,7 @@ Shell (zsh):
 
 ## Building system from scratch (reminder)
 
-* Install "Source Code Pro" font.
-* Install XCode & its Command Line Tools.
-* Change Terminal.app theme to `terminal/paulmillr.terminal`.
-* Change default shell to ZSH: `chsh -s /bin/zsh`.
 * Insert proper hosts from `etc/hosts` to system’s `/etc/hosts`.
-* Create `~/Development/`
 * Clone this project (dotfiles **RECURSIVELY** `--recursive`) and run `sh bootstrap-new-system.sh`
 * Download the Yosemite style [Sublime Text icon](https://dribbble.com/shots/1840393-Sublime-Text-Yosemite-Icon?list=searches&tag=sublime_text) (instructions on usage are included in download)
 * Install Sublime packages with Package Control: "Seti UI"
