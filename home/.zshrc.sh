@@ -55,8 +55,8 @@ if [[ "$OSTYPE" == darwin* ]]; then
   alias sniff="sudo ngrep -d 'en1' -t '^(GET|POST) ' 'tcp and port 80'"
 
   # Developer tools shortcuts.
-  alias tower='gittower .'
-  alias t='gittower .'
+  alias tower='gittower'
+  alias t='gittower'
 
   # Process grep should output full paths to binaries.
   alias pgrep='pgrep -fli'
@@ -81,6 +81,8 @@ alias gd='git diff'
 alias gds='git diff --staged'
 alias gdn='git diff --name-only'
 alias gdisc='git discard'
+
+alias grao='git remote add origin'
 
 function gc() {
   args=$@
@@ -135,6 +137,7 @@ alias ni='npm install'
 alias nis='npm install --save'
 alias nibi='npm install & bower install'
 alias nibir='rm -rf {bower_components,node_modules} && npm install && bower install'
+alias nup='npm update'
 alias ns='npm search'
 
 alias jk='jekyll serve --watch' # lol jk
