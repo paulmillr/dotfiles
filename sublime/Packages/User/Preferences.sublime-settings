@@ -18,12 +18,12 @@
 		"tmp",
 		"node_modules"
 	],
-	"font_face": "Hermit",
+	"font_face": "Operator Mono",
 	"font_options":
 	[
-		"gray_antialias"
+		"gray_antialias2"
 	],
-	"font_size": 13,
+	"font_size": 14,
 	"highlight_line": true,
 	"highlight_modified_tabs": true,
 	"ignored_packages":
@@ -42,10 +42,6 @@
 	"material_theme_compact_sidebar": true,
 	"material_theme_disable_fileicons": true,
 	"material_theme_small_statusbar": true,
-	"rulers":
-	[
-		80
-	],
 	"save_on_focus_lost": false,
 	"side_bar_width": 150,
 	"tab_size": 2,
