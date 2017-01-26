@@ -6,30 +6,20 @@
   user = paulmillr
 
 [alias]
-  br = branch
-  cb = "!sh -c 'git branch $1 && git ch $1' -"
-  ctb = "!sh -c 'git cb topics/$1' -"
-
+  discard = reset --hard HEAD
   ci = commit
   ch = checkout
-  fc = commit -am 'Initial commit.'
   d = diff
-  st = status --short
 
   graph = log --graph
   last = log -n 10
-  commits = "!sh -c 'git log $1 --oneline | cut -d\" \" -f 1 | tr \"\n\" \" \"'"
   url = !git remote -v|sed "'s|.*git[:@]\\(.*\\).git.*|http://\\1|;s|m:|m/|'"|uniq|xargs open
   whois = "!sh -c 'git log -i -1 --pretty=\"format:%an <%ae>\n\" --author=\"$1\"' -"
-  discard = checkout -- .
   rmtag = "!sh -c 'git tag -d $1; git push origin :refs/tags/$1'"
 
-  changelog = !sh "$HOME/Developer/paulmillr/dotfiles/git-extras/git-changelog.sh"
-  rstatus   = !zsh "$HOME/Developer/paulmillr/dotfiles/git-extras/git-rstatus.sh"
   release   = !sh "$HOME/Developer/paulmillr/dotfiles/git-extras/git-release.sh"
   setup     = !zsh "$HOME/Developer/paulmillr/dotfiles/git-extras/git-setup.sh"
   summary   = !zsh "$HOME/Developer/paulmillr/dotfiles/git-extras/git-summary.sh"
-  delete-branch = !sh "$HOME/Developer/paulmillr/dotfiles/git-extras/git-delete-branch.sh"
 
   pr = "!f() { git fetch -fu ${2:-origin} refs/pull/$1/head:pr/$1; } ; f"
 
