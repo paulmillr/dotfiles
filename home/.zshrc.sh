@@ -34,7 +34,7 @@ alias wget='wget --no-check-certificate'
 alias lint=jshint
 
 # Faster NPM for europeans.
-alias npme='npm --registry http://registry.npmjs.eu'
+# alias npme='npm --registry http://registry.npmjs.eu'
 
 # Some OS X-only stuff.
 if [[ "$OSTYPE" == darwin* ]]; then
@@ -44,9 +44,6 @@ if [[ "$OSTYPE" == darwin* ]]; then
 
   # Remove all items safely, to Trash (`brew install trash`).
   alias rm='trash'
-
-  # Case-insensitive pgrep that outputs full path.
-  alias pgrep='pgrep -fli'
 
   # Lock current session and proceed to the login screen.
   alias lock='/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend'
@@ -73,8 +70,6 @@ alias gr='git rm'
 alias gf='git fetch'
 alias gu='git pull'
 alias gup='git pull && git push'
-alias ghu='git pull hy'
-alias ghp='git push hy'
 
 alias gs='git status --short'
 alias gd='git diff'
