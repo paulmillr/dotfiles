@@ -88,28 +88,19 @@ function gca() {
   git commit --amend -m "$args"
 }
 function cherry() {
-  if [ "$#" -eq 1 ]; then # Check if it's one commit vs set of commits.
-    if [[ $1 =~ "\." ]]; then # Check for ranges.
-      commits=$(git rev-list --reverse --topo-order $1)
-      total=$(echo $commits | wc -l | xargs) # Trim the output with xargs.
-      echo "Picking $total commits while:"
-      echo $commits | while read commit; do
-        echo $commit
-        git cherry-pick -n $commit || break
-      done
-    else
-      echo 'Picking 1 commit:'
-      echo $1
-      git cherry-pick -n $1
-    fi
+  if [ "$#" -eq 1 ] && [[ $1 =~ "\." ]]; then # Check if it's one commit vs set of commits.
+    log=$(git rev-list --reverse --topo-order $1 | xargs)
+    commits=(${(s: :)log}) # Convert string to array.
   else
-    commits=($@)
-    echo "Picking $# commits for:"
-    for commit in "$@"; do
-      echo $commit
-      git cherry-pick -n "$commit" || break
-    done
+    commits=("$@")
   fi
+
+  total=$commits[(I)$commits[-1]] # Get last array index.
+  echo "Picking $total commits:"
+  for commit in $commits; do
+    echo $commit
+    git cherry-pick -n $commit || break
+  done
 }
 
 alias gp='git push'
