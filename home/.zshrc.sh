@@ -87,34 +87,49 @@ function gca() {
   args=$@
   git commit --amend -m "$args"
 }
+
 function cherry() {
-  if [ "$#" -eq 1 ] && [[ $1 =~ "\." ]]; then # Check if it's one commit vs set of commits.
+  is_range=''
+  case "$1" in # `sh`-compatible substring.
+    *\.*)
+    is_range='1'
+  ;;
+  esac
+  # Check if it's one commit vs set of commits.
+  if [ "$#" -eq 1 ] && [[ $is_range ]]; then
     log=$(git rev-list --reverse --topo-order $1 | xargs)
-    commits=(${(s: :)log}) # Convert string to array.
+    setopt sh_word_split 2> /dev/null # Ignore for `sh`.
+    commits=(${log}) # Convert string to array.
+    unsetopt sh_word_split 2> /dev/null # Ignore for `sh`.
   else
     commits=("$@")
   fi
 
-  total=$commits[(I)$commits[-1]] # Get last array index.
+  total=${#commits[@]} # Get last array index.
   echo "Picking $total commits:"
-  for commit in $commits; do
+  for commit in ${commits[@]}; do
     echo $commit
     git cherry-pick -n $commit || break
+    [[ CC -eq 1 ]] && cherrycc $commit
   done
 }
 
 alias gp='git push'
 
 function gcp() {
-  args=$@
-  git commit -a -m "$args" && git push -u origin
+  title="$@"
+  git commit -am $title && git push -u origin
 }
 alias gcl='git clone'
 alias gch='git checkout'
 alias gbr='git branch'
 alias gbrcl='git checkout --orphan'
 alias gbrd='git branch -D'
-alias gl='git log --no-merges'
+function gl() {
+  count=$1
+  [[ -z "$1" ]] && count=10
+  git graph --no-merges | head -n $count
+}
 
 # own git workflow in hy origin with Tower
 
@@ -134,6 +149,7 @@ alias bi='bower install'
 alias bis='bower install --save'
 alias ni='npm install'
 alias nis='npm install --save'
+alias nid='npm install --save-dev'
 alias nibi='npm install & bower install'
 alias nibir='rm -rf {bower_components,node_modules} && npm install && bower install'
 alias nup='npm update'
