@@ -1,5 +1,5 @@
 # Some stuff was taken from
-# https://github.com/mathiasbynens/dotfiles/blob/master/.osx
+# https://github.com/mathiasbynens/dotfiles/blob/master/.macos
 
 # Main
 # ====
@@ -179,7 +179,7 @@ defaults write org.m0k.transmission WarningLegal -bool false
 
 # Memory management
 # =================
-# Disable swap file. OS X will crash if mem will exceed max mem.
+# Disable swap file. macOS will crash if mem will exceed max mem.
 # sudo launchctl unload -w /System/Library/LaunchDaemons/com.apple.dynamic_pager.plist
 
 # Enable swap back.
