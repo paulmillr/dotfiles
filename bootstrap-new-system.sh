@@ -35,7 +35,7 @@ if [[ `uname` == 'Darwin' ]]; then
   fi
 
   echo 'Tweaking macOS...'
-    source 'etc/osx.sh'
+    source 'etc/macos.sh'
 
   # https://github.com/sindresorhus/quick-look-plugins
   echo 'Installing Quick Look plugins...'
