@@ -1,5 +1,5 @@
 # Dotfiles
-Colourful & robust OS X configuration files and utilities.
+Colourful & robust macOS configuration files and utilities.
 
 Installation is done with simple command set (see “building system from scratch” for setup of new system):
 
@@ -27,7 +27,7 @@ Shell (zsh):
 * Auto-completion
 * Syntax highlighting
 * Automatic setting up of terminal tab / window title to current dir
-* `rm` moves file to the OS X trash
+* `rm` moves file to the macOS trash
 * A bunch of useful functions:
     * `extract archive.tar.bz` — unpack any archive (supports many extensions)
     * `ram safari` — show app RAM usage
@@ -52,7 +52,7 @@ Shell (zsh):
 
 ## Structure
 * `bin` — files that are symlinked to any directory with binaries in `$PATH`
-* `etc` — various stuff like osx text substitutions / hosts backup
+* `etc` — various stuff like macOS text substitutions / hosts backup
 * `git-extras` — useful git functions, defined in `home/gitconfig`. Don't forget to change your git author to a proper name.
 * `home` — files that are symlinked to `$HOME` directory
 * `sublime` — sublime text 2 theme & settings
@@ -67,4 +67,4 @@ Shell (zsh):
 
 ## License
 
-[MIT](https://github.com/paulmillr/mit) (c) 2016 Paul Miller (http://paulmillr.com)
+[MIT](https://github.com/paulmillr/mit) (c) 2016 Paul Miller (https://paulmillr.com)
