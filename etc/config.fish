@@ -10,7 +10,7 @@ set GEM_HOME "$HOME/Library/Ruby/Gems/1.8"
 
 set PATH $GEM_HOME/bin /usr/local/bin /usr/local/share/{python,python3} /usr/local/share/npm/bin $PATH
 
-# OS X trash (`brew install trash`) util.
+# macOS trash (`brew install trash`) util.
 function rm
   trash $argv
 end
