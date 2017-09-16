@@ -36,7 +36,7 @@ alias lint=jshint
 # Faster NPM for europeans.
 # alias npme='npm --registry http://registry.npmjs.eu'
 
-# Some OS X-only stuff.
+# Some macOS-only stuff.
 if [[ "$OSTYPE" == darwin* ]]; then
   # Short-cuts for copy-paste.
   alias c='pbcopy'
@@ -217,7 +217,7 @@ function finder {
 EOF
 }
 
-# Gets password from OS X Keychain.
+# Gets password from macOS Keychain.
 # $ get-pass github
 function get-pass() {
   keychain="$HOME/Library/Keychains/login.keychain"

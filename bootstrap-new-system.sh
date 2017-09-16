@@ -1,6 +1,6 @@
 #!/usr/bin/env zsh
 
-# A simple script for setting up OSX dev environment.
+# A simple script for setting up macOS dev environment.
 
 dev="$HOME/Developer"
 pushd .
@@ -24,7 +24,7 @@ echo 'Copying public key to clipboard. Paste it into your Github account...'
   [[ -f $pub ]] && cat $pub | pbcopy
   open 'https://github.com/account/ssh'
 
-# If we on OS X, install homebrew and tweak system a bit.
+# If we on macOS, install homebrew and tweak system a bit.
 if [[ `uname` == 'Darwin' ]]; then
   which -s brew
   if [[ $? != 0 ]]; then
@@ -34,10 +34,10 @@ if [[ `uname` == 'Darwin' ]]; then
       brew install htop mysql nginx node ruby
   fi
 
-  echo 'Tweaking OS X...'
-    source 'etc/osx.sh'
+  echo 'Tweaking macOS...'
+    source 'etc/macos.sh'
 
-  # http://github.com/sindresorhus/quick-look-plugins
+  # https://github.com/sindresorhus/quick-look-plugins
   echo 'Installing Quick Look plugins...'
     brew tap phinze/homebrew-cask
     brew install caskroom/cask/brew-cask
@@ -58,30 +58,29 @@ echo 'Applying sublime config...'
     rm $asprefs
     cp -r $st/pm-themes $as
   else
-    echo "Install Sublime Text http://www.sublimetext.com"
+    echo "Install Sublime Text https://www.sublimetext.com"
   fi
 
 open_apps() {
   echo 'Install apps:'
   echo 'Firefox:'
-  open http://www.mozilla.org/en-US/firefox/new/
+  open https://www.mozilla.org/en-US/firefox/new/
   echo 'Dropbox:'
   open https://www.dropbox.com
   echo 'Chrome:'
-  open https://www.google.com/intl/en/chrome/browser/
+  open https://www.google.com/intl/en/chrome/browser/desktop/index.html
   echo 'Sequel Pro:'
-  open http://www.sequelpro.com
+  open https://www.sequelpro.com
   echo 'Skype:'
-  open http://www.skype.com/en/download-skype/skype-for-computer/
+  open https://www.skype.com/en/download-skype/skype-for-computer/
   echo 'Toggl:'
   open https://www.toggl.com
   echo 'Tower:'
-  open http://www.git-tower.com
+  open https://www.git-tower.com
   echo 'Transmission:'
-  open http://www.transmissionbt.com
+  open https://transmissionbt.com/
   echo 'VLC:'
-  open http://www.videolan.org/vlc/index.html
-  echo 'Pixelmator!'
+  open https://www.videolan.org/
 }
 
 echo 'Should I give you links for system applications (e.g. Skype, Tower, VLC)?'
