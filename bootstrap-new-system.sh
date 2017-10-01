@@ -16,9 +16,9 @@ echo 'Enter new hostname of the machine (e.g. macbook-paulmillr)'
   scutil --set ComputerName "$compname"
   sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string "$compname"
 
-pub=$HOME/.ssh/id_rsa.pub
+pub=$HOME/.ssh/id_ed25519.pub
 echo 'Checking for SSH key, generating one if it does not exist...'
-  [[ -f $pub ]] || ssh-keygen -t rsa
+  [[ -f $pub ]] || ssh-keygen -t ed25519
 
 echo 'Copying public key to clipboard. Paste it into your Github account...'
   [[ -f $pub ]] && cat $pub | pbcopy
@@ -31,11 +31,11 @@ if [[ `uname` == 'Darwin' ]]; then
     echo 'Installing Homebrew...'
       ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
       brew update
-      brew install htop mysql nginx node ruby
+      brew install htop mysql node ruby wget trash
   fi
 
-  echo 'Tweaking macOS...'
-    source 'etc/macos.sh'
+  # echo 'Tweaking macOS...'
+    # source 'etc/macos.sh'
 
   # https://github.com/sindresorhus/quick-look-plugins
   echo 'Installing Quick Look plugins...'
@@ -80,7 +80,7 @@ open_apps() {
   echo 'Transmission:'
   open https://transmissionbt.com/
   echo 'VLC:'
-  open https://www.videolan.org/
+  open http://www.videolan.org/vlc/index.html
 }
 
 echo 'Should I give you links for system applications (e.g. Skype, Tower, VLC)?'
