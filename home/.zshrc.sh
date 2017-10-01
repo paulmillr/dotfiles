@@ -145,20 +145,19 @@ alias bws='brunch w --server'
 alias nr='npm run'
 
 # Package managers.
-alias bi='bower install'
-alias bis='bower install --save'
 alias ni='npm install'
-alias nis='npm install --save'
 alias nid='npm install --save-dev'
 alias nibi='npm install & bower install'
-alias nibir='rm -rf {bower_components,node_modules} && npm install && bower install'
+alias nibir='rm -rf {node_modules} && npm install'
 alias nup='npm update'
 alias ns='npm search'
 
+alias brewup='brew update && brew upgrade'
 alias jk='jekyll serve --watch' # lol jk
 # alias serve='python -m SimpleHTTPServer'
-alias serve='http-server' # npm install http-server
-alias server='http-server'
+alias serve='http-serve' # npm install http-server
+alias server='http-serve'
+alias python2='python2.7'
 
 # Ruby.
 alias bx='bundle exec'

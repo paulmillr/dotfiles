@@ -17,14 +17,14 @@
   whois = "!sh -c 'git log -i -1 --pretty=\"format:%an <%ae>\n\" --author=\"$1\"' -"
   rmtag = "!sh -c 'git tag -d $1; git push origin :refs/tags/$1'"
 
-  release   = !sh "$HOME/Developer/paulmillr/dotfiles/git-extras/git-release.sh"
-  setup     = !zsh "$HOME/Developer/paulmillr/dotfiles/git-extras/git-setup.sh"
-  summary   = !zsh "$HOME/Developer/paulmillr/dotfiles/git-extras/git-summary.sh"
+  release   = !sh "$HOME/Developer/personal/dotfiles/git-extras/git-release.sh"
+  setup     = !zsh "$HOME/Developer/personal/dotfiles/git-extras/git-setup.sh"
+  summary   = !zsh "$HOME/Developer/personal/dotfiles/git-extras/git-summary.sh"
 
   pr = "!f() { git fetch -fu ${2:-origin} refs/pull/$1/head:pr/$1; } ; f"
 
-  ghfork = !sh "$HOME/Developer/paulmillr/dotfiles/git-extras/git-ghpull.sh"
-  cleanup = !ruby "$HOME/Developer/paulmillr/dotfiles/git-extras/git-cleanup.rb"
+  ghfork = !sh "$HOME/Developer/personal/dotfiles/git-extras/git-ghpull.sh"
+  cleanup = !ruby "$HOME/Developer/personal/dotfiles/git-extras/git-cleanup.rb"
 
 [push]
   default = simple
@@ -62,8 +62,6 @@
 
 [mergetool]
 	keepBackup = false
-[init]
-	templatedir = ~/.git_template
 [ghi]
 	token = !security find-internet-password -a paulmillr -s github.com -l 'ghi token' -w
 [pull]
