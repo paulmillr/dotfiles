@@ -29,7 +29,7 @@ if [[ `uname` == 'Darwin' ]]; then
   which -s brew
   if [[ $? != 0 ]]; then
     echo 'Installing Homebrew...'
-      ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+      /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
       brew update
       brew install htop mysql node ruby wget trash
   fi
@@ -63,18 +63,6 @@ echo 'Applying sublime config...'
 
 open_apps() {
   echo 'Install apps:'
-  echo 'Firefox:'
-  open https://www.mozilla.org/en-US/firefox/new/
-  echo 'Dropbox:'
-  open https://www.dropbox.com
-  echo 'Chrome:'
-  open https://www.google.com/intl/en/chrome/browser/desktop/index.html
-  echo 'Sequel Pro:'
-  open https://www.sequelpro.com
-  echo 'Skype:'
-  open https://www.skype.com/en/download-skype/skype-for-computer/
-  echo 'Toggl:'
-  open https://www.toggl.com
   echo 'Tower:'
   open https://www.git-tower.com
   echo 'Transmission:'
@@ -83,7 +71,7 @@ open_apps() {
   open http://www.videolan.org/vlc/index.html
 }
 
-echo 'Should I give you links for system applications (e.g. Skype, Tower, VLC)?'
+echo 'Should I give you links for system applications (e.g. Tower, VLC)?'
 echo 'n / y'
 read give_links
 [[ "$give_links" == 'y' ]] && open_apps
