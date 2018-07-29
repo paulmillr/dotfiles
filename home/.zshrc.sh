@@ -133,8 +133,9 @@ function gl() {
 
 # own git workflow in hy origin with Tower
 
-
+# ===============
 # Dev short-cuts.
+# ===============
 
 # Brunch.
 alias bb='brunch build'
@@ -142,51 +143,24 @@ alias bbp='brunch build --production'
 alias bw='brunch w'
 alias bws='brunch w --server'
 
-alias nr='npm run'
-
 # Package managers.
-alias ni='npm install'
-alias nid='npm install --save-dev'
-alias nibi='npm install & bower install'
-alias nibir='rm -rf {node_modules} && npm install'
-alias nup='npm update'
-alias ns='npm search'
-
+alias nr='npm run'
 alias brewup='brew update && brew upgrade'
 alias jk='jekyll serve --watch' # lol jk
 # alias serve='python -m SimpleHTTPServer'
 alias serve='http-serve' # npm install http-server
 alias server='http-serve'
-alias python2='python2.7'
 
 # Ruby.
 alias bx='bundle exec'
 alias bex='bundle exec'
 alias migr='bundle exec rake db:migrate'
 
-# Nginx short-cuts.
-alias ngup='sudo nginx'
-alias ngdown='sudo nginx -s stop'
-alias ngre='sudo nginx -s stop && sudo nginx'
-alias nglog='tail -f /usr/local/var/log/nginx/access.log'
-alias ngerr='tail -f /usr/local/var/log/nginx/error.log'
-
 # Checks whether connection is up.
-alias net="ping ya.ru | grep -E --only-match --color=never '[0-9\.]+ ms'"
+alias net="ping google.com | grep -E --only-match --color=never '[0-9\.]+ ms'"
 
 # Pretty print json
 alias json='python -m json.tool'
-
-# Burl: better curl shortcuts (https://github.com/visionmedia/burl).
-if (( $+commands[burl] )); then
-  alias GET='burl GET'
-  alias HEAD='burl -I'
-  alias POST='burl POST'
-  alias PUT='burl PUT'
-  alias PATCH='burl PATCH'
-  alias DELETE='burl DELETE'
-  alias OPTIONS='burl OPTIONS'
-fi
 
 # Lists the ten most used commands.
 alias history-stat="history 0 | awk '{print \$2}' | sort | uniq -c | sort -n -r | head"
@@ -194,28 +168,6 @@ alias history-stat="history 0 | awk '{print \$2}' | sort | uniq -c | sort -n -r 
 # ==================================================================
 # = Functions =
 # ==================================================================
-# Show man page in Preview.app.
-# $ manp cd
-function manp {
-  local page
-  if (( $# > 0 )); then
-    for page in "$@"; do
-      man -t "$page" | open -f -a Preview
-    done
-  else
-    print 'What manual page do you want?' >&2
-  fi
-}
-
-# Show current Finder directory.
-function finder {
-  osascript 2>/dev/null <<EOF
-    tell application "Finder"
-      return POSIX path of (target of window 1 as alias)
-    end tell
-EOF
-}
-
 # Gets password from macOS Keychain.
 # $ get-pass github
 function get-pass() {
@@ -338,55 +290,6 @@ function aes-dec() {
   openssl enc -aes-256-cbc -d -in $1 -out "${1%.*}"
 }
 
-# Converts a.mkv to a.m4v.
-function mkv2mp4() {
-  for file in "$@"; do
-    ffmpeg -i $file -map 0 -c copy "${file%.*}.m4v"
-  done
-}
-
-function mkv2mp4_1() {
-  for file in "$@"; do
-    ffmpeg -i $file -map 0:0 -map 0:1 -c copy -c:s mov_text "${file%.*}.m4v"
-  done
-}
-
-function mkv2mp4_2() {
-  for file in "$@"; do
-    ffmpeg -i $file -map 0:0 -map 0:2 -c copy -c:s mov_text "${file%.*}.m4v"
-  done
-}
-
-function mkv2mp4_3() {
-  for file in "$@"; do
-    ffmpeg -i $file -map 0:0 -map 0:3 -c copy -c:s mov_text "${file%.*}.m4v"
-  done
-}
-
-# Adds subs from a.srt to a.m4v.
-function addsubs() {
-  for file in "$@"; do
-    local raw="${file%.*}"
-    local old="$raw.m4v"
-    local new="$raw-sub.m4v"
-    ffmpeg -i $old -i $file -map 0 -map 1 -c copy -c:s mov_text $new
-    mv $new $old
-    rm $file
-  done
-}
-
-
-# Shortens GitHub URLs. By Sorin Ionescu <sorin.ionescu@gmail.com>
-function gitio() {
-  local url="$1"
-  local code="$2"
-
-  [[ -z "$url" ]] && print "usage: $0 url code" >&2 && exit
-  [[ -z "$code" ]] && print "usage: $0 url code" >&2 && exit
-
-  curl -s -i 'http://git.io' -F "url=$url" -F "code=$code"
-}
-
 # Monitor IO in real-time (open files etc).
 function openfiles() {
   sudo dtrace -n 'syscall::open*:entry { printf("%s %s",execname,copyinstr(arg0)); }'
@@ -411,11 +314,4 @@ function retry() {
   $@
   sleep 1
   retry $@
-}
-
-# Open curr dir in preview.app.
-function preview() {
-  local item=$1
-  [[ -z "$item" ]] && item='.'
-  open $1 -a 'Preview'
 }
