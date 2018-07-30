@@ -36,10 +36,10 @@ if [[ `uname` == 'Darwin' ]]; then
     # source 'etc/macos.sh'
 
   # https://github.com/sindresorhus/quick-look-plugins
-  echo 'Installing Quick Look plugins...'
-    brew tap phinze/homebrew-cask
-    brew install caskroom/cask/brew-cask
-    brew cask install suspicious-package quicklook-json qlmarkdown qlstephen qlcolorcode
+  # echo 'Installing Quick Look plugins...'
+  #   brew tap phinze/homebrew-cask
+  #   brew install caskroom/cask/brew-cask
+  #   brew cask install suspicious-package quicklook-json qlmarkdown qlstephen qlcolorcode
 fi
 
 echo 'Symlinking config files...'
