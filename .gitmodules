@@ -1,9 +1,3 @@
-[submodule "sublime/Packages/Theme - Soda"]
-	path = sublime/Packages/Theme - Soda
-	url = git@github.com:buymeasoda/soda-theme.git
-[submodule "sublime/Packages/Theme - Nil"]
-	path = sublime/Packages/Theme - Nil
-	url = git@github.com:nilium/st2-nil-theme.git
 [submodule "terminal/completion"]
 	path = terminal/completion
 	url = https://github.com/zsh-users/zsh-completions.git
