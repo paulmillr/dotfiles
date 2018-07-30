@@ -13,7 +13,6 @@
 
   graph = log --graph
   last = log -n 10
-  url = !git remote -v|sed "'s|.*git[:@]\\(.*\\).git.*|http://\\1|;s|m:|m/|'"|uniq|xargs open
   whois = "!sh -c 'git log -i -1 --pretty=\"format:%an <%ae>\n\" --author=\"$1\"' -"
   rmtag = "!sh -c 'git tag -d $1; git push origin :refs/tags/$1'"
 
@@ -40,26 +39,10 @@
 [format]
   pretty = %Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset
   graph = true
-
 [advice]
   statusHints = false
-
 [log]
   abbrevCommit = true
-
-# URL shorthands
-# gh:paulmillr/dotfiles
-[url "git@github.com:"]
-  insteadOf = "gh:"
-  pushInsteadOf = "gh:"
-  pushInsteadOf = "git://github.com/"
-
-# gist:3928760
-[url "git@gist.github.com:"]
-  insteadOf = "gist:"
-  pushInsteadOf = "gist:"
-  pushInsteadOf = "git://gist.github.com/"
-
 [mergetool]
 	keepBackup = false
 [ghi]

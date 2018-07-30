@@ -30,12 +30,6 @@ alias cl='clear'
 # Disable sertificate check for wget.
 alias wget='wget --no-check-certificate'
 
-# JSHint short-cut.
-alias lint=jshint
-
-# Faster NPM for europeans.
-# alias npme='npm --registry http://registry.npmjs.eu'
-
 # Some macOS-only stuff.
 if [[ "$OSTYPE" == darwin* ]]; then
   # Short-cuts for copy-paste.
@@ -43,7 +37,7 @@ if [[ "$OSTYPE" == darwin* ]]; then
   alias p='pbpaste'
 
   # Remove all items safely, to Trash (`brew install trash`).
-  alias rm='trash'
+  hash trash && alias rm='trash' 2> /dev/null
 
   # Lock current session and proceed to the login screen.
   alias lock='/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend'
@@ -73,11 +67,7 @@ alias gup='git pull && git push'
 
 alias gs='git status --short'
 alias gd='git diff'
-alias gds='git diff --staged'
-alias gdn='git diff --name-only'
 alias gdisc='git discard'
-
-alias grao='git remote add origin'
 
 function gc() {
   args=$@
