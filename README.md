@@ -7,13 +7,14 @@ Installation is done with simple command set (see “building system from scratc
 curl --silent https://raw.githubusercontent.com/paulmillr/dotfiles/master/install.sh | sh
 ```
 
-## Additional steps
+## Steps
 
 1. Create `~/Developer/`
 2. Change default shell to ZSH: `chsh -s /bin/zsh`.
 3. Install XCode.
-4. Install [Hermit](https://pcaro.es/p/hermit/#downloads) font.
+4. Clone this project (dotfiles **RECURSIVELY** `--recursive`) and run `sh bootstrap-new-system.sh`
 5. Change Terminal.app theme to `terminal/paulmillr.terminal` (Settings -> Profiles -> Press gear -> Import).
+
 
 ## Features
 
@@ -51,19 +52,16 @@ Shell (zsh):
   [homeshick](https://github.com/andsens/homeshick)-compatible
 
 ## Structure
-* `bin` — files that are symlinked to any directory with binaries in `$PATH`
 * `etc` — various stuff like macOS text substitutions / hosts backup
 * `git-extras` — useful git functions, defined in `home/gitconfig`. Don't forget to change your git author to a proper name.
 * `home` — files that are symlinked to `$HOME` directory
-* `sublime` — sublime text 2 theme & settings
+* `sublime` — sublime text theme & settings
 * `terminal` — terminal theme & prompt
 
-## Building system from scratch (reminder)
+## Other
 
-* Insert proper hosts from `etc/hosts` to system’s `/etc/hosts`.
-* Clone this project (dotfiles **RECURSIVELY** `--recursive`) and run `sh bootstrap-new-system.sh`
-* Download the Yosemite style [Sublime Text icon](https://dribbble.com/shots/1840393-Sublime-Text-Yosemite-Icon?list=searches&tag=sublime_text) (instructions on usage are included in download)
-* Install Sublime packages with Package Control: "Seti UI"
+- Cool [Sublime Text icon](https://dribbble.com/shots/1840393-Sublime-Text-Yosemite-Icon?list=searches&tag=sublime_text)
+- Great Sublime themes: Glacier, Nil, Seti UI
 
 ## License
 
