@@ -30,8 +30,6 @@ if [[ `uname` == 'Darwin' ]]; then
   if [[ $? != 0 ]]; then
     echo 'Installing Homebrew...'
       /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-      brew update
-      brew install htop mysql node ruby wget trash
   fi
 
   # echo 'Tweaking macOS...'
@@ -60,20 +58,5 @@ echo 'Applying sublime config...'
   else
     echo "Install Sublime Text https://www.sublimetext.com"
   fi
-
-open_apps() {
-  echo 'Install apps:'
-  echo 'Tower:'
-  open https://www.git-tower.com
-  echo 'Transmission:'
-  open https://transmissionbt.com/
-  echo 'VLC:'
-  open http://www.videolan.org/vlc/index.html
-}
-
-echo 'Should I give you links for system applications (e.g. Tower, VLC)?'
-echo 'n / y'
-read give_links
-[[ "$give_links" == 'y' ]] && open_apps
 
 popd
