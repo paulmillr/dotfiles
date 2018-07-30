@@ -467,9 +467,6 @@ else
   fi
 fi
 
-alias pbc='pbcopy'
-alias pbp='pbpaste'
-
 # File Download
 if (( $+commands[curl] )); then
   alias get='curl --continue-at - --location --progress-bar --remote-name --remote-time'
