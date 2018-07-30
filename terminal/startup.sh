@@ -139,9 +139,6 @@ setopt HIST_BEEP                 # Beep when accessing non-existent history.
 # Aliases
 #
 
-# Lists the ten most used commands.
-alias history-stat="history 0 | awk '{print \$2}' | sort | uniq -c | sort -n -r | head"
-
 
 #
 # Provides for easier use of 256 colors and effects.
@@ -226,74 +223,6 @@ unset color{s,} index
 #   return 1
 # fi
 
-# Sets the terminal or terminal multiplexer window title.
-function set-window-title {
-  local title_format{,ted}
-  zstyle -s ':prezto:module:terminal:window-title' format 'title_format' || title_format="%s"
-  zformat -f title_formatted "$title_format" "s:$argv"
-
-  if [[ "$TERM" == screen* ]]; then
-    title_format="\ek%s\e\\"
-  else
-    title_format="\e]2;%s\a"
-  fi
-
-  printf "$title_format" "${(V%)title_formatted}"
-}
-
-# Sets the terminal tab title.
-function set-tab-title {
-  local title_format{,ted}
-  zstyle -s ':prezto:module:terminal:tab-title' format 'title_format' || title_format="%s"
-  zformat -f title_formatted "$title_format" "s:$argv"
-
-  printf "\e]1;%s\a" ${(V%)title_formatted}
-}
-
-# Sets the tab and window titles with a given command.
-function _terminal-set-titles-with-command {
-  emulate -L zsh
-  setopt EXTENDED_GLOB
-
-  # Get the command name that is under job control.
-  if [[ "${2[(w)1]}" == (fg|%*)(\;|) ]]; then
-    # Get the job name, and, if missing, set it to the default %+.
-    local job_name="${${2[(wr)%*(\;|)]}:-%+}"
-
-    # Make a local copy for use in the subshell.
-    local -A jobtexts_from_parent_shell
-    jobtexts_from_parent_shell=(${(kv)jobtexts})
-
-    jobs "$job_name" 2>/dev/null > >(
-      read index discarded
-      # The index is already surrounded by brackets: [1].
-      _terminal-set-titles-with-command "${(e):-\$jobtexts_from_parent_shell$index}"
-    )
-  else
-    # Set the command name, or in the case of sudo or ssh, the next command.
-    local cmd="${${2[(wr)^(*=*|sudo|ssh|-*)]}:t}"
-    local truncated_cmd="${cmd/(#m)?(#c15,)/${MATCH[1,12]}...}"
-    unset MATCH
-
-    set-window-title "$cmd"
-    set-tab-title "$truncated_cmd"
-  fi
-}
-
-# Sets the tab and window titles with a given path.
-function _terminal-set-titles-with-path {
-  emulate -L zsh
-  setopt EXTENDED_GLOB
-
-  local absolute_path="${${1:a}:-$PWD}"
-  local abbreviated_path="${absolute_path/#$HOME/~}"
-  local truncated_path="${abbreviated_path/(#m)?(#c15,)/...${MATCH[-12,-1]}}"
-  unset MATCH
-
-  set-window-title "$abbreviated_path"
-  set-tab-title "$truncated_path"
-}
-
 # Sets the Terminal.app proxy icon.
 function _terminal-set-terminal-app-proxy-icon {
   printf '\e]7;%s\a' "file://$HOST${${1:-$PWD}// /%20}"
@@ -331,18 +260,6 @@ function term() {
 
 term
 
-# Set up non-Apple terminals.
-# if zstyle -t ':prezto:module:terminal' auto-title \
-#   && ( ! [[ -n "$STY" || -n "$TMUX" ]] )
-# then
-#   # Sets the tab and window titles before the prompt is displayed.
-#   add-zsh-hook precmd _terminal-set-titles-with-path
-
-#   # Sets the tab and window titles before command execution.
-#   add-zsh-hook preexec _terminal-set-titles-with-command
-# fi
-
-
 #
 # Defines general aliases and functions.
 #
@@ -372,7 +289,6 @@ alias ln='nocorrect ln'
 alias man='nocorrect man'
 alias mkdir='nocorrect mkdir'
 alias mv='nocorrect mv'
-# alias mysql='nocorrect mysql'
 alias rm='nocorrect rm'
 
 # Disable globbing.
@@ -386,20 +302,7 @@ alias rake='noglob rake'
 alias rsync='noglob rsync'
 alias scp='noglob scp'
 alias sftp='noglob sftp'
-
-# Define general aliases.
-alias _='sudo'
-alias b='${(z)BROWSER}'
-alias cp="${aliases[cp]:-cp} -i"
 alias e='${(z)VISUAL:-${(z)EDITOR}}'
-alias ln="${aliases[ln]:-ln} -i"
-alias mkdir="${aliases[mkdir]:-mkdir} -p"
-alias mv="${aliases[mv]:-mv} -i"
-alias p='${(z)PAGER}'
-alias po='popd'
-alias pu='pushd'
-alias rm="${aliases[rm]:-rm} -i"
-alias type='type -a'
 
 # Checks if a name is a command, function, or alias.
 function is-callable {
@@ -438,14 +341,7 @@ fi
 
 alias l='ls -1A'         # Lists in one column, hidden files.
 alias ll='ls -lh'        # Lists human readable sizes.
-alias lr='ll -R'         # Lists human readable sizes, recursively.
 alias la='ll -A'         # Lists human readable sizes, hidden files.
-alias lm='la | "$PAGER"' # Lists human readable sizes, hidden files through pager.
-alias lx='ll -XB'        # Lists sorted by extension (GNU only).
-alias lk='ll -Sr'        # Lists sorted by size, largest last.
-alias lt='ll -tr'        # Lists sorted by date, most recent last.
-alias lc='lt -c'         # Lists sorted by date, most recent last, shows change time.
-alias lu='lt -u'         # Lists sorted by date, most recent last, shows access time.
 alias sl='ls'            # I often screw this up.
 
 # macOS Everywhere
@@ -474,46 +370,9 @@ elif (( $+commands[wget] )); then
   alias get='wget --continue --progress=bar --timestamping'
 fi
 
-# Resource Usage
-alias df='df -kh'
-alias du='du -kh'
-
-if (( $+commands[htop] )); then
-  alias top=htop
-else
-  alias topc='top -o cpu'
-  alias topm='top -o vsize'
-fi
-
-# Miscellaneous
-
-# Serves a directory via HTTP.
-alias http-serve='python -m SimpleHTTPServer'
-
 #
 # Functions
 #
-
-# Makes a directory and changes to it.
-function mkdcd {
-  [[ -n "$1" ]] && mkdir -p "$1" && builtin cd "$1"
-}
-
-# Changes to a directory and lists its contents.
-function cdls {
-  builtin cd "$argv[-1]" && ls "${(@)argv[1,-2]}"
-}
-
-# Finds files and executes a command on them.
-function find-exec {
-  find . -type f -iname "*${1:-}*" -exec "${2:-file}" '{}' \;
-}
-
-# Displays user owned processes status.
-function psu {
-  ps -U "${1:-$USER}" -o 'pid,%cpu,%mem,command' "${(@)argv[2,-1]}"
-}
-
 
 function diff {
   git --no-pager diff --color=auto --no-ext-diff --no-index "$@"
