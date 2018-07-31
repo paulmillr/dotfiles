@@ -14,7 +14,7 @@ curl --silent https://raw.githubusercontent.com/paulmillr/dotfiles/master/instal
 3. Install XCode.
 4. Clone this project (dotfiles **RECURSIVELY** `--recursive`) and run `sh bootstrap-new-system.sh`
 5. Change Terminal.app theme to `terminal/paulmillr.terminal` (Settings -> Profiles -> Press gear -> Import).
-
+6. Don't forget to change the git user in `home/.gitconfig`. That's it!
 
 ## Features
 
