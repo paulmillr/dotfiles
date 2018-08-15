@@ -59,11 +59,11 @@ sudo tmutil disablelocal
 sudo pmset -a hibernatemode 0
 
 # Remove the sleep image file to save disk space
-sudo rm /Private/var/vm/sleepimage
+#sudo rm /Private/var/vm/sleepimage
 # Create a zero-byte file instead…
-sudo touch /Private/var/vm/sleepimage
+#sudo touch /Private/var/vm/sleepimage
 # …and make sure it can’t be rewritten
-sudo chflags uchg /Private/var/vm/sleepimage
+#sudo chflags uchg /Private/var/vm/sleepimage
 
 # Disable the sudden motion sensor as it’s not useful for SSDs
 sudo pmset -a sms 0
@@ -78,9 +78,9 @@ defaults write NSGlobalDomain AppleShowAllExtensions -bool true
 defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
 
 # Disable disk image verification
-defaults write com.apple.frameworks.diskimages skip-verify -bool true
-defaults write com.apple.frameworks.diskimages skip-verify-locked -bool true
-defaults write com.apple.frameworks.diskimages skip-verify-remote -bool true
+#defaults write com.apple.frameworks.diskimages skip-verify -bool true
+#defaults write com.apple.frameworks.diskimages skip-verify-locked -bool true
+#defaults write com.apple.frameworks.diskimages skip-verify-remote -bool true
 
 # When performing a search, search the current folder by default
 defaults write com.apple.finder FXDefaultSearchScope -string "SCcf"
@@ -89,7 +89,7 @@ defaults write com.apple.finder FXDefaultSearchScope -string "SCcf"
 defaults write com.apple.finder WarnOnEmptyTrash -bool false
 
 # Show the ~/Library folder
-chflags nohidden ~/Library
+#chflags nohidden ~/Library
 
 # Safari
 # ======
