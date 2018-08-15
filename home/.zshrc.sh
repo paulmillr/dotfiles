@@ -118,7 +118,7 @@ alias gbrd='git branch -D'
 function gl() {
   count=$1
   [[ -z "$1" ]] && count=10
-  git graph --no-merges | head -n $count
+  git --no-pager log --graph --no-merges --max-count=$count
 }
 
 # own git workflow in hy origin with Tower
