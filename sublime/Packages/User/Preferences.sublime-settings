@@ -2,7 +2,7 @@
 	"always_show_minimap_viewport": false,
 	"bold_folder_labels": true,
 	"caret_style": "phase",
-	"color_scheme": "Packages/Color Scheme - Default/Breakers.tmTheme",
+	"color_scheme": "Packages/OLED Color Scheme/OLED.sublime-color-scheme",
 	"draw_indent_guides": true,
 	"ensure_newline_at_eof_on_save": true,
 	"file_exclude_patterns":
@@ -18,12 +18,12 @@
 		"tmp",
 		"node_modules"
 	],
-	"font_face": "PT Mono",
+	"font_face": "SF Mono",
 	"font_options":
 	[
 		"gray_antialias2"
 	],
-	"font_size": 14,
+	"font_size": 13,
 	"highlight_line": true,
 	"highlight_modified_tabs": true,
 	"ignored_packages":
@@ -45,7 +45,7 @@
 	"save_on_focus_lost": false,
 	"side_bar_width": 150,
 	"tab_size": 2,
-	"theme": "Adaptive.sublime-theme",
+	"theme": "Glacier.sublime-theme",
 	"translate_tabs_to_spaces": true,
 	"trim_trailing_white_space_on_save": true,
 	"word_wrap": true
