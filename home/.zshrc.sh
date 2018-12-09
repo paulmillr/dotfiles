@@ -137,9 +137,9 @@ alias bws='brunch w --server'
 alias nr='npm run'
 alias brewup='brew update && brew upgrade'
 alias jk='jekyll serve --watch' # lol jk
-# alias serve='python -m SimpleHTTPServer'
-alias serve='http-serve' # npm install http-server
-alias server='http-serve'
+# alias serve='http-serve' # npm install http-server
+alias serve='python -m SimpleHTTPServer'
+alias server='serve'
 
 # Ruby.
 alias bx='bundle exec'
