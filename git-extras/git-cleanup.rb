@@ -15,7 +15,7 @@
 # The script can be redistributed under the MIT License.
 
 # CONFIG
-UNTOUCHABLES = %w[master staging]
+UNTOUCHABLES = %w[master staging live]
 REQUIRED_BRANCH = 'master'
 
 class BranchList < Array
