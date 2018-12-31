@@ -310,3 +310,10 @@ function retry() {
   sleep 1
   retry $@
 }
+
+# Managing .tar.bz2 archives - best compression.
+function tarbz2() {
+  tar -cvjf "$1.tar.bz2" "$1"
+}
+
+alias untarbz2='tar -xvjf'
