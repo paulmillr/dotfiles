@@ -291,11 +291,16 @@ function compute() {
     | hexdump -C | grep "ca fe"
 }
 
-# Load 8 cores at once.
+# Load all CPU cores at once.
 function maxcpu() {
+  cores=$(sysctl -n hw.ncpu)
   dn=/dev/null
-  yes > $dn & yes > $dn & yes > $dn & yes > $dn &
-  yes > $dn & yes > $dn & yes > $dn & yes > $dn &
+  i=0
+  while (( i < $((cores)) )); do
+    yes > $dn &
+    (( ++i ))
+  done
+  echo "Loaded $cores cores. To stop: 'killall yes'"
 }
 
 # $ retry ping google.com
