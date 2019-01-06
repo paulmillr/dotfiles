@@ -223,7 +223,7 @@ function loc() {
 
 # Show how much RAM application uses.
 # $ ram safari
-# # => safari uses 154.69 MBs of RAM.
+# # => safari uses 154.69 MBs of RAM
 function ram() {
   local sum
   local items
@@ -237,7 +237,7 @@ function ram() {
     done
     sum=$(echo "scale=2; $sum / 1024.0" | bc)
     if [[ $sum != "0" ]]; then
-      echo "${fg[blue]}${app}${reset_color} uses ${fg[green]}${sum}${reset_color} MBs of RAM."
+      echo "${fg[blue]}${app}${reset_color} uses ${fg[green]}${sum}${reset_color} MBs of RAM"
     else
       echo "There are no processes with pattern '${fg[blue]}${app}${reset_color}' are running."
     fi
@@ -313,7 +313,14 @@ function retry() {
 
 # Managing .tar.bz2 archives - best compression.
 function tarbz2() {
-  tar -cvjf "$1.tar.bz2" "$1"
+  inf="$1"
+  outf="$1.tar.bz2"
+  # Use parallel version when it exists.
+  if command -v pbzip2 > /dev/null 2>&1; then
+    tar --use-compress-program pbzip2 -cf "$outf" "$inf"
+  else
+    tar -cvjf "$outf" "$inf"
+  fi
 }
 
 alias untarbz2='tar -xvjf'
