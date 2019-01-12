@@ -146,26 +146,22 @@ alias bx='bundle exec'
 alias bex='bundle exec'
 alias migr='bundle exec rake db:migrate'
 
+# $ git log --no-merges --pretty=format:"%ae" | stats
+# # => 514 a@example.com
+# # => 200 b@example.com
+alias stats='sort | uniq -c | sort -r'
+# Lists the ten most used commands.
+alias history-stats="history 0 | awk '{print \$2}' | stats | head"
+
 # Checks whether connection is up.
 alias net="ping google.com | grep -E --only-match --color=never '[0-9\.]+ ms'"
 
 # Pretty print json
 alias json='python -m json.tool'
 
-# Lists the ten most used commands.
-alias history-stat="history 0 | awk '{print \$2}' | sort | uniq -c | sort -n -r | head"
-
 # ==================================================================
 # = Functions =
 # ==================================================================
-# Gets password from macOS Keychain.
-# $ get-pass github
-function get-pass() {
-  keychain="$HOME/Library/Keychains/login.keychain"
-  security -q find-generic-password -g -l $@ $keychain 2>&1 |\
-    awk -F\" '/password:/ {print $2}';
-}
-
 # Opens file in EDITOR.
 function edit() {
   local dir=$1
@@ -246,7 +242,7 @@ function ram() {
 
 # $ size dir1 file2.js
 function size() {
-  # du -sh "$@" 2>&1 | grep -v '^du:' | sort -nr
+  # du -scBM | sort -n
   du -shck "$@" | sort -rn | awk '
       function human(x) {
           s="kMGTEPYZ";
@@ -257,18 +253,9 @@ function size() {
       {gsub(/^[0-9]+/, human($1)); print}'
 }
 
-# $ git log --no-merges --pretty=format:"%ae" | stats
-# # => 514 a@example.com
-# # => 200 b@example.com
-function stats() {
-  sort | uniq -c | sort -r
-}
-
 # Shortcut for searching commands history.
 # hist git
-function hist() {
-  history 0 | grep $@
-}
+alias hist='history 0 | grep'
 
 # $ aes-enc file.zip
 function aes-enc() {
@@ -278,11 +265,6 @@ function aes-enc() {
 # $ aes-dec file.zip.aes
 function aes-dec() {
   openssl enc -aes-256-cbc -d -in $1 -out "${1%.*}"
-}
-
-# Monitor IO in real-time (open files etc).
-function openfiles() {
-  sudo dtrace -n 'syscall::open*:entry { printf("%s %s",execname,copyinstr(arg0)); }'
 }
 
 # 4 lulz.

@@ -70,6 +70,7 @@ unset path_file
 # Set the list of directories that Zsh searches for programs.
 path=(
   /usr/local/lib/ruby/gems/2.6.0/bin
+  /usr/local/Cellar/python/3.7.2/Frameworks/Python.framework/Versions/3.7/bin
   /usr/local/{bin,sbin}
   /usr/{bin,sbin}
   /{bin,sbin}
