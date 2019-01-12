@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 dev="$HOME/Developer"
 dotfiles="$dev/personal/dotfiles"
