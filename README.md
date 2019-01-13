@@ -5,7 +5,7 @@ Colourful & robust configuration files and utilities for Mac, Linux and BSD. Ins
 curl -L https://git.io/pmdot | sh
 ```
 
-The short URL expands to GitHub raw file `install.sh`.
+The short URL expands to GitHub-hosted `install.sh`
 
 ## Usage
 
@@ -15,22 +15,9 @@ The short URL expands to GitHub raw file `install.sh`.
 - **Terminal theme:** `terminal/pm.terminal` (Settings -> Profiles -> Press gear -> Import).
 - **Git:** Don't forget to adjust `home/.gitconfig` or you'll have improper commit author
 
-## Structure
-* `etc` — various stuff like macOS text substitutions / hosts backup
-* `git-extras` — useful git functions, defined in `home/gitconfig`
-* `home` — files that are symlinked to `$HOME` directory
-* `sublime` — sublime text theme & settings
-* `terminal` — terminal theme & prompt
-
 ## Features
 
-![](https://cloud.githubusercontent.com/assets/574696/3210643/80f11554-eed7-11e3-8c8f-5509bc304fc7.png)
-
-![](https://cloud.githubusercontent.com/assets/574696/3210642/7ecc9a00-eed7-11e3-9357-27c2a8576f80.png)
-
-Shell (zsh):
-
-* **NO DEPENDENCIES!**
+* **NO DEPENDENCIES!** Great when compared to oh-my-zsh.
 * Auto-completion
 * Syntax highlighting
 * Sets terminal tab and window title to current directory
@@ -43,7 +30,7 @@ Shell (zsh):
     * `ram safari` — show app RAM usage
     * `loc py coffee js html css` — count lines of code
     * `curl http://site/v1/api.json | json` - pretty-print JSON
-* Neat git extras:
+* `git-extras` - useful git functions, defined in `home/.gitconfig`:
     * Opinionated `git log`, `git graph`
     * `gcp` for fast `git commit -m ... && git push`
     * `git pr <pull-req> [origin]` for fetching pull request branches
@@ -53,8 +40,14 @@ Shell (zsh):
     * `git release` — save changes, tag commit. If used on node.js project, also push to npm.
     * `git url` - opens GitHub repo for current git repo.
     * `git-changelog`, `git-setup` etc.
+* `etc` — MacOS fine tuning
+* `sublime` — Sublime Text theme & settings
 * [homesick](https://github.com/technicalpickles/homesick) /
   [homeshick](https://github.com/andsens/homeshick)-compatible
+
+![](https://cloud.githubusercontent.com/assets/574696/3210643/80f11554-eed7-11e3-8c8f-5509bc304fc7.png)
+
+![](https://cloud.githubusercontent.com/assets/574696/3210642/7ecc9a00-eed7-11e3-9357-27c2a8576f80.png)
 
 ## Not included
 
