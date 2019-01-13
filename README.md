@@ -17,6 +17,10 @@ The short URL expands to GitHub-hosted `install.sh`
 
 ## Features
 
+![](https://cloud.githubusercontent.com/assets/574696/3210643/80f11554-eed7-11e3-8c8f-5509bc304fc7.png)
+
+![](https://cloud.githubusercontent.com/assets/574696/3210642/7ecc9a00-eed7-11e3-9357-27c2a8576f80.png)
+
 * **NO DEPENDENCIES!** Great when compared to oh-my-zsh.
 * Auto-completion
 * Syntax highlighting
@@ -44,10 +48,6 @@ The short URL expands to GitHub-hosted `install.sh`
 * `sublime` — Sublime Text theme & settings
 * [homesick](https://github.com/technicalpickles/homesick) /
   [homeshick](https://github.com/andsens/homeshick)-compatible
-
-![](https://cloud.githubusercontent.com/assets/574696/3210643/80f11554-eed7-11e3-8c8f-5509bc304fc7.png)
-
-![](https://cloud.githubusercontent.com/assets/574696/3210642/7ecc9a00-eed7-11e3-9357-27c2a8576f80.png)
 
 ## Not included
 
