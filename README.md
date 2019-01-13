@@ -1,11 +1,15 @@
 # Dotfiles
-Colourful & robust macOS configuration files and utilities.
-
-Installation is done with simple command set (see “building system from scratch” for setup of new system):
+Colourful & robust configuration files and utilities. Installation is done with a simple command:
 
 ```
-curl https://raw.githubusercontent.com/paulmillr/dotfiles/master/install.sh | sh
+curl -L git.io/pmdot | sh
 ```
+
+## Supported systems
+
+* MacOS
+* Linux
+* BSD
 
 ## Steps
 
