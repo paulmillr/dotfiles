@@ -1,15 +1,9 @@
 # Dotfiles
-Colourful & robust configuration files and utilities. Installation is done with a simple command:
+Colourful & robust configuration files and utilities for Mac, Linux and BSD. Installation is done with a simple command:
 
-```
+```sh
 curl -L git.io/pmdot | sh
 ```
-
-## Supported systems
-
-* MacOS
-* Linux
-* BSD
 
 ## Steps
 
