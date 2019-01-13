@@ -9,7 +9,7 @@ The short URL expands to GitHub-hosted `install.sh`
 
 ## Usage
 
-- **MacOS:** Ensure you have latest XCode or dev tools. It can be downloaded from the app store.
+- **MacOS:** Ensure you have XCode or dev tools. It can be downloaded from the app store.
     - Optionally `sh etc/bootstrap-macos.sh`
 - **Linux and BSD:** Ensure you have `git` and `zsh` installed.
 - **Terminal theme:** `terminal/pm.terminal` (Settings -> Profiles -> Press gear -> Import).
@@ -24,8 +24,6 @@ The short URL expands to GitHub-hosted `install.sh`
 * **NO DEPENDENCIES!** Great when compared to oh-my-zsh.
 * Auto-completion
 * Syntax highlighting
-* Sets terminal tab and window title to current directory
-* `rm` moves file to the MacOS trash with `brew install trash`
 * Useful utilities:
     * `ff file-name-or-pattern` - fast recursive search for a file name in directories.
     * `aes-enc`, `aes-dec` - safely encrypt files.
@@ -46,6 +44,8 @@ The short URL expands to GitHub-hosted `install.sh`
     * `git-changelog`, `git-setup` etc.
 * `etc` — MacOS fine tuning
 * `sublime` — Sublime Text theme & settings
+* `rm` moves file to the MacOS trash with `brew install trash`
+* Sets terminal tab and window title to current directory
 * [homesick](https://github.com/technicalpickles/homesick) /
   [homeshick](https://github.com/andsens/homeshick)-compatible
 
