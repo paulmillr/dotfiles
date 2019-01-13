@@ -43,7 +43,7 @@ if [[ `uname` == 'Darwin' ]]; then
 fi
 
 echo 'Symlinking config files...'
-  source 'bin/symlink-dotfiles.sh'
+  source 'etc/symlink-dotfiles.sh'
 
 echo 'Applying sublime config...'
   st=$(pwd)/sublime/packages

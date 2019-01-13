@@ -2,17 +2,25 @@
 Colourful & robust configuration files and utilities for Mac, Linux and BSD. Installation is done with a simple command:
 
 ```sh
-curl -L git.io/pmdot | sh
+curl -L https://git.io/pmdot | sh
 ```
 
-## Steps
+The short URL expands to GitHub raw file `install.sh`.
 
-1. Create `~/Developer/`
-2. Change default shell to ZSH: `chsh -s /bin/zsh`.
-3. Install XCode.
-4. Clone this project (dotfiles **RECURSIVELY** `--recursive`) and run `sh bootstrap-new-system.sh`
-5. Change Terminal.app theme to `terminal/paulmillr.terminal` (Settings -> Profiles -> Press gear -> Import).
-6. Don't forget to change the git user in `home/.gitconfig`. That's it!
+## Usage
+
+- **MacOS:** Ensure you have latest XCode or dev tools. It can be downloaded from the app store.
+    - Optionally `sh etc/bootstrap-macos.sh`
+- **Linux and BSD:** Ensure you have `git` and `zsh` installed.
+- **Terminal theme:** `terminal/pm.terminal` (Settings -> Profiles -> Press gear -> Import).
+- **Git:** Don't forget to adjust `home/.gitconfig` or you'll have improper commit author
+
+## Structure
+* `etc` — various stuff like macOS text substitutions / hosts backup
+* `git-extras` — useful git functions, defined in `home/gitconfig`
+* `home` — files that are symlinked to `$HOME` directory
+* `sublime` — sublime text theme & settings
+* `terminal` — terminal theme & prompt
 
 ## Features
 
@@ -25,17 +33,16 @@ Shell (zsh):
 * **NO DEPENDENCIES!**
 * Auto-completion
 * Syntax highlighting
-* Automatic setting up of terminal tab / window title to current dir
-* `rm` moves file to the macOS trash
-* A bunch of useful functions:
+* Sets terminal tab and window title to current directory
+* `rm` moves file to the MacOS trash with `brew install trash`
+* Useful utilities:
+    * `ff file-name-or-pattern` - fast recursive search for a file name in directories.
+    * `aes-enc`, `aes-dec` - safely encrypt files.
+    * `tarbz2`, `untarbz2` - best archive compression. Utilizes parallel `pbzip2` when available.
     * `extract archive.tar.bz` — unpack any archive (supports many extensions)
     * `ram safari` — show app RAM usage
-    * `openfiles` — real-time disk usage monitoring with `dtrace`.
     * `loc py coffee js html css` — count lines of code
-    in current dir in a colourful way.
-    * `ff file-name-or-pattern` - fast recursive search for a file name in directories.
     * `curl http://site/v1/api.json | json` - pretty-print JSON
-    * `aes-enc`, `aes-dec` - safely encrypt files.
 * Neat git extras:
     * Opinionated `git log`, `git graph`
     * `gcp` for fast `git commit -m ... && git push`
@@ -49,18 +56,31 @@ Shell (zsh):
 * [homesick](https://github.com/technicalpickles/homesick) /
   [homeshick](https://github.com/andsens/homeshick)-compatible
 
-## Structure
-* `etc` — various stuff like macOS text substitutions / hosts backup
-* `git-extras` — useful git functions, defined in `home/gitconfig`. Don't forget to change your git author to a proper name.
-* `home` — files that are symlinked to `$HOME` directory
-* `sublime` — sublime text theme & settings
-* `terminal` — terminal theme & prompt
+## Not included
 
-## Other
-
-- Cool [Sublime Text icon](https://dribbble.com/shots/1840393-Sublime-Text-Yosemite-Icon?list=searches&tag=sublime_text)
+- Cool [Sublime Text icon](https://dribbble.com/shots/1840393-Sublime-Text-Yosemite-Icon)
 - Great Sublime themes: Glacier, Nil, Seti UI
 
 ## License
 
-[MIT](https://github.com/paulmillr/mit) (c) 2016 Paul Miller (https://paulmillr.com)
+The MIT License (MIT)
+
+Copyright (c) 2019 Paul Miller [(paulmillr.com)](https://paulmillr.com)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the “Software”), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
