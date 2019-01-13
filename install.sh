@@ -7,4 +7,4 @@ mkdir -p $dir
 cd $dir
 git clone --recursive https://github.com/paulmillr/dotfiles.git
 cd dotfiles
-sh symlink-dotfiles.sh
+sh etc/symlink-dotfiles.sh
