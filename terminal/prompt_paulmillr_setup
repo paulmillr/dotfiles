@@ -19,12 +19,15 @@ function prompt_paulmillr_precmd {
 platform="$(uname -s)"
 function list-files {
   case "$platform" in
-     Darwin)
-       echo `script -q /dev/null ls -G . | tr -d '\r' | cat`
-       ;;
-     *)
-       ls .
-       ;;
+    Darwin)
+      echo `script -q /dev/null ls -G . | tr -d '\r' | cat`
+      ;;
+    FreeBSD)
+      echo `script -q /dev/null ls -G . | tr -d '\r' | cat`
+      ;;
+    *)
+      ls .
+      ;;
   esac
 }
 
