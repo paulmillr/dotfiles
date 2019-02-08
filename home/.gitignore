@@ -3,6 +3,7 @@
 *.err
 *.orig
 *.log
+*.swp
 *~
 
 # OS or Editor folders
