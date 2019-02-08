@@ -157,7 +157,11 @@ alias history-stats="history 0 | awk '{print \$2}' | stats | head"
 alias net="ping google.com | grep -E --only-match --color=never '[0-9\.]+ ms'"
 
 # Pretty print json
-alias json='python -m json.tool'
+if command -v pygmentize > /dev/null 2>&1; then
+  alias json='pygmentize -l json -g'
+else
+  alias json='python -m json.tool'
+fi
 
 # ==================================================================
 # = Functions =
