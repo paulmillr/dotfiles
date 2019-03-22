@@ -38,13 +38,16 @@
 	"material_theme_compact_sidebar": true,
 	"material_theme_disable_fileicons": true,
 	"material_theme_small_statusbar": true,
+	"rulers":
+	[
+		100
+	],
 	"save_on_focus_lost": false,
-	"side_bar_width": 150,
+	"side_bar_width": 100,
 	"tab_size": 2,
-	"theme": "Glacier.sublime-theme",
+	"theme": "Adaptive.sublime-theme",
 	"translate_tabs_to_spaces": true,
 	"trim_trailing_white_space_on_save": true,
-	"rulers": [100, 120],
 	"word_wrap": true,
 	"wrap_width": 100
 }
