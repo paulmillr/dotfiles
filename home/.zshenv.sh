@@ -96,3 +96,4 @@ unset BROWSER
 
 export NODE_PATH='/usr/local/lib/node_modules'
 export PATH="/usr/local/opt/ruby/bin:$PATH"
+export HOMEBREW_AUTO_UPDATE_SECS='2592000'
