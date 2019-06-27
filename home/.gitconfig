@@ -1,6 +1,7 @@
 [user]
 	name = Paul Miller
 	email = paul@paulmillr.com
+	signingkey = 61280CD9A383C2E5
 
 [github]
   user = paulmillr
@@ -9,6 +10,8 @@
   discard = reset --hard HEAD
   ci = commit
   ch = checkout
+  sign = commit -S -m
+  signtag = 'tag -s -m ""'
   d = diff
 
   graph = log --graph
@@ -32,7 +35,7 @@
   ui = true
 
 [core]
-  editor = subl
+  editor = code
   excludesfile = ~/.gitignore
   #pager = diff-highlight | less -r
 
