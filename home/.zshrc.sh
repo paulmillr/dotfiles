@@ -162,6 +162,7 @@ if command -v pygmentize > /dev/null 2>&1; then
 else
   alias json='python -m json.tool'
 fi
+alias pygm=pygmentize
 
 # ==================================================================
 # = Functions =
