@@ -68,19 +68,13 @@ done
 unset path_file
 
 # Set the list of directories that Zsh searches for programs.
-path=(
-  $HOME/.rbenv/shims
-  /usr/local/lib/ruby/gems/2.6.0/bin
-  /usr/local/Cellar/python/3.7.2/Frameworks/Python.framework/Versions/3.7/bin
-  /usr/local/{bin,sbin}
-  /usr/{bin,sbin}
-  /{bin,sbin}
-)
+# unset path
+# path=(/usr/local/opt/ruby/bin $path)
 
-for path_file in /etc/paths.d/*(.N); do
-  path+=($(<$path_file))
-done
-unset path_file
+# for path_file in /etc/paths.d/*(.N); do
+#   path+=($(<$path_file))
+# done
+# unset path_file
 
 # Temporary Files.
 if [[ -d "$TMPDIR" ]]; then
@@ -94,7 +88,7 @@ fi
 BROWSER=''
 unset BROWSER
 
-export NODE_PATH='/usr/local/lib/node_modules'
-export PATH="/usr/local/opt/ruby/bin:$PATH"
+# export NODE_PATH='/usr/local/lib/node_modules'
 export HOMEBREW_AUTO_UPDATE_SECS='2592000'
+export PATH="/usr/local/opt/ruby/bin:$PATH"
 export GPG_TTY=$(tty) # For git commit signing

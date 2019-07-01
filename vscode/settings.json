@@ -1,0 +1,91 @@
+{
+    "editor.fontFamily": "SF Mono, Menlo, Monaco, 'Courier New', monospace",
+    "editor.minimap.enabled": false,
+    "files.exclude": {
+        ".nyc_output": true,
+        "test-fixtures": true
+    },
+    "workbench.colorCustomizations": {
+        "editor.background": "#09141B",
+        "statusBar.background" : "#303030",
+        "statusBar.noFolderBackground" : "#222225",
+        "statusBar.debuggingBackground": "#511f1f"
+    },
+    "window.zoomLevel": 0,
+    "workbench.startupEditor": "newUntitledFile",
+    "editor.fontSize": 13,
+    "workbench.statusBar.feedback.visible": false,
+    "editor.wordWrapColumn": 100,
+    "editor.wordWrap": "wordWrapColumn",
+    "explorer.openEditors.visible": 10,
+    "workbench.activityBar.visible": true,
+    "javascript.implicitProjectConfig.checkJs": true,
+    "editor.renderWhitespace": "none",
+    "editor.renderControlCharacters": false,
+    "breadcrumbs.enabled": false,
+    "git.confirmSync": false,
+    "files.trimTrailingWhitespace": true,
+    "explorer.confirmDelete": false,
+    "[markdown]": {},
+    "markdown.extension.toc.githubCompatibility": true,
+    "workbench.enableExperiments": false,
+    "window.openFilesInNewWindow": "default",
+    "workbench.colorTheme": "Monokai Dark Soda",
+    "editor.tabSize": 2,
+    "html.format.wrapLineLength": 100,
+    "[javascript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "workbench.iconTheme": "Monokai Pro (Filter Spectrum) Icons",
+    "files.autoSave": "onFocusChange",
+    "prettifySymbolsMode.substitutions": [
+        {
+            "language": "javascript",
+            "substitutions": [
+                {"ugly": "=>", "pretty": "⇒"},
+                {"ugly": "===", "pretty": "≡"},
+                {"ugly": "for", "pretty": "∀"}
+            ],
+        },
+        {
+    "language": "haskell",
+    "revealOn": "active-line",
+    "substitutions": [
+        { "ugly": "\\\\",     "pretty": "λ", "post": "\\s*(?:\\w|_).*?\\s*->" },
+        { "ugly": "->",       "pretty": "→" },
+        { "ugly": "==",       "pretty": "≡" },
+        { "ugly": "not\\s?",  "pretty": "¬", "pre": "\\b", "post": "\\b" },
+        { "ugly": ">",        "pretty": ">", "pre": "[^=\\-<>]|^", "post": "[^=\\-<>]|$" },
+        { "ugly": "<",        "pretty": "<", "pre": "[^=\\-<>]|^", "post": "[^=\\-<>]|$" },
+        { "ugly": ">=",       "pretty": "≥", "pre": "[^=\\-<>]|^", "post": "[^=\\-<>]|$" },
+        { "ugly": "<=",       "pretty": "≤", "pre": "[^=\\-<>]|^", "post": "[^=\\-<>]|$" }
+    ]},{
+    "language": ["ocaml", {"pattern": "**/*.{ml}"}],
+    "revealOn": "none",
+    "adjustCursorMovement": true,
+    "substitutions": [
+        { "ugly": "fun",            "pretty": "λ", "pre": "\\b", "post": "\\b" },
+        { "ugly": "->",             "pretty": "→", "pre": "[^->]", "post": "[^->]" },
+        { "ugly": "List[.]for_all", "pretty": "∀", "pre": "\\b", "post": "\\b" },
+        { "ugly": "List[.]exists",  "pretty": "∃", "pre": "\\b", "post": "\\b" },
+        { "ugly": "List[.]mem",     "pretty": "∈", "pre": "\\b", "post": "\\b" },
+        { "ugly": "\\|",            "pretty": "║", "pre": "^\\s+" }
+    ]},{
+    "language": "fsharp",
+    "substitutions": [
+        { "ugly": "fun",           "pretty": "λ", "pre": "\\b", "post": "\\b" },
+        { "ugly": "->",            "pretty": "→", "pre": "[^->]", "post": "[^->]" },
+        { "ugly": "List[.]forall", "pretty": "∀", "pre": "\\b", "post": "\\b" },
+        { "ugly": "List[.]exists", "pretty": "∃", "pre": "\\b", "post": "\\b" },
+        { "ugly": ">>",            "pretty": "≫", "pre": "[^=<>]|^", "post": "[^=<>]|$" },
+        { "ugly": "<<",            "pretty": "≪", "pre": "[^=<>]|^", "post": "[^=<>]|$" },
+        { "ugly": "\\|",           "pretty": "║", "pre": "^\\s+" }
+    ]
+}
+],
+"telemetry.enableCrashReporter": false,
+"telemetry.enableTelemetry": false,
+"update.mode": "none",
+"extensions.autoUpdate": false,
+"extensions.ignoreRecommendations": true
+}
