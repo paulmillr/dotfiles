@@ -25,6 +25,10 @@ filetype indent plugin on
 " crashes.
 set hidden
 
+" Security
+set modeline=0
+set nomodeline
+
 " Better command-line completion
 set wildmenu
 
