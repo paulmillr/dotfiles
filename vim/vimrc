@@ -26,7 +26,7 @@ filetype indent plugin on
 set hidden
 
 " Security
-set modeline=0
+set modelines=0
 set nomodeline
 
 " Better command-line completion
