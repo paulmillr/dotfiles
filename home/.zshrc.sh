@@ -23,17 +23,13 @@ export GPG_TTY=$(tty) # For git commit signing
 # ==================================================================
 # = Aliases =
 # ==================================================================
-
-alias -g f2='| head -n 2'
-alias -g f10='| head -n 10'
-alias -g l10='| tail -n 10'
 # Simple clear command.
 alias cl='clear'
 
 # Disable sertificate check for wget.
-alias wget='wget --no-check-certificate'
+# alias wget='wget --no-check-certificate'
 
-# Some macOS-only stuff.
+# Some MacOS-only stuff.
 if [[ "$OSTYPE" == darwin* ]]; then
   # Short-cuts for copy-paste.
   alias c='pbcopy'
@@ -48,10 +44,6 @@ if [[ "$OSTYPE" == darwin* ]]; then
   # Sniff network info.
   alias sniff="sudo ngrep -d 'en1' -t '^(GET|POST) ' 'tcp and port 80'"
 
-  # Developer tools shortcuts.
-  alias tower='gittower'
-  alias t='gittower'
-
   # Process grep should output full paths to binaries.
   alias pgrep='pgrep -fli'
 else
@@ -63,11 +55,8 @@ fi
 alias g='git'
 alias ga='git add'
 alias gr='git rm'
-
 alias gf='git fetch'
 alias gu='git pull'
-alias gup='git pull && git push'
-
 alias gs='git status --short'
 alias gd='git diff'
 alias gdisc='git discard'
@@ -162,6 +151,8 @@ alias net="ping google.com | grep -E --only-match --color=never '[0-9\.]+ ms'"
 # Pretty print json
 if command -v pygmentize > /dev/null 2>&1; then
   alias json='pygmentize -l json -g'
+  alias markdown='pygmentize -l md -g'
+  alias md='pygmentize -l md -g'
 else
   alias json='python -m json.tool'
 fi
@@ -291,16 +282,6 @@ function size() {
 # Shortcut for searching commands history.
 # hist git
 alias hist='history 0 | grep'
-
-# $ aes-enc file.zip
-function aes-enc() {
-  openssl enc -aes-256-cbc -e -in $1 -out "$1.aes"
-}
-
-# $ aes-dec file.zip.aes
-function aes-dec() {
-  openssl enc -aes-256-cbc -d -in $1 -out "${1%.*}"
-}
 
 # 4 lulz.
 function compute() {
