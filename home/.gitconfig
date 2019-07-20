@@ -1,14 +1,13 @@
 [user]
-	name = Paul Miller
-	email = paul@paulmillr.com
-	signingkey = 61280CD9A383C2E5
+  name = Paul Miller
+  email = paul@paulmillr.com
+  signingkey = 61280CD9A383C2E5
 
 [github]
   user = paulmillr
 
 [alias]
-  discard = reset --hard HEAD
-  ci = commit
+  discard = reset --hard HEAD 
   ch = checkout
   sign = commit -S -m
   signtag = 'tag -s -m ""'
@@ -20,12 +19,10 @@
   rmtag = "!sh -c 'git tag -d $1; git push origin :refs/tags/$1'"
 
   release   = !sh "$HOME/Developer/personal/dotfiles/git-extras/git-release.sh"
+  sign-release   = !sh "$HOME/Developer/personal/dotfiles/git-extras/git-sign-release.sh"
   setup     = !zsh "$HOME/Developer/personal/dotfiles/git-extras/git-setup.sh"
   summary   = !zsh "$HOME/Developer/personal/dotfiles/git-extras/git-summary.sh"
-
-  pr = "!f() { git fetch -fu ${2:-origin} refs/pull/$1/head:pr/$1; } ; f"
-
-  ghfork = !sh "$HOME/Developer/personal/dotfiles/git-extras/git-ghpull.sh"
+  pr = "!f() { git fetch -fu ${2:-origin} refs/pull/$1/head:pr/$1; } ; f" 
   cleanup = !ruby "$HOME/Developer/personal/dotfiles/git-extras/git-cleanup.rb"
 
 [push]
@@ -37,23 +34,40 @@
 [core]
   editor = code
   excludesfile = ~/.gitignore
-  #pager = diff-highlight | less -r
+  pager = diff-so-fancy | less --tabs=4 -RFX 
 
 [format]
   pretty = %Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset
   graph = true
+
 [advice]
   statusHints = false
+
 [log]
   abbrevCommit = true
+
 [mergetool]
-	keepBackup = false
-[ghi]
-	token = !security find-internet-password -a paulmillr -s github.com -l 'ghi token' -w
+  keepBackup = false
+
 [pull]
-	rebase = true
+  rebase = true
+
 [filter "lfs"]
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
-	required = true
+  clean = git-lfs clean -- %f
+  smudge = git-lfs smudge -- %f
+  process = git-lfs filter-process
+  required = true
+
+[color "diff-highlight"]
+  oldNormal = red bold
+  oldHighlight = red bold 52
+  newNormal = green bold
+  newHighlight = green bold 22
+
+[color "diff"]
+  meta = 11
+  frag = magenta bold
+  commit = yellow bold
+  old = red bold
+  new = green bold
+  whitespace = red reverse
