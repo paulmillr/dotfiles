@@ -17,9 +17,9 @@ The short URL expands to GitHub-hosted `install.sh`
 
 ## Features
 
-![](https://user-images.githubusercontent.com/574696/61765242-eb19dc00-ade4-11e9-8db0-ac607e1eed8a.png)
-
 ![](https://user-images.githubusercontent.com/574696/61765243-eb19dc00-ade4-11e9-8d16-5a402a0fdfec.png)
+
+![](https://user-images.githubusercontent.com/574696/61765242-eb19dc00-ade4-11e9-8db0-ac607e1eed8a.png)
 
 * **NO DEPENDENCIES!** Great when compared to oh-my-zsh.
 * Auto-completion
