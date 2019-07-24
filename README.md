@@ -5,14 +5,14 @@ Colourful & robust configuration files and utilities for Mac, Linux and BSD. Ins
 curl -L https://git.io/pmdot | sh
 ```
 
-The short URL expands to GitHub-hosted `install.sh`
+The short URL expands to GitHub-hosted `install.sh`, which can be easily audited.
 
 ## Usage
 
 - **MacOS:** Ensure you have XCode or dev tools. It can be downloaded from the app store.
     - Optionally `sh etc/bootstrap-macos.sh`
 - **Linux and BSD:** Ensure you have `git` and `zsh` installed.
-- **Terminal theme:** `terminal/pm.terminal` (Settings -> Profiles -> Press gear -> Import).
+- **MacOS terminal:** `terminal/monokai_pro_spectrum.terminal` (Settings -> Profiles -> Press "gear" -> Import).
 - **Git:** Don't forget to adjust `home/.gitconfig` or you'll have improper commit author
 
 ## Features
@@ -21,7 +21,7 @@ The short URL expands to GitHub-hosted `install.sh`
 
 ![](https://user-images.githubusercontent.com/574696/61765242-eb19dc00-ade4-11e9-8db0-ac607e1eed8a.png)
 
-* **NO DEPENDENCIES!** Great when compared to oh-my-zsh.
+* **No external dependencies!** Great, when compared to oh-my-zsh.
 * Auto-completion
 * Syntax highlighting
 * Useful utilities:
@@ -34,16 +34,15 @@ The short URL expands to GitHub-hosted `install.sh`
 * `git-extras` - useful git functions, defined in `home/.gitconfig`:
     * Opinionated `git log`, `git graph`
     * `gcp` for fast `git commit -m ... && git push`
-    * `git sign` and `git sign-release` for PGP-signed git
+    * `git sign` for PGP-signed git
     * `git cleanup` — clean up merged git branches. Very useful if
     you’re doing github pull requests in topic branches.
     * `git summary` — outputs commit email statistics.
-    * `git release` — save changes, tag commit. If used on node.js project, also push to npm.
+    * `git release` and `git sign-release` — commit and tag the commit. Publishes to NPM for node projects.
     * `git url` - opens GitHub repo for current git repo.
     * `git-changelog`, `git-setup` etc.
 * `etc` — MacOS fine tuning
 * `vscode` — Sublime Text theme & settings
-* `rm` moves file to the MacOS trash with `brew install trash`
 * Sets terminal tab and window title to current directory
 * [homesick](https://github.com/technicalpickles/homesick) /
   [homeshick](https://github.com/andsens/homeshick)-compatible
