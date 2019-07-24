@@ -17,16 +17,15 @@ The short URL expands to GitHub-hosted `install.sh`
 
 ## Features
 
-![](https://cloud.githubusercontent.com/assets/574696/3210643/80f11554-eed7-11e3-8c8f-5509bc304fc7.png)
+![](https://user-images.githubusercontent.com/574696/61765242-eb19dc00-ade4-11e9-8db0-ac607e1eed8a.png)
 
-![](https://cloud.githubusercontent.com/assets/574696/3210642/7ecc9a00-eed7-11e3-9357-27c2a8576f80.png)
+![](https://user-images.githubusercontent.com/574696/61765243-eb19dc00-ade4-11e9-8d16-5a402a0fdfec.png)
 
 * **NO DEPENDENCIES!** Great when compared to oh-my-zsh.
 * Auto-completion
 * Syntax highlighting
 * Useful utilities:
     * `ff file-name-or-pattern` - fast recursive search for a file name in directories.
-    * `aes-enc`, `aes-dec` - safely encrypt files.
     * `tarbz2`, `untarbz2` - best archive compression. Utilizes parallel `pbzip2` when available.
     * `extract archive.tar.bz` — unpack any archive (supports many extensions)
     * `ram safari` — show app RAM usage
@@ -35,7 +34,7 @@ The short URL expands to GitHub-hosted `install.sh`
 * `git-extras` - useful git functions, defined in `home/.gitconfig`:
     * Opinionated `git log`, `git graph`
     * `gcp` for fast `git commit -m ... && git push`
-    * `git pr <pull-req> [origin]` for fetching pull request branches
+    * `git sign` and `git sign-release` for PGP-signed git
     * `git cleanup` — clean up merged git branches. Very useful if
     you’re doing github pull requests in topic branches.
     * `git summary` — outputs commit email statistics.
@@ -43,7 +42,7 @@ The short URL expands to GitHub-hosted `install.sh`
     * `git url` - opens GitHub repo for current git repo.
     * `git-changelog`, `git-setup` etc.
 * `etc` — MacOS fine tuning
-* `sublime` — Sublime Text theme & settings
+* `vscode` — Sublime Text theme & settings
 * `rm` moves file to the MacOS trash with `brew install trash`
 * Sets terminal tab and window title to current directory
 * [homesick](https://github.com/technicalpickles/homesick) /
@@ -51,8 +50,7 @@ The short URL expands to GitHub-hosted `install.sh`
 
 ## Not included
 
-- Cool [Sublime Text icon](https://dribbble.com/shots/1840393-Sublime-Text-Yosemite-Icon)
-- Great Sublime themes: Glacier, Nil, Seti UI
+- `diff-so-fancy`: solid alternative to `git diff`
 
 ## License
 
