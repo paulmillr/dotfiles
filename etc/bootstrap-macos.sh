@@ -32,6 +32,8 @@ if [[ `uname` == 'Darwin' ]]; then
       /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
   fi
 
+  # Homebrew packages.
+  brew install diff-so-fancy gnupg htop node pbzip2 python python@2 ruby postgresql wget
   # echo 'Tweaking macOS...'
     # source 'etc/macos.sh'
 
