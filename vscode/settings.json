@@ -6,7 +6,6 @@
         "test-fixtures": true
     },
     "workbench.colorCustomizations": {
-        "editor.background": "#09141B",
         "statusBar.background" : "#303030",
         "statusBar.noFolderBackground" : "#222225",
         "statusBar.debuggingBackground": "#511f1f"
@@ -20,7 +19,7 @@
     "explorer.openEditors.visible": 10,
     "workbench.activityBar.visible": true,
     "javascript.implicitProjectConfig.checkJs": true,
-    "editor.renderWhitespace": "none",
+    "editor.renderWhitespace": "selection",
     "editor.renderControlCharacters": false,
     "breadcrumbs.enabled": false,
     "git.confirmSync": false,
@@ -30,7 +29,6 @@
     "markdown.extension.toc.githubCompatibility": true,
     "workbench.enableExperiments": false,
     "window.openFilesInNewWindow": "default",
-    "workbench.colorTheme": "Monokai Dark Soda",
     "editor.tabSize": 2,
     "html.format.wrapLineLength": 100,
     "[javascript]": {
@@ -38,54 +36,23 @@
     },
     "workbench.iconTheme": "Monokai Pro (Filter Spectrum) Icons",
     "files.autoSave": "onFocusChange",
-    "prettifySymbolsMode.substitutions": [
-        {
-            "language": "javascript",
-            "substitutions": [
-                {"ugly": "=>", "pretty": "⇒"},
-                {"ugly": "===", "pretty": "≡"},
-                {"ugly": "for", "pretty": "∀"}
-            ],
-        },
-        {
-    "language": "haskell",
-    "revealOn": "active-line",
-    "substitutions": [
-        { "ugly": "\\\\",     "pretty": "λ", "post": "\\s*(?:\\w|_).*?\\s*->" },
-        { "ugly": "->",       "pretty": "→" },
-        { "ugly": "==",       "pretty": "≡" },
-        { "ugly": "not\\s?",  "pretty": "¬", "pre": "\\b", "post": "\\b" },
-        { "ugly": ">",        "pretty": ">", "pre": "[^=\\-<>]|^", "post": "[^=\\-<>]|$" },
-        { "ugly": "<",        "pretty": "<", "pre": "[^=\\-<>]|^", "post": "[^=\\-<>]|$" },
-        { "ugly": ">=",       "pretty": "≥", "pre": "[^=\\-<>]|^", "post": "[^=\\-<>]|$" },
-        { "ugly": "<=",       "pretty": "≤", "pre": "[^=\\-<>]|^", "post": "[^=\\-<>]|$" }
-    ]},{
-    "language": ["ocaml", {"pattern": "**/*.{ml}"}],
-    "revealOn": "none",
-    "adjustCursorMovement": true,
-    "substitutions": [
-        { "ugly": "fun",            "pretty": "λ", "pre": "\\b", "post": "\\b" },
-        { "ugly": "->",             "pretty": "→", "pre": "[^->]", "post": "[^->]" },
-        { "ugly": "List[.]for_all", "pretty": "∀", "pre": "\\b", "post": "\\b" },
-        { "ugly": "List[.]exists",  "pretty": "∃", "pre": "\\b", "post": "\\b" },
-        { "ugly": "List[.]mem",     "pretty": "∈", "pre": "\\b", "post": "\\b" },
-        { "ugly": "\\|",            "pretty": "║", "pre": "^\\s+" }
-    ]},{
-    "language": "fsharp",
-    "substitutions": [
-        { "ugly": "fun",           "pretty": "λ", "pre": "\\b", "post": "\\b" },
-        { "ugly": "->",            "pretty": "→", "pre": "[^->]", "post": "[^->]" },
-        { "ugly": "List[.]forall", "pretty": "∀", "pre": "\\b", "post": "\\b" },
-        { "ugly": "List[.]exists", "pretty": "∃", "pre": "\\b", "post": "\\b" },
-        { "ugly": ">>",            "pretty": "≫", "pre": "[^=<>]|^", "post": "[^=<>]|$" },
-        { "ugly": "<<",            "pretty": "≪", "pre": "[^=<>]|^", "post": "[^=<>]|$" },
-        { "ugly": "\\|",           "pretty": "║", "pre": "^\\s+" }
-    ]
-}
-],
-"telemetry.enableCrashReporter": false,
-"telemetry.enableTelemetry": false,
-"update.mode": "none",
-"extensions.autoUpdate": false,
-"extensions.ignoreRecommendations": true
+    "telemetry.enableCrashReporter": false,
+    "telemetry.enableTelemetry": false,
+    "update.mode": "none",
+    "extensions.autoUpdate": false,
+    "extensions.ignoreRecommendations": true,
+    "[typescript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[json]": {
+        "editor.defaultFormatter": "vscode.json-language-features"
+    },
+    "outline.icons": false,
+    "outline.problems.badges": false,
+    "outline.problems.colors": false,
+    "outline.problems.enabled": false,
+    "markdown.extension.toc.levels": "5..6",
+    "prettier.singleQuote": true,
+    "prettier.printWidth": 100,
+    "workbench.colorTheme": "Monokai Pro (Filter Spectrum)"
 }
