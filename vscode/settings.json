@@ -1,23 +1,30 @@
 {
-    "editor.fontFamily": "SF Mono, Menlo, Monaco, 'Courier New', monospace",
-    "editor.minimap.enabled": false,
-    "files.exclude": {
-        ".nyc_output": true,
-        "test-fixtures": true
-    },
-    "workbench.colorCustomizations": {
-        "statusBar.background" : "#303030",
-        "statusBar.noFolderBackground" : "#222225",
-        "statusBar.debuggingBackground": "#511f1f"
-    },
-    "window.zoomLevel": 0,
-    "workbench.startupEditor": "newUntitledFile",
+    "editor.fontFamily": "JetBrains Mono, SF Mono, Menlo, Monaco, 'Courier New', monospace",
     "editor.fontSize": 13,
-    "workbench.statusBar.feedback.visible": false,
+    "editor.fontLigatures": true,
+
+    // F-off telemetry
+    "telemetry.enableCrashReporter": false,
+    "telemetry.enableTelemetry": false,
+    "update.mode": "none",
+    "extensions.autoUpdate": false,
+    "editor.minimap.enabled": false,
+    "update.showReleaseNotes": false,
+    "extensions.autoCheckUpdates": false,
+    "workbench.settings.enableNaturalLanguageSearch": false,
+    "workbench.enableExperiments": false,
+
+    "files.exclude": {
+        "node_modules": true
+    },
     "editor.wordWrapColumn": 100,
+    "html.format.wrapLineLength": 100,
+    "prettier.singleQuote": true,
+    "prettier.printWidth": 100,
     "editor.wordWrap": "wordWrapColumn",
     "explorer.openEditors.visible": 10,
     "workbench.activityBar.visible": true,
+    "workbench.iconTheme": null,
     "javascript.implicitProjectConfig.checkJs": true,
     "editor.renderWhitespace": "selection",
     "editor.renderControlCharacters": false,
@@ -25,21 +32,12 @@
     "git.confirmSync": false,
     "files.trimTrailingWhitespace": true,
     "explorer.confirmDelete": false,
-    "[markdown]": {},
-    "markdown.extension.toc.githubCompatibility": true,
-    "workbench.enableExperiments": false,
     "window.openFilesInNewWindow": "default",
     "editor.tabSize": 2,
-    "html.format.wrapLineLength": 100,
     "[javascript]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
-    "workbench.iconTheme": "Monokai Pro (Filter Spectrum) Icons",
-    "files.autoSave": "onFocusChange",
-    "telemetry.enableCrashReporter": false,
-    "telemetry.enableTelemetry": false,
-    "update.mode": "none",
-    "extensions.autoUpdate": false,
+    "files.autoSave": "off",
     "extensions.ignoreRecommendations": true,
     "[typescript]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"
@@ -47,12 +45,12 @@
     "[json]": {
         "editor.defaultFormatter": "vscode.json-language-features"
     },
-    "outline.icons": false,
-    "outline.problems.badges": false,
-    "outline.problems.colors": false,
-    "outline.problems.enabled": false,
-    "markdown.extension.toc.levels": "5..6",
-    "prettier.singleQuote": true,
-    "prettier.printWidth": 100,
-    "workbench.colorTheme": "Monokai Pro (Filter Spectrum)"
+    "javascript.autoClosingTags": false,
+    "typescript.autoClosingTags": false,
+    "workbench.colorTheme": "Monokai Pro (Filter Spectrum)",
+    "workbench.startupEditor": "newUntitledFile",
+    "[html]": {
+        "editor.defaultFormatter": "vscode.html-language-features"
+    },
+    "python.pythonPath": "/usr/bin/python3"
 }
