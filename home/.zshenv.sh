@@ -92,3 +92,8 @@ unset BROWSER
 export HOMEBREW_AUTO_UPDATE_SECS='2592000'
 export PATH="/usr/local/opt/ruby/bin:$PATH"
 export GPG_TTY=$(tty) # For git commit signing
+gitssh="$HOME/.ssh/git"
+if [[ -f $gitssh ]]; then
+  export GIT_SSH_COMMAND="ssh -i $gitssh -F /dev/null"
+fi
+unset gitssh

@@ -37,7 +37,7 @@
   pager = diff-so-fancy | less --tabs=4 -RFX
 
 [format]
-  pretty = %Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset%C(bold yellow) [%GK]%Creset
+  pretty = %Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)%an%Creset %C(bold yellow)%GK%Creset
   graph = true
 
 [advice]
