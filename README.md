@@ -49,6 +49,7 @@ The short URL expands to GitHub-hosted `install.sh`, which can be easily audited
 ## Not included
 
 - `diff-so-fancy`: solid alternative to `git diff`
+- To apply CSS (tab = 2 spaces, font) to GitHub, you will need to copy etc/userChrome.css to firefox profile dir & create subdir "chrome".
 
 ## License
 
