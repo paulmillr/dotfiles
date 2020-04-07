@@ -17,7 +17,7 @@ fpath=("$curr/terminal" $fpath)
 autoload -Uz promptinit && promptinit
 prompt 'paulmillr'
 
-path=(/usr/local/opt/ruby/bin $path) # changing .zshenv doesn't work
+path=(/usr/local/opt/ruby/bin $HOME/.cargo/bin $path) # changing .zshenv doesn't work
 export GPG_TTY=$(tty) # For git commit signing
 
 # ==================================================================
@@ -309,6 +309,15 @@ function retry() {
   retry $@
 }
 
+# Simple .tar archiving.
+function tar_() {
+  tar -cvf "$1.tar" "$1"
+}
+
+function untar() {
+  tar -xvf $1
+}
+
 # Managing .tar.bz2 archives - best compression.
 function tarbz2() {
   inf="$1"
@@ -322,3 +331,23 @@ function tarbz2() {
 }
 
 alias untarbz2='tar -xvjf'
+
+function tarage() {
+  file="$1"
+  tarf="$file.tar.bz2"
+  agef="$file.tar.bz2.age"
+  tarbz2 $file
+  age -p $tarf > $agef
+  rm $tarf
+}
+
+function untarage() {
+  agef="$1"
+  tarf="${agef/.age/}"
+  file="${tarf/.tar.bz2/}"
+  age -d $agef > $tarf
+  tar -xf $tarf
+  rm $tarf
+}
+
+export PATH="/usr/local/opt/python@3.8/bin:$PATH"
