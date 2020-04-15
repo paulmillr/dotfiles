@@ -3,7 +3,7 @@ set nocompatible
 " Enable syntax highlighting
 syntax on
 " colorscheme mycontrast
-colorscheme monokai_pro
+colorscheme monokaipro
 
 " Attempt to determine the type of a file based on its name and possibly its
 " contents. Use this to allow intelligent auto-indenting for each filetype,
