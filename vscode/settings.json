@@ -52,5 +52,6 @@
     "[html]": {
         "editor.defaultFormatter": "vscode.html-language-features"
     },
+    "terminal.integrated.shell.linux": "/bin/zsh",
     "python.pythonPath": "/usr/bin/python3"
 }
