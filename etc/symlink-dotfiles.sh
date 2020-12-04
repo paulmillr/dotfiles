@@ -26,5 +26,7 @@ for location in $(find home -name '.*'); do
 done
 
 if [ `uname` == 'Darwin' ]; then
-  link "$dotfiles/sublime/Packages/User/Preferences.sublime-settings" "$HOME/Library/Application Support/Sublime Text 3/Packages/User/Preferences.sublime-settings"
+  link "$dotfiles/vscode/settings.json" "$HOME/Library/Application Support/Code/User/settings.json"
+else
+  link "$dotfiles/vscode/settings.json" "$HOME/.vscode/settings.json"
 fi

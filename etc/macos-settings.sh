@@ -67,8 +67,8 @@ defaults write com.apple.screensaver askForPasswordDelay -int 0
 # Enable lid wakeup
 sudo pmset -a lidwake 1
 
-# Sleep the display after 15 minutes
-# sudo pmset -c displaysleep 15
+# Sleep the display after 5 minutes
+sudo pmset -c displaysleep 5
 
 # Disable machine sleep while charging
 # sudo pmset -c sleep 0
@@ -83,7 +83,9 @@ sudo pmset -a lidwake 1
 # 0: Disable hibernation (speeds up entering sleep mode)
 # 3: Copy RAM to disk so the system state can still be restored in case of a
 #    power failure.
-sudo pmset -a hibernatemode 0
+# 25: Force copying RAM to disk always
+# https://thunderspy.io/
+sudo pmset -a hibernatemode 25
 
 # Remove the sleep image file to save disk space
 #sudo rm /Private/var/vm/sleepimage
