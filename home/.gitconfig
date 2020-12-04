@@ -2,10 +2,10 @@
   name = Paul Miller
   email = paul@paulmillr.com
   signingkey = 46BEEF337A641ABB
-
+[commit]
+  gpgsign = true
 [github]
   user = paulmillr
-
 [alias]
   discard = reset --hard HEAD
   ch = checkout

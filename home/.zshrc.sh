@@ -332,11 +332,29 @@ function tarbz2() {
 
 alias untarbz2='tar -xvjf'
 
-function tarage() {
+function tarbzage() {
   file="$1"
   tarf="$file.tar.bz2"
   agef="$file.tar.bz2.age"
   tarbz2 $file
+  age -p $tarf > $agef
+  rm $tarf
+}
+
+function untarbzage() {
+  agef="$1"
+  tarf="${agef/.age/}"
+  file="${tarf/.tar.bz2/}"
+  age -d $agef > $tarf
+  tar -xf $tarf
+  rm $tarf
+}
+
+function tarage() {
+  file="$1"
+  tarf="$file.tar"
+  agef="$file.tar.age"
+  tar -cf "$tarf" "$file"
   age -p $tarf > $agef
   rm $tarf
 }

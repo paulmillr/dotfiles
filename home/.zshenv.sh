@@ -97,3 +97,5 @@ if [[ -f $gitssh ]]; then
   export GIT_SSH_COMMAND="ssh -i $gitssh -F /dev/null"
 fi
 unset gitssh
+
+export SSH_AUTH_SOCK="${HOME}/.gnupg/S.gpg-agent.ssh"
