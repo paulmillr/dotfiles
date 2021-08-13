@@ -368,4 +368,17 @@ function untarage() {
   rm $tarf
 }
 
-export PATH="/usr/local/opt/python@3.8/bin:$PATH"
+function remove_node_modules() {
+  find . -name 'node_modules' -type d -prune -exec rm -rf '{}' +
+}
+
+function update-ubuntu() {
+  sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get dist-upgrade -y
+}
+
+function nginx_edit() {
+  sudo vim /etc/nginx/sites-available
+}
+
+export PATH="/opt/homebrew/opt/ruby/bin:/usr/local/opt/python@3.8/bin:$PATH"
+eval $(/opt/homebrew/bin/brew shellenv)
