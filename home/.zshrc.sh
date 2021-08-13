@@ -380,5 +380,7 @@ function nginx_edit() {
   sudo vim /etc/nginx/sites-available
 }
 
-export PATH="/opt/homebrew/opt/ruby/bin:/usr/local/opt/python@3.8/bin:$PATH"
-eval $(/opt/homebrew/bin/brew shellenv)
+if [ -f "/opt/homebrew/bin/brew" ]; then
+  export PATH="/opt/homebrew/opt/ruby/bin:/usr/local/opt/python@3.8/bin:$PATH"
+  eval $(/opt/homebrew/bin/brew shellenv)
+fi
