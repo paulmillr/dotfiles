@@ -127,7 +127,6 @@ alias bws='brunch w --server'
 
 # Package managers.
 alias nr='npm run'
-alias brewup='brew update && brew upgrade'
 alias jk='jekyll serve --watch' # lol jk
 # alias serve='http-serve' # npm install http-server
 alias serve='python -m SimpleHTTPServer'
@@ -368,15 +367,22 @@ function untarage() {
   rm $tarf
 }
 
-function remove_node_modules() {
+function remove-node-modules() {
   find . -name 'node_modules' -type d -prune -exec rm -rf '{}' +
 }
 
-function update-ubuntu() {
-  sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get dist-upgrade -y
+function update-debian() {
+  sudo apt update && sudo apt upgrade -y && sudo apt dist-upgrade -y
 }
 
-function nginx_edit() {
+function update-mac() {
+  brew update && brew upgrade
+}
+
+alias logs='journalctl -fu'
+alias logs-all='journalctl -u'
+
+function nginx-edit() {
   sudo vim /etc/nginx/sites-available
 }
 
