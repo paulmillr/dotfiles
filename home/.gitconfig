@@ -71,3 +71,5 @@
   old = red bold
   new = green bold
   whitespace = red reverse
+[merge]
+	conflictstyle = diff3
