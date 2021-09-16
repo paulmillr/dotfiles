@@ -381,6 +381,7 @@ function update-mac() {
 
 alias logs='journalctl -fu'
 alias logs-all='journalctl -u'
+alias ctl='systemctl'
 
 function nginx-edit() {
   sudo vim /etc/nginx/sites-available
