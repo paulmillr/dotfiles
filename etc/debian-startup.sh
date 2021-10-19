@@ -4,8 +4,9 @@
 # Displays resource usage, etc.
 #
 # apt install figlet lolcat
-# mv debian-startup /etc/update-motd.d/50-sysinfo
-# chmod +x /etc/update-motd.d/50-sysinfo
+# chmod +x deb-startup
+# mv dev-startup /etc/update-motd.d/50-sysinfo
+# truncate -s 0 /etc/motd && rm /etc/update-motd.d/10-uname
 
 ### Hostname
 ###########################################################
