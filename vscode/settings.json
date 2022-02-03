@@ -1,6 +1,5 @@
 {
-    "editor.fontFamily": "JetBrains Mono, SF Mono, Menlo, Monaco, 'Courier New', monospace",
-    "editor.fontSize": 13,
+    "editor.fontSize": 14,
     "editor.fontLigatures": true,
 
     // F-off telemetry
@@ -15,7 +14,9 @@
     "workbench.enableExperiments": false,
 
     "files.exclude": {
-        "node_modules": true
+        "**/lib": true,
+        "**/node_modules": true,
+        "**/package-lock.json": true
     },
     "editor.wordWrapColumn": 100,
     "html.format.wrapLineLength": 100,
@@ -24,7 +25,6 @@
     "editor.wordWrap": "wordWrapColumn",
     "explorer.openEditors.visible": 10,
     "workbench.activityBar.visible": true,
-    "workbench.iconTheme": null,
     "javascript.implicitProjectConfig.checkJs": true,
     "editor.renderWhitespace": "selection",
     "editor.renderControlCharacters": false,
@@ -35,6 +35,7 @@
     "window.openFilesInNewWindow": "default",
     "editor.tabSize": 2,
     "[javascript]": {
+        // "editor.defaultFormatter": "vscode.typescript-language-features"
         "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
     "files.autoSave": "off",
@@ -47,11 +48,21 @@
     },
     "javascript.autoClosingTags": false,
     "typescript.autoClosingTags": false,
-    "workbench.colorTheme": "Monokai Pro (Filter Spectrum)",
     "workbench.startupEditor": "newUntitledFile",
     "[html]": {
         "editor.defaultFormatter": "vscode.html-language-features"
     },
     "terminal.integrated.shell.linux": "/bin/zsh",
-    "python.pythonPath": "/usr/bin/python3"
+    "python.pythonPath": "/usr/bin/python3",
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "debug.console.fontSize": 16,
+    "terminal.integrated.fontSize": 16,
+    "workbench.editor.untitled.hint": "hidden",
+    "editor.fontFamily": "Comic Mono, Fantasque Sans Mono, Monaco, 'Courier New', monospace",
+    "editor.bracketPairColorization.enabled": true,
+    "workbench.iconTheme": "ayu",
+    "files.legacyWatcher": "off",
+    "workbench.colorTheme": "Monokai Pro (Filter Spectrum)",
+    "git.autorefresh": false,
+    "diffEditor.renderSideBySide": false
 }
