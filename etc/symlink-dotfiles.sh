@@ -25,6 +25,8 @@ for location in $(find home -name '.*'); do
   link "$dotfiles/$location" "$HOME/$file"
 done
 
+link $dotfiles/vim $HOME/.vim
+
 if [ `uname` == 'Darwin' ]; then
   link "$dotfiles/vscode/settings.json" "$HOME/Library/Application Support/Code/User/settings.json"
 else
