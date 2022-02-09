@@ -1,68 +1,68 @@
 {
-    "editor.fontSize": 14,
-    "editor.fontLigatures": true,
+  "editor.fontSize": 14,
+  "editor.fontLigatures": true,
+  "debug.console.fontSize": 16,
+  "terminal.integrated.fontSize": 16,
+  "editor.fontFamily": "Comic Mono, Fantasque Sans Mono, Monaco, 'Courier New', monospace",
+  "workbench.iconTheme": "ayu",
+  "workbench.colorTheme": "Monokai Pro (Filter Spectrum)",
+  "editor.tabSize": 2,
 
-    // F-off telemetry
-    "telemetry.enableCrashReporter": false,
-    "telemetry.enableTelemetry": false,
-    "update.mode": "none",
-    "extensions.autoUpdate": false,
-    "editor.minimap.enabled": false,
-    "update.showReleaseNotes": false,
-    "extensions.autoCheckUpdates": false,
-    "workbench.settings.enableNaturalLanguageSearch": false,
-    "workbench.enableExperiments": false,
+  "editor.bracketPairColorization.enabled": true,
+  "editor.minimap.enabled": true,
 
-    "files.exclude": {
-        "**/lib": true,
-        "**/node_modules": true,
-        "**/package-lock.json": true
-    },
-    "editor.wordWrapColumn": 100,
-    "html.format.wrapLineLength": 100,
-    "prettier.singleQuote": true,
-    "prettier.printWidth": 100,
-    "editor.wordWrap": "wordWrapColumn",
-    "explorer.openEditors.visible": 10,
-    "workbench.activityBar.visible": true,
-    "javascript.implicitProjectConfig.checkJs": true,
-    "editor.renderWhitespace": "selection",
-    "editor.renderControlCharacters": false,
-    "breadcrumbs.enabled": false,
-    "git.confirmSync": false,
-    "files.trimTrailingWhitespace": true,
-    "explorer.confirmDelete": false,
-    "window.openFilesInNewWindow": "default",
-    "editor.tabSize": 2,
-    "[javascript]": {
-        // "editor.defaultFormatter": "vscode.typescript-language-features"
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
-    },
-    "files.autoSave": "off",
-    "extensions.ignoreRecommendations": true,
-    "[typescript]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
-    },
-    "[json]": {
-        "editor.defaultFormatter": "vscode.json-language-features"
-    },
-    "javascript.autoClosingTags": false,
-    "typescript.autoClosingTags": false,
-    "workbench.startupEditor": "newUntitledFile",
-    "[html]": {
-        "editor.defaultFormatter": "vscode.html-language-features"
-    },
-    "terminal.integrated.shell.linux": "/bin/zsh",
-    "python.pythonPath": "/usr/bin/python3",
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "debug.console.fontSize": 16,
-    "terminal.integrated.fontSize": 16,
-    "workbench.editor.untitled.hint": "hidden",
-    "editor.fontFamily": "Comic Mono, Fantasque Sans Mono, Monaco, 'Courier New', monospace",
-    "editor.bracketPairColorization.enabled": true,
-    "workbench.iconTheme": "ayu",
-    "files.legacyWatcher": "off",
-    "workbench.colorTheme": "Monokai Pro (Filter Spectrum)",
-    "git.autorefresh": false,
-    "diffEditor.renderSideBySide": false
+  // Trim whitespace
+  "files.trimTrailingWhitespace": true,
+
+  // Wrap lines at 100 characters
+  "editor.wordWrap": "wordWrapColumn",
+  "editor.wordWrapColumn": 100,
+  "html.format.wrapLineLength": 100,
+
+  // Prettier formatter: single quotes, 100 chars
+  "prettier.singleQuote": true,
+  "prettier.printWidth": 100,
+
+  // git
+  "git.confirmSync": false,
+  "git.autorefresh": false,
+  "diffEditor.renderSideBySide": false,
+
+  // Do not show files
+  "files.exclude": {
+    "**/lib": true,
+    "**/node_modules": true,
+    "**/package-lock.json": true
+  },
+
+  // F-off telemetry
+  "telemetry.enableCrashReporter": false,
+  "telemetry.enableTelemetry": false,
+  "update.mode": "none",
+  "extensions.autoUpdate": false,
+  "update.showReleaseNotes": false,
+  "extensions.autoCheckUpdates": false,
+  "workbench.settings.enableNaturalLanguageSearch": false,
+  "workbench.enableExperiments": false,
+  "extensions.ignoreRecommendations": true,
+
+  "explorer.openEditors.visible": 10,
+  "explorer.confirmDelete": false,
+  "workbench.activityBar.visible": true,
+  "javascript.implicitProjectConfig.checkJs": true,
+  "editor.renderWhitespace": "selection",
+  "editor.renderControlCharacters": false,
+  "window.openFilesInNewWindow": "default",
+  "[javascript]": {
+    // "editor.defaultFormatter": "vscode.typescript-language-features"
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+  },
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "workbench.editor.untitled.hint": "hidden"
 }
