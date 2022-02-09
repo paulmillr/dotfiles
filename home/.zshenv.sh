@@ -1,6 +1,7 @@
 # Defines environment variables.
 privenv="$HOME/.private-env"
 [[ -f "$privenv" ]] && source $privenv
+unset privenv
 
 # Browser.
 # --------
@@ -10,8 +11,6 @@ fi
 
 # Editors.
 # --------
-export EDITOR='/usr/local/bin/code'
-export VISUAL='/usr/local/bin/code'
 export PAGER='less'
 
 # Language.
@@ -43,33 +42,27 @@ com="$dev/com"
 pm="$dev/personal"
 as="$HOME/Library/Application Support"
 
-# Set the the list of directories that cd searches.
-cdpath=(
-  $cdpath
-)
+# path=($HOME/.cargo/bin /usr/local/opt/ruby/bin $path) # changing .zshenv doesn't work
+if [ -f "/opt/homebrew/bin/brew" ]; then
+  # export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
 
-# Set the list of directories that info searches for manuals.
-infopath=(
-  /usr/local/share/info
-  /usr/share/info
-  $infopath
-)
+  # Note: you can do this instead of the lines below
+  # It's more reliable, but can be 0.1s (etc) slower
+  eval $(/opt/homebrew/bin/brew shellenv)
 
-# Set the list of directories that man searches for manuals.
-manpath=(
-  /usr/local/share/man
-  /usr/share/man
-  $manpath
-)
-
-for path_file in /etc/manpaths.d/*(.N); do
-  manpath+=($(<$path_file))
-done
-unset path_file
-
-# Set the list of directories that Zsh searches for programs.
-# unset path
-# path=(/usr/local/opt/ruby/bin $path)
+  # export HOMEBREW_CELLAR=/opt/homebrew/Cellar
+  # export HOMEBREW_REPOSITORY=/opt/homebrew
+  # path=(
+  #   /opt/homebrew/bin
+  #   /opt/homebrew/sbin
+  #   /opt/homebrew/opt/ruby/bin
+  #   /usr/local/opt/ruby/bin
+  #   $path
+  # )
+  # # export PATH=/opt/homebrew/bin:/opt/homebrew/sbin:/opt/homebrew/opt/ruby/bin:/usr/local/opt/ruby/bin
+  # export MANPATH=/opt/homebrew/share/man::
+  # export INFOPATH=/opt/homebrew/share/info:
+fi
 
 # for path_file in /etc/paths.d/*(.N); do
 #   path+=($(<$path_file))
@@ -88,14 +81,23 @@ fi
 BROWSER=''
 unset BROWSER
 
-# export NODE_PATH='/usr/local/lib/node_modules'
+export HOMEBREW_NO_ANALYTICS=1
 export HOMEBREW_AUTO_UPDATE_SECS='2592000'
-export PATH="/usr/local/opt/ruby/bin:$PATH"
+export HOMEBREW_NO_ENV_HINTS=1
 export GPG_TTY=$(tty) # For git commit signing
 gitssh="$HOME/.ssh/git"
 if [[ -f $gitssh ]]; then
   export GIT_SSH_COMMAND="ssh -i $gitssh -F /dev/null"
 fi
 unset gitssh
+
+
+if (( $+commands[code] )); then
+  export EDITOR=$commands[code]
+  export VISUAL=$commands[code]
+else
+  export EDITOR=$commands[vim]
+  export VISUAL=$commands[vim]
+fi
 
 export SSH_AUTH_SOCK="${HOME}/.gnupg/S.gpg-agent.ssh"

@@ -3,9 +3,9 @@
 curr="$pm/dotfiles"
 
 # Load main files.
+# To benchmark startup: brew install coreutils, uncomment lines
 # echo "Load start\t" $(gdate "+%s-%N")
 source "$curr/terminal/startup.sh"
-# echo "$curr/terminal/startup.sh"
 source "$curr/terminal/completion.sh"
 source "$curr/terminal/highlight.sh"
 # echo "Load end\t" $(gdate "+%s-%N")
@@ -17,7 +17,7 @@ fpath=("$curr/terminal" $fpath)
 autoload -Uz promptinit && promptinit
 prompt 'paulmillr'
 
-path=(/usr/local/opt/ruby/bin $HOME/.cargo/bin $path) # changing .zshenv doesn't work
+# path=(/usr/local/opt/ruby/bin $HOME/.cargo/bin $path) # changing .zshenv doesn't work
 export GPG_TTY=$(tty) # For git commit signing
 
 # ==================================================================
@@ -148,7 +148,7 @@ alias history-stats="history 0 | awk '{print \$2}' | stats | head"
 alias net="ping google.com | grep -E --only-match --color=never '[0-9\.]+ ms'"
 
 # Pretty print json
-if command -v pygmentize > /dev/null 2>&1; then
+if (( $+commands[pygmentize] )); then
   alias json='pygmentize -l json -g'
   alias markdown='pygmentize -l md -g'
   alias md='pygmentize -l md -g'
@@ -322,7 +322,7 @@ function tarbz2() {
   inf="$1"
   outf="$1.tar.bz2"
   # Use parallel version when it exists.
-  if command -v pbzip2 > /dev/null 2>&1; then
+  if (( $+commands[pbzip2] )); then
     tar --use-compress-program pbzip2 -cf "$outf" "$inf"
   else
     tar -cvjf "$outf" "$inf"
@@ -386,8 +386,3 @@ alias ctl='systemctl'
 function nginx-edit() {
   sudo vim /etc/nginx/sites-available
 }
-
-if [ -f "/opt/homebrew/bin/brew" ]; then
-  export PATH="/opt/homebrew/opt/ruby/bin:/usr/local/opt/python@3.8/bin:$PATH"
-  eval $(/opt/homebrew/bin/brew shellenv)
-fi
