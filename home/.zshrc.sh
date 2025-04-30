@@ -15,9 +15,12 @@ autoload -U colors && colors
 # Load and execute the prompt theming system.
 fpath=("$curr/terminal" $fpath)
 autoload -Uz promptinit && promptinit
-prompt 'paulmillr'
+prompt 'pm'
 
-# The icrnl setting tells the terminal driver in the kernel to convert the CR character to LF on input. This way, applications only need to worry about one newline character; the same newline character that ends lines in files also ends lines of user input on the terminal, so the application doesn't need to have a special case for that.
+# The icrnl setting tells the terminal driver in the kernel to convert the CR character
+# to LF on input. This way, applications only need to worry about one newline character;
+# the same newline character that ends lines in files also ends lines of user input on
+# the terminal, so the application doesn't need to have a special case for that.
 # Fixes <Return> key bugs with some secure keyboards etc
 stty icrnl
 export GPG_TTY=$(tty) # For git commit signing
@@ -25,17 +28,10 @@ export GPG_TTY=$(tty) # For git commit signing
 # ==================================================================
 # = Aliases =
 # ==================================================================
-# Disable sertificate check for wget.
-# alias wget='wget --no-check-certificate'
-
 # Some MacOS-only stuff.
 if [[ "$OSTYPE" == darwin* ]]; then
   # Short-cuts for copy-paste.
-  alias c='pbcopy'
   alias p='pbpaste'
-
-  # Remove all items safely, to Trash (`brew install trash`).
-  [[ -z "$commands[trash]" ]] || alias rm='trash' 2>&1 > /dev/null
 
   # Lock current session and proceed to the login screen.
   alias lock='/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend'
@@ -48,26 +44,28 @@ if [[ "$OSTYPE" == darwin* ]]; then
 else
   # Process grep should output full paths to binaries.
   alias pgrep='pgrep -fl'
+  alias update-debian='sudo apt update && sudo apt upgrade -y && sudo apt dist-upgrade -y'
+  alias ctl='systemctl'
+  alias jctl='journalctl'
 fi
 
 # Git short-cuts.
 alias g='git'
 alias ga='git add'
+alias gd='git diff'
 alias gf='git fetch'
-alias gu='git pull'
 alias gp='git push'
 alias gs='git status --short'
-alias gd='git diff'
-alias gds='git diff --staged'
-alias gcl='git clone'
-alias gch='git checkout'
+alias gu='git pull'
 alias gbr='git branch'
 alias gbrcl='git checkout --orphan'
 alias gbrd='git branch -D'
-alias gback='git reset HEAD~1'
+alias gcl='git clone'
+alias gch='git checkout'
+alias gds='git diff --staged'
+alias ghead='git reset HEAD~1'
 alias gdisc='git reset --hard HEAD'
-alias glast='g show'
-
+alias gnames='git log --no-merges --pretty="format:%an <%ae>" | sort | uniq -c | sort -r'
 function gc() {
   args=$@
   ndate=$(date -u +%Y-%m-%dT%H:%M:%S%z)
@@ -78,13 +76,22 @@ function gcam() {
   ndate=$(date -u +%Y-%m-%dT%H:%M:%S%z)
   GIT_AUTHOR_DATE=$ndate GIT_COMMITTER_DATE=$ndate git commit --amend -m "$args"
 }
+function gcp() {
+  title="$@"
+  ndate=$(date -u +%Y-%m-%dT%H:%M:%S%z)
+  GIT_AUTHOR_DATE=$ndate GIT_COMMITTER_DATE=$ndate git commit -am $title && git push -u origin
+}
+function gl() {
+  count=$1
+  [[ -z "$1" ]] && count=10
+  git --no-pager log --graph --no-merges --max-count=$count
+}
 function grmtag() {
   tag=$1
   git tag -d $tag
   git push origin ":refs/tags/${tag}"
 }
 
-alias cl='clear'
 
 function gcherry() {
   is_range=''
@@ -111,19 +118,7 @@ function gcherry() {
     [[ CC -eq 1 ]] && cherrycc $commit
   done
 }
-
-
-function gcp() {
-  title="$@"
-  ndate=$(date -u +%Y-%m-%dT%H:%M:%S%z)
-  GIT_AUTHOR_DATE=$ndate GIT_COMMITTER_DATE=$ndate git commit -am $title && git push -u origin
-}
-function gl() {
-  count=$1
-  [[ -z "$1" ]] && count=10
-  git --no-pager log --graph --no-merges --max-count=$count
-}
-function git_dates() {
+function gdates() {
   git log --pretty="format:%al---%ad---%cd" --date=format:'%Y-%m-%d %H:%M:%S%z' | python3 <(cat <<END
 import sys
 res = []
@@ -139,36 +134,27 @@ END
 )
 }
 
-# ===============
-# Dev short-cuts.
-# ===============
-
+# Shortcuts
+alias cl='clear'
+alias serve='python3 -m http.server --bind 127.0.0.1'
+alias server='serve'
+alias hist='history 0 | grep' # for searching command history. Usage: "hist git"
+alias history-stats="history 0 | awk '{print \$2}' | sort | uniq -c | sort -r | head"
+alias net="ping google.com | grep -E --color=never '[0-9\.]+ ms'"
+alias remove-node-modules="find . -name 'node_modules' -type d -prune -exec rm -rf '{}' +"
 # Node.js
 alias ni='npm install'
 alias nr='npm run'
 alias nt='npm test'
 alias nrb='npm run build'
+alias nrl='npm run build && npm run build:release'
 alias nrf='npm run format'
 alias npm-dry='npm pack --dry-run'
 alias jsr-dry='jsr publish --dry-run'
 alias nibir='npm install && npm run build'
 
-alias serve='python3 -m http.server --bind 127.0.0.1'
-alias server='serve'
-alias stats='sort | uniq -c | sort -r'
-alias git-emails='git log --no-merges --pretty=format:"%ae" | stats'
-alias history-stats="history 0 | awk '{print \$2}' | stats | head"
-# Checks whether connection is up.
-alias net="ping google.com | grep -E --only-match --color=never '[0-9\.]+ ms'"
-alias hist='history 0 | grep' # for searching command history. Usage: "hist git"
-alias remove-node-modules="find . -name 'node_modules' -type d -prune -exec rm -rf '{}' +"
-alias update-debian='sudo apt update && sudo apt upgrade -y && sudo apt dist-upgrade -y'
-alias ctl='systemctl'
-alias jctl='journalctl'
 
-# ==================================================================
-# = Functions =
-# ==================================================================
+# Functions
 # Opens file in EDITOR.
 function edit() {
   local dir=$1
@@ -187,41 +173,16 @@ function each() {
   done
 }
 
-# Find files and exec commands at them.
-# $ find-exec .coffee cat | wc -l
-# # => 9762
-function find-exec() {
-  find . -type f -iname "*${1:-}*" -exec "${2:-file}" '{}' \;
-}
-
 # Better find(1)
-function ff() {
+function find-file() {
   find . -iname "*${1:-}*"
 }
 
-# Count code lines in some directory.
-# $ loc py js css
-# # => Lines of code for .py: 3781
-# # => Lines of code for .js: 3354
-# # => Lines of code for .css: 2970
-# # => Total lines of code: 10105
-function loc() {
-  local total
-  local firstletter
-  local ext
-  local lines
-  total=0
-  for ext in $@; do
-    firstletter=$(echo $ext | cut -c1-1)
-    if [[ firstletter != "." ]]; then
-      ext=".$ext"
-    fi
-    lines=`find-exec "*$ext" cat | wc -l`
-    lines=${lines// /}
-    total=$(($total + $lines))
-    echo "Lines of code for ${fg[blue]}$ext${reset_color}: ${fg[green]}$lines${reset_color}"
-  done
-  echo "${fg[blue]}Total${reset_color} lines of code: ${fg[green]}$total${reset_color}"
+# Find files and exec commands at them.
+# $ find-exec .js cat | wc -l
+# # => 9762
+function find-exec() {
+  find . -type f -iname "*${1:-}*" -exec "${2:-file}" '{}' \;
 }
 
 function _calcram() {
@@ -254,8 +215,8 @@ function ram() {
 }
 
 # Same, but tracks RAM usage in realtime. Will run until you stop it.
-# $ rams safari
-function rams() {
+# $ ram-streaming safari
+function ram-streaming() {
   local sum
   local app="$1"
   if [ -z "$app" ]; then
@@ -333,5 +294,3 @@ function tarxz() {
 
 alias untarbz2='tar -xvjf'
 alias untarxz='tar -xvf'
-
-export PATH="/opt/homebrew/opt/ruby/bin:$PATH"

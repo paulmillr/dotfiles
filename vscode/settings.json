@@ -1,9 +1,9 @@
 {
-  "editor.fontSize": 16,
+  "editor.fontSize": 14,
   "editor.fontLigatures": "'ss01', 'ss02', 'ss03', 'ss04', 'ss05', 'ss06', 'ss07', 'ss08', 'calt', 'dlig'",
   "debug.console.fontSize": 16,
   "terminal.integrated.fontSize": 14,
-  "editor.fontFamily": "'Monaspace Xenon', 'Courier New', monospace",
+  "editor.fontFamily": "Monaco, 'Monaspace Xenon', 'Courier New', monospace",
   "editor.tabSize": 2,
   "editor.bracketPairColorization.enabled": true,
   "editor.minimap.enabled": false,
@@ -50,14 +50,13 @@
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "workbench.startupEditor": "none",
   "workbench.editor.languageDetection": false,
-  "workbench.preferredDarkColorTheme": "Monokai Pro (Filter Spectrum)",
   "window.autoDetectColorScheme": true,
   "editor.unicodeHighlight.nonBasicASCII": false,
   "[jsonc]": {
     "editor.defaultFormatter": "vscode.json-language-features"
   },
   "breadcrumbs.enabled": false,
-  "workbench.preferredLightColorTheme": "Iceberg Light",
+  "workbench.preferredLightColorTheme": "Ayu Dark",
   "workbench.colorTheme": "Iceberg Light",
   "editor.lineNumbers": "off",
   "editor.folding": false,
@@ -89,5 +88,6 @@
     "editor.maxTokenizationLineLength"
   ],
   "github.gitAuthentication": false,
-  "print.editorTitleMenuButton": false
+  "print.editorTitleMenuButton": false,
+  "workbench.preferredDarkColorTheme": "Ayu Dark"
 }

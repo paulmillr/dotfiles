@@ -5,7 +5,9 @@ Colourful & robust configuration files and utilities for Mac, Linux and BSD. Ins
 curl -L https://git.io/pmdot | sh
 ```
 
-The short URL expands to GitHub-hosted `install.sh`, which can be easily audited.
+The short URL expands to GitHub-hosted `install.sh`,
+and then `etc/symlink-dotfiles.sh`,
+which can be easily audited.
 
 ## Usage
 
@@ -26,9 +28,7 @@ The short URL expands to GitHub-hosted `install.sh`, which can be easily audited
 * Useful utilities:
     * `ff file-name-or-pattern` - fast recursive search for a file name in directories.
     * `tarbz2`, `untarbz2` - best archive compression. Utilizes parallel `pbzip2` when available.
-    * `extract archive.tar.bz` — unpack any archive (supports many extensions)
     * `ram safari` — show app RAM usage
-    * `loc py coffee js html css` — count lines of code
     * `curl http://site/v1/api.json | json` - pretty-print JSON
 * `git-extras` - useful git functions, defined in `home/.gitconfig`:
     * Opinionated `git log`, `git graph`
@@ -46,16 +46,11 @@ The short URL expands to GitHub-hosted `install.sh`, which can be easily audited
 * [homesick](https://github.com/technicalpickles/homesick) /
   [homeshick](https://github.com/andsens/homeshick)-compatible
 
-## Not included
-
-- `diff-so-fancy`: solid alternative to `git diff`
-- To apply CSS (tab = 2 spaces, font) to GitHub, you will need to copy etc/userChrome.css to firefox profile dir & create subdir "chrome".
-
 ## License
 
 The MIT License (MIT)
 
-Copyright (c) 2019 Paul Miller [(paulmillr.com)](https://paulmillr.com)
+Copyright (c) 2011 Paul Miller [(paulmillr.com)](https://paulmillr.com)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the “Software”), to deal

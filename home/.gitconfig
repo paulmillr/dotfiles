@@ -2,54 +2,40 @@
   name = Paul Miller
   email = paul@paulmillr.com
 [commit]
-  gpgsign = true
+  gpgsign = false
 [tag]
-	gpgSign = true
+	gpgsign = false
+[advice]
+  statusHints = false
 [alias]
   ch = checkout
   d = diff
-  whois = "!sh -c 'git log -i -1 --pretty=\"format:%an <%ae>\n\" --author=\"$1\"' -"
-  rmtag = "!sh -c 'git tag -d $1; git push origin :refs/tags/$1'"
-  release   = !sh "$HOME/Developer/personal/dotfiles/git-extras/git-release.sh"
-  pr = "!f() { git fetch -fu ${2:-origin} refs/pull/$1/head:pr/$1; } ; f"
-[init]
-  defaultBranch = main
-[push]
-  default = simple
-[pull]
-  rebase = true
-[core]
-  excludesfile = ~/.gitignore
-  # pager = diff-so-fancy | less --tabs=4 -RFX
-  pager = delta
-[interactive]
-  diffFilter = delta --color-only
-[delta]
-  navigate = true    # use n and N to move between diff sections
-  # delta detects terminal colors automatically; set one of these to disable auto-detection
-  # dark = true
-  # light = true
-[diff]
-  colorMoved = default
+  release  = !sh "$HOME/Developer/personal/dotfiles/git-extras/git-release.sh"
 [color "diff"]
-  meta = 11
+  meta = white dim
   frag = magenta bold
   commit = yellow bold
   old = red bold
   new = green bold
   whitespace = red reverse
+[core]
+  excludesfile = ~/.gitignore
+[diff]
+  colorMoved = default
+[filter "lfs"]
+  clean = git-lfs clean -- %f
+  smudge = git-lfs smudge -- %f
+  process = git-lfs filter-process
+  required = true
 [format]
   pretty = %Cred%h%Creset%C(yellow)%d%Creset %s %Cgreen(%cd) %C(bold blue)%an%Creset
-[advice]
-  statusHints = false
 [log]
   date = human
 [merge]
   conflictstyle = diff3
 [mergetool]
   keepBackup = false
-[filter "lfs"]
-  clean = git-lfs clean -- %f
-  smudge = git-lfs smudge -- %f
-  process = git-lfs filter-process
-  required = true
+[push]
+  default = simple
+[pull]
+  rebase = true

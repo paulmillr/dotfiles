@@ -3,44 +3,13 @@ privenv="$HOME/.private-env"
 [[ -f "$privenv" ]] && source $privenv
 unset privenv
 
-# Browser.
-# --------
-if [[ "$OSTYPE" == darwin* ]]; then
-  export BROWSER='open'
-fi
-
-# Editors.
-# --------
-export PAGER='less'
-
-# Language.
-# ---------
-if [[ -z "$LANG" ]]; then
-  eval "$(locale)"
-fi
-
-# Less.
-# -----
-# Set the default Less options.
-# Mouse-wheel scrolling has been disabled by -X (disable screen clearing).
-# Remove -X and -F (exit if the content fits on one screen) to enable it.
-export LESS='-F -g -i -M -R -S -w -X -z-4'
-
-# Set the Less input preprocessor.
-if (( $+commands[lesspipe.sh] )); then
-  export LESSOPEN='| /usr/bin/env lesspipe.sh %s 2>&-'
-fi
-
 # Paths.
-# ------
 typeset -gU cdpath fpath mailpath manpath path
 typeset -gUT INFOPATH infopath
 
 # Commonly used directories.
 dev="$HOME/Developer"
-com="$dev/com"
 pm="$dev/personal"
-as="$HOME/Library/Application Support"
 
 # path=($HOME/.cargo/bin /usr/local/opt/ruby/bin $path) # changing .zshenv doesn't work
 if [ -f "/opt/homebrew/bin/brew" ]; then
@@ -64,6 +33,26 @@ if [ -f "/opt/homebrew/bin/brew" ]; then
   # export INFOPATH=/opt/homebrew/share/info:
 fi
 
+if [[ "$OSTYPE" == darwin* ]]; then
+  export BROWSER='open'
+fi
+
+if [[ -z "$LANG" ]]; then
+  eval "$(locale)"
+fi
+
+# Set the default Less options.
+# Mouse-wheel scrolling has been disabled by -X (disable screen clearing).
+# Remove -X and -F (exit if the content fits on one screen) to enable it.
+export LESS='-F -g -i -M -R -S -w -X -z-4'
+
+export PAGER='less'
+# if (( $+commands[bat] )); then
+#   export PAGER='bat'
+# else
+#   export PAGER='less'
+# fi
+
 # for path_file in /etc/paths.d/*(.N); do
 #   path+=($(<$path_file))
 # done
@@ -84,8 +73,10 @@ unset BROWSER
 export HOMEBREW_NO_ANALYTICS=1
 export HOMEBREW_AUTO_UPDATE_SECS='2592000'
 export HOMEBREW_NO_ENV_HINTS=1
-export MSHOULD_QUIET=1
-export MSHOULD_FAST=1
+export HOMEBREW_CURLRC=1
+export MSHOULD_QUIET=1 # micro-should, dots
+export MSHOULD_FAST=1 # micro-should, workers=auto
+export OLLAMA_NOHISTORY=1
 export GPG_TTY=$(tty) # For git commit signing
 gitssh="$HOME/.ssh/git"
 if [[ -f $gitssh ]]; then
