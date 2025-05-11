@@ -63,9 +63,9 @@ alias gbrd='git branch -D'
 alias gcl='git clone'
 alias gch='git checkout'
 alias gds='git diff --staged'
-alias ghead='git reset HEAD~1'
 alias gdisc='git reset --hard HEAD'
-alias gnames='git log --no-merges --pretty="format:%an <%ae>" | sort | uniq -c | sort -r'
+alias gitreset='git reset HEAD~1'
+alias gitnames='git log --no-merges --pretty="format:%an <%ae>" | sort | uniq -c | sort -r'
 function gc() {
   args=$@
   ndate=$(date -u +%Y-%m-%dT%H:%M:%S%z)
@@ -93,7 +93,7 @@ function grmtag() {
 }
 
 
-function gcherry() {
+function gitcherry() {
   is_range=''
   case "$1" in # `sh`-compatible substring.
     *\.*)
@@ -118,16 +118,16 @@ function gcherry() {
     [[ CC -eq 1 ]] && cherrycc $commit
   done
 }
-function gdates() {
-  git log --pretty="format:%al---%ad---%cd" --date=format:'%Y-%m-%d %H:%M:%S%z' | python3 <(cat <<END
+function gitdates() {
+  git log --pretty="format:%ae---%ad---%cd" --date=format:'%Y-%m-%dT%H:%M:%S%z' | python3 <(cat <<END
 import sys
 res = []
 for line in sys.stdin:
   (m, ad, cd) = line.strip().split('---')
   if ad == cd:
-    res.append('{}: {}'.format(m, ad))
+    res.append('{} {}'.format(m, ad))
   else:
-    res.append('{}: {} {}'.format(m, ad, cd))
+    res.append('{} {} {}'.format(m, ad, cd))
 for item in res:
   print(item)
 END

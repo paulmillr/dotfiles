@@ -1,30 +1,26 @@
 {
-  "editor.fontSize": 14,
-  "editor.fontLigatures": "'ss01', 'ss02', 'ss03', 'ss04', 'ss05', 'ss06', 'ss07', 'ss08', 'calt', 'dlig'",
+  "editor.fontSize": 16,
   "debug.console.fontSize": 16,
   "terminal.integrated.fontSize": 14,
-  "editor.fontFamily": "Monaco, 'Monaspace Xenon', 'Courier New', monospace",
+  "chat.editor.fontSize": 14,
+  "terminal.integrated.defaultProfile.linux": "zsh",
+  "editor.fontFamily": "'Iosevka Extended', 'Menlo', 'Monaco', 'Consolas', 'Droid Sans Mono', 'Inconsolata', 'Courier New', monospace",
+  "window.autoDetectColorScheme": true,
+  "workbench.preferredDarkColorTheme": "One Hunter Theme Vercel",
+  "workbench.preferredLightColorTheme": "Tomorrow",
+  "workbench.iconTheme": "catppuccin-perfect-frappe",
+  "editor.fontLigatures": "'ss01', 'ss02', 'ss03', 'ss04', 'ss05', 'ss06', 'ss07', 'ss08', 'calt', 'dlig'",
   "editor.tabSize": 2,
   "editor.bracketPairColorization.enabled": true,
   "editor.minimap.enabled": false,
-  // Wrap lines at 100 characters
   "editor.wordWrap": "wordWrapColumn",
   "editor.wordWrapColumn": 100,
   "html.format.wrapLineLength": 100,
-  // Prettier formatter: single quotes, 100 chars
-  "prettier.singleQuote": true,
-  "prettier.printWidth": 100,
-  // git
-  "git.confirmSync": false,
-  "git.autorefresh": false,
   "diffEditor.renderSideBySide": false,
-  // Do not show files
   "files.exclude": {
     "**/package-lock.json": true
   },
-  // F-off telemetry
   "telemetry.enableCrashReporter": false,
-  "telemetry.enableTelemetry": false,
   "telemetry.telemetryLevel": "off",
   "update.mode": "none",
   "extensions.autoUpdate": false,
@@ -50,44 +46,58 @@
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "workbench.startupEditor": "none",
   "workbench.editor.languageDetection": false,
-  "window.autoDetectColorScheme": true,
   "editor.unicodeHighlight.nonBasicASCII": false,
   "[jsonc]": {
     "editor.defaultFormatter": "vscode.json-language-features"
   },
   "breadcrumbs.enabled": false,
-  "workbench.preferredLightColorTheme": "Ayu Dark",
-  "workbench.colorTheme": "Iceberg Light",
   "editor.lineNumbers": "off",
   "editor.folding": false,
   "editor.glyphMargin": false,
   "editor.guides.indentation": false,
-  "prettier.enable": false,
   "editor.rulers": [],
   "markdown.preview.fontSize": 18,
   "files.trimTrailingWhitespace": true,
-  "git.openRepositoryInParentFolders": "always",
   "workbench.editorAssociations": {
     "*.epub": "default"
   },
   "typescript.inlayHints.parameterTypes.enabled": true,
-  "zig.zls.enabled": true,
   "workbench.editor.empty.hint": "hidden",
   "editor.inlayHints.enabled": "off",
-  "print.colourScheme": "A11 Y",
   "markdown.preview.fontFamily": "SF Mono, SFMono, -apple-system, sans-serif",
-  "print.fontSize": "8pt",
-  "window.commandCenter": false,
   "js/ts.implicitProjectConfig.checkJs": true,
-  "haskell.serverEnvironment": {
-    "PATH": "${HOME}/.ghcup/bin:$PATH"
-  },
-  "haskell.manageHLS": "GHCup",
   "editor.maxTokenizationLineLength": 50000,
   "workbench.settings.applyToAllProfiles": [
     "editor.maxTokenizationLineLength"
   ],
   "github.gitAuthentication": false,
+  "git.optimisticUpdate": false,
+  "git.confirmSync": false,
+  "git.autorefresh": false,
+  "git.openRepositoryInParentFolders": "always",
+  "markdown.extension.toc.updateOnSave": false,
+  "window.nativeTabs": true,
+  "window.customTitleBarVisibility": "never",
+  "prettier.enable": false,
+  "prettier.singleQuote": true,
+  "prettier.printWidth": 100,
+  "print.colourScheme": "A11 Y",
+  "print.fontSize": "8pt",
   "print.editorTitleMenuButton": false,
-  "workbench.preferredDarkColorTheme": "Ayu Dark"
+  "continue.telemetryEnabled": false,
+  "continue.remoteConfigServerUrl": "",
+  "continue.enableTabAutocomplete": false,
+  "continue.showInlineTip": false,
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": "always"
+  },
+  "javascript.preferences.organizeImports": {
+    "typeOrder": "last"
+  },
+  "workbench.navigationControl.enabled": false,
+  "workbench.layoutControl.enabled": false,
+  "window.commandCenter": false,
+  "github.showAvatar": false,
+  "git.countBadge": "off",
+  "git.blame.statusBarItem.enabled": false
 }

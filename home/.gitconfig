@@ -28,7 +28,7 @@
   process = git-lfs filter-process
   required = true
 [format]
-  pretty = %Cred%h%Creset%C(yellow)%d%Creset %s %Cgreen(%cd) %C(bold blue)%an%Creset
+  pretty = %Cred%h%Creset%C(yellow)%d%Creset %s %Cgreen(%cd) %C(bold blue)%an %C(yellow)%G?%Creset
 [log]
   date = human
 [merge]
