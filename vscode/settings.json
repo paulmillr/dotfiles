@@ -1,0 +1,113 @@
+{
+  "editor.fontSize": 15,
+  "debug.console.fontSize": 16,
+  "terminal.integrated.fontSize": 14,
+  "chat.editor.fontSize": 14,
+  "terminal.integrated.defaultProfile.linux": "zsh",
+  "editor.fontFamily": "'Iosevka Extended', 'Menlo', 'Monaco', 'Consolas', 'Droid Sans Mono', 'Inconsolata', 'Courier New', monospace",
+  "window.autoDetectColorScheme": true,
+  "workbench.preferredDarkColorTheme": "Monokai Pro (Filter Spectrum)",
+  "workbench.iconTheme": "Monokai Pro Light (Filter Sun) Monochrome Icons",
+  "editor.fontLigatures": "'ss01', 'ss02', 'ss03', 'ss04', 'ss05', 'ss06', 'ss07', 'ss08', 'calt', 'dlig'",
+  "editor.tabSize": 2,
+  "editor.bracketPairColorization.enabled": true,
+  "editor.minimap.enabled": false,
+  "editor.wordWrap": "wordWrapColumn",
+  "editor.wordWrapColumn": 100,
+  "html.format.wrapLineLength": 100,
+  "diffEditor.renderSideBySide": false,
+  "files.exclude": {
+    "**/*.d.ts.map": true,
+    "**/*.d.ts1": true,
+    "**/*.js.map": true,
+    "**/package-lock.json": true
+  },
+  "telemetry.enableCrashReporter": false,
+  "telemetry.telemetryLevel": "off",
+  "update.mode": "none",
+  "extensions.autoUpdate": false,
+  "update.showReleaseNotes": false,
+  "extensions.autoCheckUpdates": false,
+  "workbench.settings.enableNaturalLanguageSearch": false,
+  "workbench.enableExperiments": false,
+  "extensions.ignoreRecommendations": true,
+  "explorer.openEditors.visible": 10,
+  "explorer.confirmDelete": false,
+  "editor.renderWhitespace": "selection",
+  "editor.renderControlCharacters": false,
+  "window.openFilesInNewWindow": "default",
+  "[javascript]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+  },
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "workbench.startupEditor": "none",
+  "workbench.editor.languageDetection": false,
+  "editor.unicodeHighlight.nonBasicASCII": false,
+  "[jsonc]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+  },
+  "breadcrumbs.enabled": false,
+  "editor.glyphMargin": false,
+  "editor.guides.indentation": false,
+  "editor.rulers": [],
+  "markdown.preview.fontSize": 18,
+  "files.trimTrailingWhitespace": true,
+  "workbench.editorAssociations": {
+    "*.epub": "default"
+  },
+  "typescript.inlayHints.parameterTypes.enabled": true,
+  "workbench.editor.empty.hint": "hidden",
+  "editor.inlayHints.enabled": "off",
+  "markdown.preview.fontFamily": "SF Mono, SFMono, -apple-system, sans-serif",
+  "js/ts.implicitProjectConfig.checkJs": true,
+  "editor.maxTokenizationLineLength": 50000,
+  "workbench.settings.applyToAllProfiles": [
+    "editor.maxTokenizationLineLength"
+  ],
+  "github.gitAuthentication": false,
+  "git.optimisticUpdate": false,
+  "git.confirmSync": false,
+  "git.autorefresh": false,
+  "git.openRepositoryInParentFolders": "always",
+  "markdown.extension.toc.updateOnSave": false,
+  "window.nativeTabs": true,
+  "window.customTitleBarVisibility": "never",
+  "prettier.enable": false,
+  "prettier.singleQuote": true,
+  "prettier.printWidth": 100,
+  "print.colourScheme": "A11 Y",
+  "print.fontSize": "8pt",
+  "print.editorTitleMenuButton": false,
+  "continue.telemetryEnabled": false,
+  "continue.remoteConfigServerUrl": "",
+  "continue.enableTabAutocomplete": false,
+  "continue.showInlineTip": false,
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": "explicit"
+  },
+  "javascript.preferences.organizeImports": {
+
+    "typeOrder": "last"
+  },
+  "workbench.navigationControl.enabled": false,
+  "workbench.layoutControl.enabled": false,
+  "window.commandCenter": false,
+  "github.showAvatar": false,
+  "git.countBadge": "off",
+  "git.blame.statusBarItem.enabled": false,
+  "workbench.productIconTheme": "icons-carbon",
+  "catppuccin.italicComments": false,
+  "catppuccin.italicKeywords": false,
+  "[css]": {
+    "editor.defaultFormatter": "vscode.css-language-features"
+  },
+  "workbench.preferredLightColorTheme": "Monokai Pro Light (Filter Sun)",
+  "files.trimTrailingWhitespaceInRegexAndStrings": false,
+  "editor.lineNumbers": "off"
+}

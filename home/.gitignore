@@ -1,0 +1,35 @@
+# Numerous always-ignore extensions
+*.diff
+*.err
+*.orig
+*.log
+*.swp
+*~
+*.js.map
+*.d.ts.map
+
+# OS or Editor folders
+.DS_Store
+.cache
+
+# Version control
+.hg
+.svn
+
+# Node.js
+/node_modules
+/npm-debug.log
+yarn.lock
+.pnp.cjs
+.yarn
+package-lock.json
+pnpm-lock.yaml
+bun.lockb
+bun.lock
+deno.lock
+/.nyc_output/
+
+# Other
+*.pyc
+/tmp
+/.zed

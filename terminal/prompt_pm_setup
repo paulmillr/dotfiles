@@ -1,0 +1,65 @@
+# Simple zsh prompt.
+#
+# dotfiles ❯ (default)
+# dotfiles master ❯ (in git repository)
+# root@serv dotfiles master ❯ (with SSH)
+#
+# * is prepended to git branch name if repo is dirty.
+# ❯ is green or red depending on previous command exit status.
+
+vcs_info=''
+
+function prompt_szsh_precmd {
+  setopt LOCAL_OPTIONS
+  unsetopt XTRACE KSH_ARRAYS
+}
+
+platform="$(uname -s)"
+function list-files {
+  case "$platform" in
+    Darwin)
+      ls -1 .
+      ;;
+    FreeBSD)
+      ls -1 .
+      ;;
+    *)
+      ls .
+      ;;
+  esac
+}
+
+function get-vcs-info {
+  vcs_info=''
+  git rev-parse --is-inside-work-tree &>/dev/null || return
+
+  local ref=$(git symbolic-ref -q HEAD | sed -e 's|^refs/heads/||')
+  if [[ -z "$ref" ]]; then
+    vcs_info=''
+  else
+    st=`git diff --quiet --ignore-submodules HEAD &>/dev/null; [ $? -eq 1 ] && echo '*'`
+    vcs_info=" %F{blue}%F{magenta}${ref}${st}%f"
+  fi
+}
+
+function prompt_szsh_setup {
+  setopt LOCAL_OPTIONS
+  unsetopt XTRACE KSH_ARRAYS
+  prompt_opts=(cr percent subst)
+
+  autoload -Uz add-zsh-hook
+  add-zsh-hook precmd get-vcs-info
+  # add-zsh-hook chpwd list-files
+  add-zsh-hook chpwd get-vcs-info
+
+  # zstyle ':omz:module:editor' completing '%B%F{red}...%f%b'
+
+  # Time: %F{yellow}%T
+  PROMPT='%F{magenta}${SSH_TTY:+%n@%m }%F{blue}%1~%f${vcs_info}\
+%(!.%B%F{red}#%f%b.%B %(?.%F{green}.%F{red})❯%f%b) '
+  RPROMPT=''
+  SPROMPT='zsh: correct %F{red}%R%f to %F{green}%r%f [nyae]? '
+}
+
+prompt_szsh_setup "$@"
+

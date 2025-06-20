@@ -1,0 +1,34 @@
+[advice]
+  statusHints = false
+[alias]
+  ch = checkout
+  d = diff
+  release  = !sh "$HOME/Developer/personal/dotfiles/git-extras/git-release.sh"
+[color "diff"]
+  meta = white dim
+  frag = magenta bold
+  commit = yellow bold
+  old = red bold
+  new = green bold
+  whitespace = red reverse
+[core]
+  excludesfile = ~/.gitignore
+[diff]
+  colorMoved = default
+[filter "lfs"]
+  clean = git-lfs clean -- %f
+  smudge = git-lfs smudge -- %f
+  process = git-lfs filter-process
+  required = true
+[format]
+  pretty = %Cred%h%Creset%C(yellow)%d%Creset %s %Cgreen(%cd) %C(bold blue)%an %C(yellow)%G?%Creset
+[log]
+  date = human
+[merge]
+  conflictstyle = diff3
+[mergetool]
+  keepBackup = false
+[push]
+  default = simple
+[pull]
+  rebase = true

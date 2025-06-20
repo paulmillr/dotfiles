@@ -1,0 +1,9 @@
+[submodule "terminal/completion"]
+	path = terminal/completion
+	url = https://github.com/zsh-users/zsh-completions.git
+[submodule "terminal/highlight"]
+	path = terminal/highlight
+	url = https://github.com/zsh-users/zsh-syntax-highlighting.git
+[submodule "vim"]
+	path = vim
+	url = https://github.com/paulmillr/dotfiles-vim.git
