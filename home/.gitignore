@@ -33,3 +33,4 @@ deno.lock
 *.pyc
 /tmp
 /.zed
+*.patch

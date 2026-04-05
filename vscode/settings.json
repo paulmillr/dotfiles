@@ -6,19 +6,16 @@
   "terminal.integrated.defaultProfile.linux": "zsh",
   "editor.fontFamily": "'SF Mono', 'Iosevka Extended', 'Menlo', 'Monaco', 'Consolas', 'Droid Sans Mono', 'Inconsolata', 'Courier New', monospace",
   "window.autoDetectColorScheme": true,
-  "workbench.preferredDarkColorTheme": "Monokai Pro (Filter Ristretto)",
   "workbench.iconTheme": "Monokai Pro Light (Filter Sun) Monochrome Icons",
   "editor.fontLigatures": "'ss01', 'ss02', 'ss03', 'ss04', 'ss05', 'ss06', 'ss07', 'ss08', 'calt', 'dlig'",
   "editor.tabSize": 2,
   "editor.bracketPairColorization.enabled": true,
   "editor.minimap.enabled": false,
-  "editor.wordWrap": "wordWrapColumn",
-  "editor.wordWrapColumn": 110,
+  "editor.wordWrap": "bounded",
   "html.format.wrapLineLength": 110,
   "diffEditor.renderSideBySide": false,
   "files.exclude": {
     "**/*.d.ts.map": true,
-    "**/*.d.ts1": true,
     "**/*.js.map": true,
     "**/package-lock.json": true
   },
@@ -108,10 +105,19 @@
   "[css]": {
     "editor.defaultFormatter": "vscode.css-language-features"
   },
-  "workbench.preferredLightColorTheme": "Monokai Pro Light (Filter Sun)",
   "files.trimTrailingWhitespaceInRegexAndStrings": false,
-  "editor.lineNumbers": "off",
   "telemetry.editStats.enabled": false,
   "telemetry.feedback.enabled": false,
-  "workbench.secondarySideBar.defaultVisibility": "hidden"
+  "workbench.secondarySideBar.defaultVisibility": "hidden",
+  "chat.agent.enabled": false,
+  "editor.largeFileOptimizations": false,
+  "files.simpleDialog.enable": true,
+  "workbench.preferredDarkColorTheme": "Monokai Pro (Filter Spectrum)",
+  "editor.lineNumbers": "off",
+  "workbench.preferredLightColorTheme": "Monokai Pro (Filter Spectrum)",
+  "problems.visibility": false,
+  "prettier.proseWrap": "always",
+  "editor.wordWrapColumn": 100,
+  "diffEditor.experimental.useTrueInlineView": true,
+  "diffEditor.hideUnchangedRegions.enabled": true
 }

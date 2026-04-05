@@ -27,7 +27,9 @@ done
 
 echo "Initializing fresh git config in '$HOME/.gitconfig'"
 rm -f $HOME/.gitconfig
+rm -f $HOME/.npmrc
 cp -r $dotfiles/home/.gitconfig $HOME/.gitconfig
+cp -r $dotfiles/home/.npmrc $HOME/.npmrc
 
 link $dotfiles/vim $HOME/.vim
 unm=$(uname)

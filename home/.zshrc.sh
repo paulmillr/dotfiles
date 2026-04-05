@@ -65,6 +65,8 @@ alias gch='git checkout'
 alias gds='git diff --staged'
 alias gdisc='git reset --hard HEAD'
 alias gitnames='git log --no-merges --pretty="format:%an <%ae>" | sort | uniq -c | sort -r'
+alias gitauthors='git log --no-merges --pretty="format:%an <%ae>" | sort | uniq -c | sort -r'
+alias gitsubmodules='git submodule update --init --recursive'
 function gback() {
   subj=$(git log -1 --format='%s')
   echo "reverting ${fg[yellow]}${subj}${reset_color}"
@@ -291,7 +293,7 @@ function tarbz2() {
 function tarxz() {
   inf="$1"
   outf="$1.tar.xz"
-  XZ_OPT=-9 tar -Jcvjf "$outf" "$inf"
+  XZ_OPT=-9 tar -Jcvf "$outf" "$inf"
 }
 
 alias untarbz2='tar -xvjf'
