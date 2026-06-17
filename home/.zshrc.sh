@@ -1,29 +1,96 @@
 #!/usr/bin/env zsh
 
-curr="$pm/dotfiles"
+if [[ -n "${pm:-}" ]]; then
+  curr="$pm/dotfiles"
+else
+  curr=''
+  print -u2 'pm is not set; skipping dotfiles startup files'
+fi
+
+function _zshrc_is_trusted_path() {
+  local target="$1"
+  local path
+  local home
+  local -A st
+
+  if [[ -z "$target" || ( ! -e "$target" && ! -L "$target" ) ]]; then
+    print -u2 "Refusing to trust missing path: $target"
+    return 1
+  fi
+
+  zmodload zsh/stat 2> /dev/null || {
+    print -u2 'Refusing to trust startup files: zsh/stat is unavailable'
+    return 1
+  }
+
+  path="${target:A}"
+  home="${HOME:A}"
+  if [[ "$path" != "$home" && "$path" != "$home"/* ]]; then
+    print -u2 "Refusing to trust $path: outside HOME"
+    return 1
+  fi
+
+  while true; do
+    zstat -H st -- "$path" || return 1
+
+    if (( st[uid] != EUID && st[uid] != 0 )); then
+      print -u2 "Refusing to trust $path: owner is neither current user nor root"
+      return 1
+    fi
+
+    if (( st[mode] & 0002 )); then
+      print -u2 "Refusing to trust $path: world-writable"
+      return 1
+    fi
+
+    if (( (st[mode] & 0020) && st[gid] != EGID )); then
+      print -u2 "Refusing to trust $path: writable by another group"
+      return 1
+    fi
+
+    [[ "$path" == "$home" ]] && break
+    path="${path:h}"
+  done
+}
+
+function _zshrc_source_trusted() {
+  local file="$1"
+
+  _zshrc_is_trusted_path "$file" || return 1
+  source -- "$file"
+}
 
 # Load main files.
 # To benchmark startup: brew install coreutils, uncomment lines
 # echo "Load start\t" $(gdate "+%s-%N")
-source "$curr/terminal/startup.sh"
-source "$curr/terminal/completion.sh"
-source "$curr/terminal/highlight.sh"
+if [[ -n "$curr" ]]; then
+  _zshrc_source_trusted "$curr/terminal/startup.sh"
+  _zshrc_source_trusted "$curr/terminal/completion.sh"
+  _zshrc_source_trusted "$curr/terminal/highlight.sh"
+fi
 # echo "Load end\t" $(gdate "+%s-%N")
 
-autoload -U colors && colors
+function _zshrc_colors() {
+  (( ${+fg[blue]} )) || { autoload -U colors && colors }
+}
 
 # Load and execute the prompt theming system.
-fpath=("$curr/terminal" $fpath)
-autoload -Uz promptinit && promptinit
-prompt 'pm'
+if [[ -n "$curr" ]] \
+  && _zshrc_is_trusted_path "$curr/terminal" \
+  && _zshrc_is_trusted_path "$curr/terminal/prompt_pm_setup"
+then
+  _zshrc_source_trusted "$curr/terminal/prompt_pm_setup"
+fi
 
 # The icrnl setting tells the terminal driver in the kernel to convert the CR character
 # to LF on input. This way, applications only need to worry about one newline character;
 # the same newline character that ends lines in files also ends lines of user input on
 # the terminal, so the application doesn't need to have a special case for that.
 # Fixes <Return> key bugs with some secure keyboards etc
-stty icrnl
-export GPG_TTY=$(tty) # For git commit signing
+if [[ -t 0 ]]; then
+  stty icrnl
+  export GPG_TTY="$(tty)" # For git commit signing
+fi
 
 # ==================================================================
 # = Aliases =
@@ -69,30 +136,39 @@ alias gitauthors='git log --no-merges --pretty="format:%an <%ae>" | sort | uniq 
 alias gitsubmodules='git submodule update --init --recursive'
 function gback() {
   subj=$(git log -1 --format='%s')
+  _zshrc_colors
   echo "reverting ${fg[yellow]}${subj}${reset_color}"
   git reset HEAD~1
 }
 function gc() {
-  args=$@
+  local args="$*"
+  local ndate
   ndate=$(date -u +%Y-%m-%dT%H:%M:%S%z)
-  GIT_AUTHOR_DATE=$ndate GIT_COMMITTER_DATE=$ndate git commit -m "$args"
+  GIT_AUTHOR_DATE="$ndate" GIT_COMMITTER_DATE="$ndate" git commit -m "$args"
 }
 function gcam() {
-  args=$@
+  local args="$*"
+  local ndate
   ndate=$(date -u +%Y-%m-%dT%H:%M:%S%z)
-  GIT_AUTHOR_DATE=$ndate GIT_COMMITTER_DATE=$ndate git commit --amend -m "$args"
+  GIT_AUTHOR_DATE="$ndate" GIT_COMMITTER_DATE="$ndate" git commit --amend -m "$args"
 }
 function gcp() {
-  title="$@"
+  local title="$*"
+  local ndate
   ndate=$(date -u +%Y-%m-%dT%H:%M:%S%z)
-  GIT_AUTHOR_DATE=$ndate GIT_COMMITTER_DATE=$ndate git commit -am $title && git push -u origin
+  GIT_AUTHOR_DATE="$ndate" GIT_COMMITTER_DATE="$ndate" git commit -am "$title" && git push -u origin
 }
 function gl() {
   git --no-pager log -10 --graph
 }
 function grmtag() {
-  tag=$1
-  git tag -d $tag
+  local tag="$1"
+  if [[ -z "$tag" ]]; then
+    print -u2 'Usage: grmtag <tag>'
+    return 2
+  fi
+
+  git tag -d -- "$tag"
   git push origin ":refs/tags/${tag}"
 }
 
@@ -106,7 +182,7 @@ function gitcherry() {
   esac
   # Check if it's one commit vs set of commits.
   if [ "$#" -eq 1 ] && [[ $is_range ]]; then
-    log=$(git rev-list --reverse --topo-order $1 | xargs)
+    log=$(git rev-list --reverse --topo-order "$1" | xargs)
     setopt sh_word_split 2> /dev/null # Ignore for `sh`.
     commits=(${log}) # Convert string to array.
     unsetopt sh_word_split 2> /dev/null # Ignore for `sh`.
@@ -116,10 +192,10 @@ function gitcherry() {
 
   total=${#commits[@]} # Get last array index.
   echo "Picking $total commits:"
-  for commit in ${commits[@]}; do
-    echo $commit
-    git cherry-pick -n $commit || break
-    [[ CC -eq 1 ]] && cherrycc $commit
+  for commit in "${commits[@]}"; do
+    echo "$commit"
+    git cherry-pick -n -- "$commit" || break
+    [[ CC -eq 1 ]] && cherrycc "$commit"
   done
 }
 function gitdates() {
@@ -162,18 +238,28 @@ alias nibir='npm install && npm run build'
 # Opens file in EDITOR.
 function edit() {
   local dir=$1
+  local -a editor
   [[ -z "$dir" ]] && dir='.'
-  $EDITOR $dir
+  editor=(${(z)${EDITOR:-vi}})
+  command "${editor[@]}" -- "$dir"
 }
 alias e=edit
 
 # Execute commands for each file in current directory.
 function each() {
-  for dir in *; do
+  local dir
+  local oldpwd="$PWD"
+
+  if (( $# == 0 )); then
+    print -u2 'Usage: each <command> [args...]'
+    return 2
+  fi
+
+  for dir in *(/N); do
     # echo "${dir}:"
-    cd $dir
-    $@
-    cd ..
+    builtin cd -- "$dir" || continue
+    "$@"
+    builtin cd -- "$oldpwd" || return
   done
 }
 
@@ -210,7 +296,8 @@ function ram() {
     return 0
   fi
 
-  sum=$(_calcram $app)
+  sum=$(_calcram "$app")
+  _zshrc_colors
   if [[ $sum != "0" ]]; then
     echo "${fg[blue]}${app}${reset_color} uses ${fg[green]}${sum}${reset_color} MBs of RAM"
   else
@@ -229,7 +316,8 @@ function ram-streaming() {
   fi
 
   while true; do
-    sum=$(_calcram $app)
+    sum=$(_calcram "$app")
+    _zshrc_colors
     if [[ $sum != "0" ]]; then
       echo -en "${fg[blue]}${app}${reset_color} uses ${fg[green]}${sum}${reset_color} MBs of RAM\r"
     else
@@ -270,31 +358,157 @@ function maxcpu() {
   echo "Loaded $cores cores. To stop: 'killall yes'"
 }
 
-# Simple .tar archiving.
+# Simple tar archiving and extraction.
+function _tar_require_one_path() {
+  local usage="$1"
+  shift
+
+  if (( $# != 1 )) || [[ -z "$1" ]]; then
+    print -u2 "Usage: $usage"
+    return 2
+  fi
+}
+
+function _tar_require_existing_path() {
+  local path="$1"
+
+  if [[ ! -e "$path" && ! -L "$path" ]]; then
+    print -u2 "No such path: $path"
+    return 1
+  fi
+}
+
+function _tar_reject_unsafe_members() {
+  local archive="$1"
+  local listing
+  local verbose_listing
+  shift
+
+  if ! listing=$(tar "$@" -t -f "$archive"); then
+    return 1
+  fi
+
+  _tar_reject_unsafe_member_names "$listing" || return
+
+  if ! verbose_listing=$(tar "$@" -t -v -f "$archive"); then
+    return 1
+  fi
+
+  _tar_reject_unsafe_member_types "$verbose_listing"
+}
+
+function _tar_reject_unsafe_member_names() {
+  local listing="$1"
+  local member
+
+  for member in "${(@f)listing}"; do
+    if [[ "$member" == /* || "$member" == .. || "$member" == ../* || "$member" == */.. || "$member" == */../* ]]; then
+      print -u2 "Refusing to extract unsafe archive member: $member"
+      return 1
+    fi
+  done
+}
+
+function _tar_reject_unsafe_member_types() {
+  local listing="$1"
+  local member
+
+  for member in "${(@f)listing}"; do
+    if [[ "${member[1]}" == [lhbcp] ]]; then
+      print -u2 "Refusing to extract archive with special member: $member"
+      return 1
+    fi
+  done
+}
+
+function _tar_safe_extract() {
+  local archive="$1"
+  shift
+
+  _tar_require_existing_path "$archive" || return
+  _tar_reject_unsafe_members "$archive" "$@" || return
+  tar "$@" -x -v -k -o -f "$archive"
+}
+
+function _tar_safe_extract_pbzip2() {
+  local archive="$1"
+  local listing
+  local verbose_listing
+  _tar_require_existing_path "$archive" || return
+  setopt local_options pipefail
+  if ! listing=$(pbzip2 -d -c -- "$archive" | tar -t -f -); then
+    return 1
+  fi
+  _tar_reject_unsafe_member_names "$listing" || return
+
+  if ! verbose_listing=$(pbzip2 -d -c -- "$archive" | tar -t -v -f -); then
+    return 1
+  fi
+  _tar_reject_unsafe_member_types "$verbose_listing" || return
+
+  pbzip2 -d -c -- "$archive" | tar -x -v -k -o -f -
+}
+
+function _tar_require_bzip2() {
+  if (( ! $+commands[pbzip2] && ! $+commands[bzip2] )); then
+    print -u2 "bzip2 or pbzip2 is required for .tar.bz2 archives"
+    return 1
+  fi
+}
+
 function tar_() {
-  tar -cvf "$1.tar" "$1"
+  _tar_require_one_path "tar_ <path>" "$@" || return
+  _tar_require_existing_path "$1" || return
+  tar -c -v -f "$1.tar" -- "$1"
 }
 
 function untar() {
-  tar -xvf $1
+  _tar_require_one_path "untar <archive.tar>" "$@" || return
+  _tar_safe_extract "$1"
 }
 
 # Managing .tar.bz2 archives - best compression.
 function tarbz2() {
-  inf="$1"
-  outf="$1.tar.bz2"
+  _tar_require_one_path "tarbz2 <path>" "$@" || return
+  _tar_require_existing_path "$1" || return
+  _tar_require_bzip2 || return
+  local inf="$1"
+  local outf="$1.tar.bz2"
+
   # Use parallel version when it exists.
   if (( $+commands[pbzip2] )); then
-    tar --use-compress-program pbzip2 -cf "$outf" "$inf"
+    setopt local_options pipefail
+    tar -c -v -f - -- "$inf" | pbzip2 -c > "$outf"
   else
-    tar -cvjf "$outf" "$inf"
+    tar -c -v -j -f "$outf" -- "$inf"
   fi
 }
+
 function tarxz() {
-  inf="$1"
-  outf="$1.tar.xz"
-  XZ_OPT=-9 tar -Jcvf "$outf" "$inf"
+  _tar_require_one_path "tarxz <path>" "$@" || return
+  _tar_require_existing_path "$1" || return
+  local inf="$1"
+  local outf="$1.tar.xz"
+  XZ_OPT=-9 tar -c -v -J -f "$outf" -- "$inf"
 }
 
-alias untarbz2='tar -xvjf'
-alias untarxz='tar -xvf'
+function untarbz2() {
+  _tar_require_one_path "untarbz2 <archive.tar.bz2>" "$@" || return
+  _tar_require_existing_path "$1" || return
+  _tar_require_bzip2 || return
+
+  if (( $+commands[pbzip2] )); then
+    _tar_safe_extract_pbzip2 "$1"
+  else
+    _tar_safe_extract "$1" -j
+  fi
+}
+
+function untarxz() {
+  _tar_require_one_path "untarxz <archive.tar.xz>" "$@" || return
+  _tar_safe_extract "$1" -J
+}
+
+# >>> Codex installer >>>
+export PATH="/home/user/.local/bin:$PATH"
+# <<< Codex installer <<<

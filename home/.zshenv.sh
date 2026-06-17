@@ -1,6 +1,6 @@
 # Defines environment variables.
 privenv="$HOME/.private-env"
-[[ -f "$privenv" ]] && source $privenv
+[[ -f "$privenv" ]] && source "$privenv"
 unset privenv
 
 # Paths.
@@ -13,24 +13,12 @@ pm="$dev/personal"
 
 # path=($HOME/.cargo/bin /usr/local/opt/ruby/bin $path) # changing .zshenv doesn't work
 if [ -f "/opt/homebrew/bin/brew" ]; then
-  # export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
-
-  # Note: you can do this instead of the lines below
-  # It's more reliable, but can be 0.1s (etc) slower
-  eval $(/opt/homebrew/bin/brew shellenv)
-
-  # export HOMEBREW_CELLAR=/opt/homebrew/Cellar
-  # export HOMEBREW_REPOSITORY=/opt/homebrew
-  # path=(
-  #   /opt/homebrew/bin
-  #   /opt/homebrew/sbin
-  #   /opt/homebrew/opt/ruby/bin
-  #   /usr/local/opt/ruby/bin
-  #   $path
-  # )
-  # # export PATH=/opt/homebrew/bin:/opt/homebrew/sbin:/opt/homebrew/opt/ruby/bin:/usr/local/opt/ruby/bin
-  # export MANPATH=/opt/homebrew/share/man::
-  # export INFOPATH=/opt/homebrew/share/info:
+  export HOMEBREW_PREFIX=/opt/homebrew
+  export HOMEBREW_CELLAR=/opt/homebrew/Cellar
+  export HOMEBREW_REPOSITORY=/opt/homebrew
+  path=(/opt/homebrew/bin /opt/homebrew/sbin $path)
+  export MANPATH="/opt/homebrew/share/man${MANPATH+:$MANPATH}:"
+  export INFOPATH="/opt/homebrew/share/info:${INFOPATH:-}"
 fi
 
 if [[ "$OSTYPE" == darwin* ]]; then
@@ -75,9 +63,8 @@ export HOMEBREW_AUTO_UPDATE_SECS='2592000'
 export HOMEBREW_NO_ENV_HINTS=1
 export HOMEBREW_CURLRC=1
 export MSHOULD_QUIET=1 # micro-should, dots
-export MSHOULD_FAST=15 # micro-should, workers=auto
+export MSHOULD_FAST=12 # micro-should, workers=auto
 export OLLAMA_NOHISTORY=1
-export GPG_TTY=$(tty) # For git commit signing
 gitssh="$HOME/.ssh/git"
 if [[ -f $gitssh ]]; then
   export GIT_SSH_COMMAND="ssh -i $gitssh -F /dev/null"

@@ -8,15 +8,10 @@
 # ❯ is green or red depending on previous command exit status.
 
 vcs_info=''
+setopt PROMPT_CR PROMPT_PERCENT PROMPT_SUBST
 
-function prompt_szsh_precmd {
-  setopt LOCAL_OPTIONS
-  unsetopt XTRACE KSH_ARRAYS
-}
-
-platform="$(uname -s)"
 function list-files {
-  case "$platform" in
+  case "$(uname -s)" in
     Darwin)
       ls -1 .
       ;;
@@ -30,27 +25,23 @@ function list-files {
 }
 
 function get-vcs-info {
-  vcs_info=''
-  git rev-parse --is-inside-work-tree &>/dev/null || return
+  local ref
+  local st
 
-  local ref=$(git symbolic-ref -q HEAD | sed -e 's|^refs/heads/||')
-  if [[ -z "$ref" ]]; then
-    vcs_info=''
-  else
-    st=`git diff --quiet --ignore-submodules HEAD &>/dev/null; [ $? -eq 1 ] && echo '*'`
-    vcs_info=" %F{blue}%F{magenta}${ref}${st}%f"
-  fi
+  vcs_info=''
+  ref=$(git symbolic-ref --short -q HEAD 2> /dev/null) || return
+  git diff-index --quiet --ignore-submodules HEAD -- &> /dev/null
+  [[ $? -eq 1 ]] && st='*'
+  vcs_info=" %F{magenta}${ref}${st}%f"
 }
 
 function prompt_szsh_setup {
   setopt LOCAL_OPTIONS
   unsetopt XTRACE KSH_ARRAYS
-  prompt_opts=(cr percent subst)
 
   autoload -Uz add-zsh-hook
   add-zsh-hook precmd get-vcs-info
   # add-zsh-hook chpwd list-files
-  add-zsh-hook chpwd get-vcs-info
 
   # zstyle ':omz:module:editor' completing '%B%F{red}...%f%b'
 
@@ -62,4 +53,3 @@ function prompt_szsh_setup {
 }
 
 prompt_szsh_setup "$@"
-

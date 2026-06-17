@@ -1,29 +1,38 @@
-#
-# Integrates zsh-syntax-highlighting into Prezto.
-#
-# Authors:
-#   Sorin Ionescu <sorin.ionescu@gmail.com>
-#
+# Load zsh-syntax-highlighting.
 
-# Return if requirements are not found.
-if ! zstyle -t ':prezto:module:syntax-highlighting' color; then
-  return 1
-fi
+function _terminal_highlight_load() {
+  local context=':prezto:module:syntax-highlighting'
+  local plugin="${${(%):-%x}:A:h}/highlight/zsh-syntax-highlighting.zsh"
+  local style
+  local -A styles
 
-# Source module files.
-source "${0:h}/highlight/zsh-syntax-highlighting.zsh" || return 1
+  zstyle -t "$context" color || return 1
 
-# Set highlighters.
-zstyle -a ':prezto:module:syntax-highlighting' highlighters 'ZSH_HIGHLIGHT_HIGHLIGHTERS'
-if (( ${#ZSH_HIGHLIGHT_HIGHLIGHTERS[@]} == 0 )); then
-  ZSH_HIGHLIGHT_HIGHLIGHTERS=(main)
-fi
+  if [[ ! -r "$plugin" ]]; then
+    print -u2 "zsh-syntax-highlighting is unavailable: $plugin"
+    return 1
+  fi
 
-# Set highlighting styles.
-typeset -A syntax_highlighting_styles
-zstyle -a ':prezto:module:syntax-highlighting' styles 'syntax_highlighting_styles'
-for syntax_highlighting_style in "${(k)syntax_highlighting_styles[@]}"; do
-  ZSH_HIGHLIGHT_STYLES[$syntax_highlighting_style]="$syntax_highlighting_styles[$syntax_highlighting_style]"
-done
-unset syntax_highlighting_style{s,}
+  typeset -ga ZSH_HIGHLIGHT_HIGHLIGHTERS
+  typeset -gA ZSH_HIGHLIGHT_STYLES
 
+  zstyle -a "$context" highlighters ZSH_HIGHLIGHT_HIGHLIGHTERS
+  (( ${#ZSH_HIGHLIGHT_HIGHLIGHTERS[@]} > 0 )) || ZSH_HIGHLIGHT_HIGHLIGHTERS=(main)
+
+  zstyle -a "$context" styles styles
+  for style in "${(@k)styles}"; do
+    ZSH_HIGHLIGHT_STYLES[$style]="${styles[$style]}"
+  done
+
+  source -- "$plugin"
+}
+
+() {
+  local rc
+
+  _terminal_highlight_load
+  rc=$?
+  unfunction _terminal_highlight_load
+  return "$rc"
+}
+return $?

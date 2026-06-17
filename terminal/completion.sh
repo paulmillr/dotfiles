@@ -15,7 +15,26 @@ fi
 fpath=("${0:h}/completion/src" $fpath)
 
 # Load and initialize the completion system ignoring insecure directories.
-autoload -Uz compinit && compinit -i
+zcompdump="${ZDOTDIR:-$HOME}/.zcompdump"
+zcompdump_max_age=$(( 24 * 60 * 60 ))
+typeset -A zcompdump_stat
+
+autoload -Uz compinit
+if [[ -s "$zcompdump" ]] \
+  && zmodload zsh/datetime 2> /dev/null \
+  && zmodload zsh/stat 2> /dev/null \
+  && zstat -H zcompdump_stat -- "$zcompdump" 2> /dev/null \
+  && (( EPOCHSECONDS - zcompdump_stat[mtime] < zcompdump_max_age ))
+then
+  compinit -C -i -d "$zcompdump"
+else
+  compinit -i -d "$zcompdump"
+  if [[ -s "$zcompdump" ]]; then
+    touch "$zcompdump" 2> /dev/null
+    zcompile "$zcompdump" 2> /dev/null
+  fi
+fi
+unset zcompdump zcompdump_max_age zcompdump_stat
 
 #
 # Options
@@ -146,4 +165,3 @@ zstyle ':completion:*:ssh:*' group-order users hosts-domain hosts-host users hos
 zstyle ':completion:*:(ssh|scp|rsync):*:hosts-host' ignored-patterns '*(.|:)*' loopback ip6-loopback localhost ip6-localhost broadcasthost
 zstyle ':completion:*:(ssh|scp|rsync):*:hosts-domain' ignored-patterns '<->.<->.<->.<->' '^[-[:alnum:]]##(.[-[:alnum:]]##)##' '*@*'
 zstyle ':completion:*:(ssh|scp|rsync):*:hosts-ipaddr' ignored-patterns '^(<->.<->.<->.<->|(|::)([[:xdigit:].]##:(#c,2))##(|%*))' '127.0.0.<->' '255.255.255.255' '::1' 'fe80::*'
-
