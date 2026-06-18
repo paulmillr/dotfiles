@@ -12,10 +12,92 @@ if [[ "$TERM" == 'dumb' ]]; then
 fi
 
 # Add zsh-completions to $fpath.
-fpath=("${0:h}/completion/src" $fpath)
+_completion_dir="${${(%):-%x}:A:h}/completion/src"
+fpath=("$_completion_dir" $fpath)
+unset _completion_dir
 
 # Load and initialize the completion system ignoring insecure directories.
-autoload -Uz compinit && compinit -i
+zcompdump="${ZDOTDIR:-$HOME}/.zcompdump"
+zcompdump_dir="${zcompdump:h}"
+zcompcache="${ZDOTDIR:-$HOME}/.zcompcache"
+
+function _completion_use_fallback_dump() {
+  zcompdump="${ZDOTDIR:-$HOME}/.zcompdump-${EUID}"
+  zcompdump_dir="${zcompdump:h}"
+}
+
+function _completion_use_private_dump() {
+  zcompdump="${ZDOTDIR:-$HOME}/.zcompdump-${EUID}-${$}-${RANDOM}"
+  zcompdump_dir="${zcompdump:h}"
+}
+
+function _completion_trust_file() {
+  local file="$1"
+  local label="$2"
+  local -A st
+
+  if [[ -L "$file" || ( -e "$file" && ! -f "$file" ) ]]; then
+    print -u2 "Ignoring unsafe $label path: $file"
+    return 1
+  fi
+
+  [[ -e "$file" ]] || return 0
+
+  if ! zmodload zsh/stat 2> /dev/null || ! zstat -H st -- "$file" 2> /dev/null; then
+    print -u2 "Ignoring unreadable $label file: $file"
+    return 1
+  fi
+
+  if (( st[uid] != EUID && st[uid] != 0 )); then
+    print -u2 "Ignoring untrusted $label file: $file"
+    return 1
+  fi
+
+  if (( st[mode] & 8#022 )); then
+    print -u2 "Ignoring group/world-writable $label file: $file"
+    return 1
+  fi
+}
+
+function _completion_trust_dump_pair() {
+  local dump="$1"
+
+  _completion_trust_file "$dump" 'completion dump' || return 1
+  _completion_trust_file "${dump}.zwc" 'compiled completion dump' || return 1
+}
+
+if ! _completion_trust_dump_pair "$zcompdump"; then
+  _completion_use_fallback_dump
+  if ! _completion_trust_dump_pair "$zcompdump"; then
+    _completion_use_private_dump
+  fi
+fi
+
+if [[ -L "$zcompcache" || ( -e "$zcompcache" && ! -d "$zcompcache" ) ]]; then
+  print -u2 "Ignoring unsafe completion cache path: $zcompcache"
+  zcompcache="${ZDOTDIR:-$HOME}/.zcompcache-${EUID}"
+fi
+
+if [[ -d "$zcompdump_dir" ]] || mkdir -p "$zcompdump_dir" 2> /dev/null; then
+  chmod go-w "$zcompdump_dir" 2> /dev/null
+fi
+
+if [[ -d "$zcompcache" ]] || mkdir -m 700 -p "$zcompcache" 2> /dev/null; then
+  chmod 700 "$zcompcache" 2> /dev/null
+fi
+
+autoload -Uz compinit
+compinit -i -d "$zcompdump"
+if [[ -s "$zcompdump" ]]; then
+  chmod go-rwx "$zcompdump" 2> /dev/null
+  if [[ ! -s "${zcompdump}.zwc" || "$zcompdump" -nt "${zcompdump}.zwc" ]]; then
+    touch "$zcompdump" 2> /dev/null
+    zcompile "$zcompdump" 2> /dev/null
+  fi
+  chmod go-rwx "$zcompdump" "${zcompdump}.zwc" 2> /dev/null
+fi
+unset zcompdump zcompdump_dir
+unfunction _completion_trust_dump_pair _completion_trust_file _completion_use_fallback_dump _completion_use_private_dump 2> /dev/null
 
 #
 # Options
@@ -36,16 +118,12 @@ unsetopt FLOW_CONTROL      # Disable start/stop characters in shell editor.
 
 # Use caching to make completion for cammands such as dpkg and apt usable.
 zstyle ':completion::complete:*' use-cache on
-zstyle ':completion::complete:*' cache-path "${ZDOTDIR:-$HOME}/.zcompcache"
+zstyle ':completion::complete:*' cache-path "$zcompcache"
+unset zcompcache
 
 # Case-insensitive (all), partial-word, and then substring completion.
-if zstyle -t ':prezto:module:completion:*' case-sensitive; then
-  zstyle ':completion:*' matcher-list 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
-  setopt CASE_GLOB
-else
-  zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
-  unsetopt CASE_GLOB
-fi
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+unsetopt CASE_GLOB
 
 # Group matches and describe.
 zstyle ':completion:*:*:*:*:*' menu select
@@ -116,7 +194,7 @@ zstyle ':completion:*:(rm|kill|diff):*' ignore-line other
 zstyle ':completion:*:rm:*' file-patterns '*:all-files'
 
 # Kill
-zstyle ':completion:*:*:*:*:processes' command 'ps -u $USER -o pid,user,comm -w'
+zstyle ':completion:*:*:*:*:processes' command 'ps -u "$USER" -o pid,user,comm -w'
 zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#) ([0-9a-z-]#)*=01;36=0=01'
 zstyle ':completion:*:*:kill:*' menu yes select
 zstyle ':completion:*:*:kill:*' force-list always
@@ -146,4 +224,3 @@ zstyle ':completion:*:ssh:*' group-order users hosts-domain hosts-host users hos
 zstyle ':completion:*:(ssh|scp|rsync):*:hosts-host' ignored-patterns '*(.|:)*' loopback ip6-loopback localhost ip6-localhost broadcasthost
 zstyle ':completion:*:(ssh|scp|rsync):*:hosts-domain' ignored-patterns '<->.<->.<->.<->' '^[-[:alnum:]]##(.[-[:alnum:]]##)##' '*@*'
 zstyle ':completion:*:(ssh|scp|rsync):*:hosts-ipaddr' ignored-patterns '^(<->.<->.<->.<->|(|::)([[:xdigit:].]##:(#c,2))##(|%*))' '127.0.0.<->' '255.255.255.255' '::1' 'fe80::*'
-

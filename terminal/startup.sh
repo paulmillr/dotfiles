@@ -1,16 +1,4 @@
 #
-# Initializes Prezto.
-#
-# Authors:
-#   Sorin Ionescu <sorin.ionescu@gmail.com>
-
-# Set case-sensitivity for completion, history lookup, etc.
-zstyle ':prezto:*:*' case-sensitive 'no'
-
-# Color output (auto set to 'no' on dumb terminals).
-zstyle ':prezto:*:*' color 'yes'
-
-#
 # Sets directory options and defines directory aliases.
 #
 # Authors:
@@ -80,27 +68,20 @@ unsetopt CHECK_JOBS       # Don't report on jobs when shell exit.
 # Grep
 #
 
-if zstyle -t ':prezto:environment:grep' color; then
-  export GREP_COLOR='37;45'
-  export GREP_OPTIONS='--color=auto'
-fi
+export GREP_COLOR='37;45'
+export GREP_OPTIONS='--color=auto'
 
 #
 # Termcap
 #
 
-if zstyle -t ':prezto:environment:termcap' color; then
-  export LESS_TERMCAP_mb=$'\E[01;31m'      # Begins blinking.
-  export LESS_TERMCAP_md=$'\E[01;31m'      # Begins bold.
-  export LESS_TERMCAP_me=$'\E[0m'          # Ends mode.
-  export LESS_TERMCAP_se=$'\E[0m'          # Ends standout-mode.
-  export LESS_TERMCAP_so=$'\E[00;47;30m'   # Begins standout-mode.
-  export LESS_TERMCAP_ue=$'\E[0m'          # Ends underline.
-  export LESS_TERMCAP_us=$'\E[01;32m'      # Begins underline.
-fi
-
-
-
+export LESS_TERMCAP_mb=$'\E[01;31m'      # Begins blinking.
+export LESS_TERMCAP_md=$'\E[01;31m'      # Begins bold.
+export LESS_TERMCAP_me=$'\E[0m'          # Ends mode.
+export LESS_TERMCAP_se=$'\E[0m'          # Ends standout-mode.
+export LESS_TERMCAP_so=$'\E[00;47;30m'   # Begins standout-mode.
+export LESS_TERMCAP_ue=$'\E[0m'          # Ends underline.
+export LESS_TERMCAP_us=$'\E[01;32m'      # Begins underline.
 
 #
 # Sets history options and defines history aliases.
@@ -118,6 +99,15 @@ HISTFILE="${ZDOTDIR:-$HOME}/.zhistory"       # The path to the history file.
 HISTSIZE=10000                   # The maximum number of events to save in the internal history.
 SAVEHIST=10000                   # The maximum number of events to save in the history file.
 
+if [[ -n "$HISTFILE" ]]; then
+  _histdir="${HISTFILE:h}"
+  if [[ -d "$_histdir" ]] || mkdir -p "$_histdir" 2> /dev/null; then
+    : >>! "$HISTFILE" 2> /dev/null
+    chmod go-rwx "$HISTFILE" 2> /dev/null
+  fi
+  unset _histdir
+fi
+
 #
 # Options
 #
@@ -131,6 +121,9 @@ setopt HIST_IGNORE_DUPS          # Do not record an event that was just recorded
 setopt HIST_IGNORE_ALL_DUPS      # Delete an old recorded event if a new event is a duplicate.
 setopt HIST_FIND_NO_DUPS         # Do not display a previously found event.
 setopt HIST_IGNORE_SPACE         # Do not record an event starting with a space.
+setopt HIST_NO_FUNCTIONS         # Do not record function definitions.
+setopt HIST_NO_STORE             # Do not record history commands.
+setopt HIST_REDUCE_BLANKS        # Remove superfluous blanks before recording.
 setopt HIST_SAVE_NO_DUPS         # Do not write a duplicate event to the history file.
 setopt HIST_VERIFY               # Do not execute immediately upon history expansion.
 setopt HIST_BEEP                 # Beep when accessing non-existent history.
@@ -139,76 +132,111 @@ setopt HIST_BEEP                 # Beep when accessing non-existent history.
 # Aliases
 #
 
+autoload -Uz add-zsh-hook
 
-#
-# Provides for easier use of 256 colors and effects.
-#
-# Authors:
-#   P.C. Shyamshankar <sykora@lucentbeing.com>
-#   Sorin Ionescu <sorin.ionescu@gmail.com>
-#
+function _history-ignore-private-commands {
+  emulate -L zsh
+  setopt extended_glob
 
-# Return if requirements are not found.
-# if [[ "$TERM" == 'dumb' ]]; then
-#   return 1
-# fi
+  local command="${1%%$'\n'}"
+  local command_l
+  local fragment
+  local private_command
+  local -a private_commands
+  local -a sensitive_fragments
 
-typeset -gA FX FG BG
+  command="${command##[[:space:]]#}"
+  command_l="${(L)command}"
 
-FX=(
-                                        none                         "\e[00m"
-                                        normal                       "\e[22m"
-  bold                      "\e[01m"    no-bold                      "\e[22m"
-  faint                     "\e[02m"    no-faint                     "\e[22m"
-  standout                  "\e[03m"    no-standout                  "\e[23m"
-  underline                 "\e[04m"    no-underline                 "\e[24m"
-  blink                     "\e[05m"    no-blink                     "\e[25m"
-  fast-blink                "\e[06m"    no-fast-blink                "\e[25m"
-  reverse                   "\e[07m"    no-reverse                   "\e[27m"
-  conceal                   "\e[08m"    no-conceal                   "\e[28m"
-  strikethrough             "\e[09m"    no-strikethrough             "\e[29m"
-  gothic                    "\e[20m"    no-gothic                    "\e[22m"
-  double-underline          "\e[21m"    no-double-underline          "\e[22m"
-  proportional              "\e[26m"    no-proportional              "\e[50m"
-  overline                  "\e[53m"    no-overline                  "\e[55m"
+  private_commands=(
+    history hist fc
+    'aws configure' 'gh auth' 'npm login' 'yarn npm login' 'pnpm login'
+    'docker login' 'podman login' 'heroku login' 'firebase login'
+    'vercel login' 'netlify login' 'op signin' 'vault login' 'doppler login'
+  )
+  for private_command in "${private_commands[@]}"; do
+    [[ "$command_l" == "$private_command"(|[[:space:]]*) ]] && return 1
+  done
 
-                                        no-border                    "\e[54m"
-  border-rectangle          "\e[51m"    no-border-rectangle          "\e[54m"
-  border-circle             "\e[52m"    no-border-circle             "\e[54m"
+  sensitive_fragments=(
+    'password=' 'passwd=' 'passphrase=' 'token=' 'secret='
+    'api_key=' 'apikey=' 'api-key=' 'access_key=' 'access-key='
+    'private_key=' 'private-key=' 'client_secret=' 'client-secret='
+    'auth_token=' 'auth-token=' 'session_token=' 'session-token='
+    '--password' '--passwd' '--passphrase' '--token' '--secret'
+    '--api-key' '--access-key' '--private-key' '--client-secret'
+    'authorization:' 'bearer ' 'cookie:'
+  )
+  for fragment in "${sensitive_fragments[@]}"; do
+    [[ "$command_l" == *"$fragment"* ]] && return 1
+  done
 
-                                        no-ideogram-marking          "\e[65m"
-  underline-or-right        "\e[60m"    no-underline-or-right        "\e[65m"
-  double-underline-or-right "\e[61m"    no-double-underline-or-right "\e[65m"
-  overline-or-left          "\e[62m"    no-overline-or-left          "\e[65m"
-  double-overline-or-left   "\e[63m"    no-double-overline-or-left   "\e[65m"
-  stress                    "\e[64m"    no-stress                    "\e[65m"
+  return 0
+}
 
-                                        font-default                 "\e[10m"
-  font-first                "\e[11m"    no-font-first                "\e[10m"
-  font-second               "\e[12m"    no-font-second               "\e[10m"
-  font-third                "\e[13m"    no-font-third                "\e[10m"
-  font-fourth               "\e[14m"    no-font-fourth               "\e[10m"
-  font-fifth                "\e[15m"    no-font-fifth                "\e[10m"
-  font-sixth                "\e[16m"    no-font-sixth                "\e[10m"
-  font-seventh              "\e[17m"    no-font-seventh              "\e[10m"
-  font-eigth                "\e[18m"    no-font-eigth                "\e[10m"
-  font-ninth                "\e[19m"    no-font-ninth                "\e[10m"
-)
+add-zsh-hook zshaddhistory _history-ignore-private-commands
 
-FG[none]="$FX[none]"
-BG[none]="$FX[none]"
-colors=(black red green yellow blue magenta cyan white)
-for color in {0..255}; do
-  if (( $color >= 0 )) && (( $color < $#colors )); then
-    index=$(( $color + 1 ))
-    FG[$colors[$index]]="\e[38;5;${color}m"
-    BG[$colors[$index]]="\e[48;5;${color}m"
-  fi
 
-  FG[$color]="\e[38;5;${color}m"
-  BG[$color]="\e[48;5;${color}m"
-done
-unset color{s,} index
+function terminal-colors-256 {
+  (( ${+FX[none]} && ${+FG[0]} && ${+BG[0]} )) && return
+
+  typeset -gA FX FG BG
+
+  FX=(
+                                          none                         "\e[00m"
+                                          normal                       "\e[22m"
+    bold                      "\e[01m"    no-bold                      "\e[22m"
+    faint                     "\e[02m"    no-faint                     "\e[22m"
+    standout                  "\e[03m"    no-standout                  "\e[23m"
+    underline                 "\e[04m"    no-underline                 "\e[24m"
+    blink                     "\e[05m"    no-blink                     "\e[25m"
+    fast-blink                "\e[06m"    no-fast-blink                "\e[25m"
+    reverse                   "\e[07m"    no-reverse                   "\e[27m"
+    conceal                   "\e[08m"    no-conceal                   "\e[28m"
+    strikethrough             "\e[09m"    no-strikethrough             "\e[29m"
+    gothic                    "\e[20m"    no-gothic                    "\e[22m"
+    double-underline          "\e[21m"    no-double-underline          "\e[22m"
+    proportional              "\e[26m"    no-proportional              "\e[50m"
+    overline                  "\e[53m"    no-overline                  "\e[55m"
+
+                                          no-border                    "\e[54m"
+    border-rectangle          "\e[51m"    no-border-rectangle          "\e[54m"
+    border-circle             "\e[52m"    no-border-circle             "\e[54m"
+
+                                          no-ideogram-marking          "\e[65m"
+    underline-or-right        "\e[60m"    no-underline-or-right        "\e[65m"
+    double-underline-or-right "\e[61m"    no-double-underline-or-right "\e[65m"
+    overline-or-left          "\e[62m"    no-overline-or-left          "\e[65m"
+    double-overline-or-left   "\e[63m"    no-double-overline-or-left   "\e[65m"
+    stress                    "\e[64m"    no-stress                    "\e[65m"
+
+                                          font-default                 "\e[10m"
+    font-first                "\e[11m"    no-font-first                "\e[10m"
+    font-second               "\e[12m"    no-font-second               "\e[10m"
+    font-third                "\e[13m"    no-font-third                "\e[10m"
+    font-fourth               "\e[14m"    no-font-fourth               "\e[10m"
+    font-fifth                "\e[15m"    no-font-fifth                "\e[10m"
+    font-sixth                "\e[16m"    no-font-sixth                "\e[10m"
+    font-seventh              "\e[17m"    no-font-seventh              "\e[10m"
+    font-eigth                "\e[18m"    no-font-eigth                "\e[10m"
+    font-ninth                "\e[19m"    no-font-ninth                "\e[10m"
+  )
+
+  FG[none]="$FX[none]"
+  BG[none]="$FX[none]"
+  local colors=(black red green yellow blue magenta cyan white)
+  local color index
+  for color in {0..255}; do
+    if (( color >= 0 && color < $#colors )); then
+      index=$(( color + 1 ))
+      FG[$colors[$index]]="\e[38;5;${color}m"
+      BG[$colors[$index]]="\e[48;5;${color}m"
+    fi
+
+    FG[$color]="\e[38;5;${color}m"
+    BG[$color]="\e[48;5;${color}m"
+  done
+}
 
 
 #
@@ -224,12 +252,43 @@ unset color{s,} index
 # fi
 
 # Sets the Terminal.app proxy icon.
+function _terminal-file-host {
+  local host="${ZSH_TERMINAL_FILE_HOST:-localhost}"
+
+  if [[ "$host" == [[:alnum:]._-]## ]]; then
+    print -r -- "$host"
+  else
+    print -r -- 'localhost'
+  fi
+}
+
+function _terminal-file-uri-path {
+  local path="$1"
+
+  path="${path//\%/%25}"
+  path="${path//$'\a'/%07}"
+  path="${path//$'\e'/%1B}"
+  path="${path//$'\t'/%09}"
+  path="${path//$'\r'/%0D}"
+  path="${path//$'\n'/%0A}"
+  path="${path// /%20}"
+  path="${path//\#/%23}"
+  path="${path//\?/%3F}"
+  print -r -- "$path"
+}
+
 function _terminal-set-terminal-app-proxy-icon {
-  printf '\e]7;%s\a' "file://$HOST${${1:-$PWD}// /%20}"
+  local path="${1:-$PWD}"
+
+  if [[ "$path" == ' ' ]]; then
+    printf '\e]7;%s\a' 'file://localhost '
+    return
+  fi
+
+  printf '\e]7;%s\a' "file://$(_terminal-file-host)$(_terminal-file-uri-path "$path")"
 }
 
 # Do not override precmd/preexec; append to the hook array.
-autoload -Uz add-zsh-hook
 
 # Set up the Apple Terminal.
 function term() {
@@ -313,30 +372,22 @@ if is-callable 'dircolors'; then
   # GNU Core Utilities
   alias ls='ls --group-directories-first'
 
-  if zstyle -t ':prezto:module:utility:ls' color; then
-    if [[ -s "$HOME/.dir_colors" ]]; then
-      eval "$(dircolors "$HOME/.dir_colors")"
-    else
-      eval "$(dircolors)"
-    fi
-
-    alias ls="$aliases[ls] --color=auto"
+  if [[ -s "$HOME/.dir_colors" ]]; then
+    eval "$(dircolors "$HOME/.dir_colors")"
   else
-    alias ls="$aliases[ls] -F"
+    eval "$(dircolors)"
   fi
+
+  alias ls="$aliases[ls] --color=auto"
 else
   # BSD Core Utilities
-  if zstyle -t ':prezto:module:utility:ls' color; then
-    # Define colors for BSD ls.
-    export LSCOLORS='exfxcxdxbxGxDxabagacad'
+  # Define colors for BSD ls.
+  export LSCOLORS='exfxcxdxbxGxDxabagacad'
 
-    # Define colors for the completion system.
-    export LS_COLORS='di=34:ln=35:so=32:pi=33:ex=31:bd=36;01:cd=33;01:su=31;40;07:sg=36;40;07:tw=32;40;07:ow=33;40;07:'
+  # Define colors for the completion system.
+  export LS_COLORS='di=34:ln=35:so=32:pi=33:ex=31:bd=36;01:cd=33;01:su=31;40;07:sg=36;40;07:tw=32;40;07:ow=33;40;07:'
 
-    alias ls='ls -G'
-  else
-    alias ls='ls -F'
-  fi
+  alias ls='ls -G'
 fi
 
 alias l='ls -1A'         # Lists in one column, hidden files.

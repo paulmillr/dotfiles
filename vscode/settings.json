@@ -4,9 +4,8 @@
   "terminal.integrated.fontSize": 14,
   "chat.editor.fontSize": 14,
   "terminal.integrated.defaultProfile.linux": "zsh",
-  "editor.fontFamily": "'SF Mono', 'Iosevka Extended', 'Menlo', 'Monaco', 'Consolas', 'Droid Sans Mono', 'Inconsolata', 'Courier New', monospace",
+  "editor.fontFamily": "'Monaco','SF Mono', 'Iosevka Extended', 'Menlo', 'Consolas', 'Droid Sans Mono', 'Inconsolata', 'Courier New', monospace",
   "window.autoDetectColorScheme": true,
-  "workbench.iconTheme": "Monokai Pro Light (Filter Sun) Monochrome Icons",
   "editor.fontLigatures": "'ss01', 'ss02', 'ss03', 'ss04', 'ss05', 'ss06', 'ss07', 'ss08', 'calt', 'dlig'",
   "editor.tabSize": 2,
   "editor.bracketPairColorization.enabled": true,
@@ -112,12 +111,17 @@
   "chat.agent.enabled": false,
   "editor.largeFileOptimizations": false,
   "files.simpleDialog.enable": true,
-  "workbench.preferredDarkColorTheme": "Monokai Pro (Filter Spectrum)",
   "editor.lineNumbers": "off",
-  "workbench.preferredLightColorTheme": "Monokai Pro (Filter Spectrum)",
-  "problems.visibility": false,
   "prettier.proseWrap": "always",
-  "editor.wordWrapColumn": 100,
-  "diffEditor.experimental.useTrueInlineView": true,
-  "diffEditor.hideUnchangedRegions.enabled": true
+  "editor.wordWrapColumn": 120,
+  "diffEditor.hideUnchangedRegions.enabled": true,
+  "workbench.colorTheme": "Monokai Pro",
+  "markdown.preview.linkify": false,
+  "chat.tools.urls.autoApprove": {
+    "https://code.visualstudio.com": true,
+    "https://github.com/microsoft/vscode/wiki/*": true
+  },
+  "workbench.iconTheme": null,
+  "workbench.preferredDarkColorTheme": "Ice Ice OLED",
+  "workbench.preferredLightColorTheme": "MangaMode: Sailor Moon"
 }

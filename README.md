@@ -27,7 +27,7 @@ The short URL expands to GitHub-hosted `./install.sh`, and then `./etc/symlink-d
     * `git cleanup` — clean up merged git branches. Very useful if
     you’re doing github pull requests in topic branches.
     * `git summary` — outputs commit email statistics.
-    * `git release` and `git sign-release` — commit and tag the commit. Publishes to NPM for node projects.
+    * `git_release` — commit and tag the commit. Publishes to NPM for node projects.
     * `git url` - opens GitHub repo for current git repo.
     * `git-changelog`, `git-setup` etc.
 * `etc` — MacOS fine tuning

@@ -1,9 +1,5 @@
 [advice]
   statusHints = false
-[alias]
-  ch = checkout
-  d = diff
-  release  = !sh "$HOME/Developer/personal/dotfiles/git-extras/git-release.sh"
 [color "diff"]
   meta = white dim
   frag = magenta bold

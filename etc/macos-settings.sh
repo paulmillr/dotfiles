@@ -1,3 +1,13 @@
+#!/bin/sh
+
+PATH='/usr/bin:/bin:/usr/sbin:/sbin'
+export PATH
+
+if [ "$(uname -s)" != 'Darwin' ]; then
+  echo "This script is only intended for macOS systems." >&2
+  exit 1
+fi
+
 # Some stuff was taken from
 # https://github.com/mathiasbynens/dotfiles/blob/master/.macos
 
