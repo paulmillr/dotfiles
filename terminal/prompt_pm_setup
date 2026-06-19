@@ -12,13 +12,14 @@ setopt PROMPT_CR PROMPT_PERCENT PROMPT_SUBST
 
 function get-vcs-info {
   local ref
-  local st
+  local dirty=''
+  local git_status
 
   vcs_info=''
-  ref=$(git symbolic-ref --short -q HEAD 2> /dev/null) || return
-  git diff-index --quiet --ignore-submodules HEAD -- &> /dev/null
-  [[ $? -eq 1 ]] && st='*'
-  vcs_info=" %F{magenta}${ref}${st}%f"
+  ref=$(command git symbolic-ref --short -q HEAD 2> /dev/null) || return 0
+  git_status=$(command git status --porcelain=v1 --ignore-submodules=all 2> /dev/null) || return 0
+  [[ -n "$git_status" ]] && dirty='*'
+  vcs_info=" %F{magenta}${ref}${dirty}%f"
 }
 
 function prompt_szsh_setup {

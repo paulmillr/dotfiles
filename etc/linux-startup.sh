@@ -344,8 +344,14 @@ get_temperature() {
 
 load_color() {
     local load="$1"
+    local processor_count="$2"
 
-    if command awk -v load="$load" 'BEGIN { exit !(load > 1) }'; then
+    if command awk -v load="$load" -v processor_count="$processor_count" 'BEGIN {
+        if (processor_count !~ /^[0-9]+$/ || processor_count < 1) {
+            processor_count = 1
+        }
+        exit !(load > processor_count)
+    }'; then
         printf "%s" "$red"
     else
         printf "%s" "$W"
@@ -354,9 +360,13 @@ load_color() {
 
 format_load_percent() {
     local load="$1"
+    local processor_count="$2"
 
-    command awk -v load="$load" 'BEGIN {
-        printf "%.0f%%", load * 100
+    command awk -v load="$load" -v processor_count="$processor_count" 'BEGIN {
+        if (processor_count !~ /^[0-9]+$/ || processor_count < 1) {
+            processor_count = 1
+        }
+        printf "%.0f%%", (load / processor_count) * 100
     }'
 }
 
@@ -504,12 +514,12 @@ case "$temp_lc" in
         ;;
 esac
 
-LOAD1_COLOR=$(load_color "$LOAD1")
-LOAD5_COLOR=$(load_color "$LOAD5")
-LOAD15_COLOR=$(load_color "$LOAD15")
-LOAD1_PERCENT=$(format_load_percent "$LOAD1")
-LOAD5_PERCENT=$(format_load_percent "$LOAD5")
-LOAD15_PERCENT=$(format_load_percent "$LOAD15")
+LOAD1_COLOR=$(load_color "$LOAD1" "$PROCESSOR_COUNT")
+LOAD5_COLOR=$(load_color "$LOAD5" "$PROCESSOR_COUNT")
+LOAD15_COLOR=$(load_color "$LOAD15" "$PROCESSOR_COUNT")
+LOAD1_PERCENT=$(format_load_percent "$LOAD1" "$PROCESSOR_COUNT")
+LOAD5_PERCENT=$(format_load_percent "$LOAD5" "$PROCESSOR_COUNT")
+LOAD15_PERCENT=$(format_load_percent "$LOAD15" "$PROCESSOR_COUNT")
 
 SERVICES_COLOR="$W"
 if [ "$SERVICES" != "OK" ]; then
