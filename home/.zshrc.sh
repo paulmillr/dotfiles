@@ -257,9 +257,10 @@ alias net="ping google.com | grep -E --color=never '[0-9\.]+ ms'"
 alias remove-node-modules="find . -name 'node_modules' -type d -prune -exec rm -rf '{}' +"
 # Node.js
 alias ni='npm install'
-alias nr='npm run'
-alias nt='npm test'
-alias nrb='npm run build'
+alias nr='node --run'
+alias nt='node --run test'
+alias nrb='node --run build'
+alias bench='node --run benchmark'
 alias npm-dry='npm pack --dry-run'
 alias jsr-dry='jsr publish --dry-run'
 alias npm-reinstall='rm package-lock.json; rm -r node_modules; npm install'

@@ -154,7 +154,8 @@ export NODE_REPL_HISTORY=''
 export OLLAMA_NOHISTORY=1
 export OLLAMA_NO_CLOUD=1
 
-export JSBT='+fast-1 +quiet'
+export JSBT_FAST=-4
+export JSBT_QUIET=1
 export MSHOULD_QUIET=1 # micro-should, dots
 export MSHOULD_FAST=12 # micro-should, workers=auto
 
