@@ -34,3 +34,8 @@ deno.lock
 /tmp
 /.zed
 *.patch
+*.claude
+LOG.md
+AGENTS.md
+CLAUDE.md
+
