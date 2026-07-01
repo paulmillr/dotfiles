@@ -9,8 +9,10 @@
   whitespace = red reverse
 [core]
   excludesfile = ~/.gitignore
+  pager = delta
 [diff]
   colorMoved = default
+  tool = delta
 [filter "lfs"]
   clean = git-lfs clean -- %f
   smudge = git-lfs smudge -- %f
@@ -21,10 +23,14 @@
 [log]
   date = human
 [merge]
-  conflictstyle = diff3
+  conflictstyle = zdiff3
 [mergetool]
   keepBackup = false
 [push]
   default = simple
 [pull]
   rebase = true
+[interactive]
+  diffFilter = delta --color-only
+[delta]
+  navigate = true
