@@ -48,6 +48,11 @@ cp "$dotfiles/home/.gitconfig" "$HOME/.gitconfig"
 cp "$dotfiles/home/.npmrc" "$HOME/.npmrc"
 
 link "$dotfiles/vim" "$HOME/.vim"
+
+fish_config_home="${XDG_CONFIG_HOME:-$HOME/.config}"
+mkdir -p "$fish_config_home/fish"
+link "$dotfiles/home/config.fish" "$fish_config_home/fish/config.fish"
+
 unm="$(uname)"
 if [ "$unm" = 'Darwin' ]; then
   vsdir="$HOME/Library/Application Support/Code/User"

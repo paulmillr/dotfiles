@@ -5,7 +5,14 @@ umask 022
 
 shell_name="${SHELL:-}"
 shell_name="${shell_name##*/}"
-[ "$shell_name" != "zsh" ] && echo "You might need to change default shell to zsh: \`chsh -s /bin/zsh\`"
+if command -v fish >/dev/null 2>&1; then
+  preferred_shell='fish'
+  preferred_shell_path="$(command -v fish)"
+else
+  preferred_shell='zsh'
+  preferred_shell_path="$(command -v zsh 2>/dev/null || echo /bin/zsh)"
+fi
+[ "$shell_name" != "$preferred_shell" ] && echo "You might need to change default shell to $preferred_shell: \`chsh -s $preferred_shell_path\`"
 
 if ! command -v git >/dev/null 2>&1; then
   echo "git is required to install these dotfiles" >&2

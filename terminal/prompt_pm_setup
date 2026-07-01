@@ -8,6 +8,7 @@
 # ❯ is green or red depending on previous command exit status.
 
 vcs_info=''
+prompt_ssh_info=''
 setopt PROMPT_CR PROMPT_PERCENT PROMPT_SUBST
 
 function get-vcs-info {
@@ -19,7 +20,7 @@ function get-vcs-info {
   ref=$(command git symbolic-ref --short -q HEAD 2> /dev/null) || return 0
   git_status=$(command git status --porcelain=v1 --ignore-submodules=all 2> /dev/null) || return 0
   [[ -n "$git_status" ]] && dirty='*'
-  vcs_info=" %F{magenta}${ref}${dirty}%f"
+  vcs_info=" ${ref}${dirty}"
 }
 
 function prompt_szsh_setup {
@@ -28,7 +29,12 @@ function prompt_szsh_setup {
   autoload -Uz add-zsh-hook
   add-zsh-hook precmd get-vcs-info
   # add-zsh-hook chpwd list-files
-  PROMPT='%F{magenta}${SSH_TTY:+%n@%m }%F{blue}%1~%f${vcs_info}%(!.%B%F{red}#%f%b.%B %(?.%F{green}.%F{red})❯%f%b) '
+  if [[ -n "${SSH_TTY:-}" ]]; then
+    prompt_ssh_info='%n@%m '
+  else
+    prompt_ssh_info=''
+  fi
+  PROMPT='${prompt_ssh_info}%F{12}%1~%f${vcs_info}%(!.%B%F{red}#%f%b.%B %(?.%F{green}.%F{red})❯%f%b) '
   RPROMPT=''
   SPROMPT='zsh: correct %F{red}%R%f to %F{green}%r%f [nyae]? '
 }
