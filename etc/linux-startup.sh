@@ -112,13 +112,13 @@ format_bytes_decimal() {
 
     command awk -v bytes="$bytes" 'BEGIN {
         if (bytes >= 1000000000000) {
-            printf "%.0f Tb", bytes / 1000000000000
+            printf "%.0f TB", bytes / 1000000000000
         } else if (bytes >= 1000000000) {
-            printf "%.0f Gb", bytes / 1000000000
+            printf "%.0f GB", bytes / 1000000000
         } else if (bytes >= 1000000) {
-            printf "%.0f Mb", bytes / 1000000
+            printf "%.0f MB", bytes / 1000000
         } else if (bytes >= 1000) {
-            printf "%.0f Kb", bytes / 1000
+            printf "%.0f kB", bytes / 1000
         } else {
             printf "%d B", bytes
         }
@@ -131,16 +131,16 @@ format_network_bytes() {
     command awk -v bytes="$bytes" 'BEGIN {
         if (bytes >= 1000000000000) {
             value = bytes / 1000000000000
-            unit = "Tb"
+            unit = "TB"
         } else if (bytes >= 1000000000) {
             value = bytes / 1000000000
-            unit = "Gb"
+            unit = "GB"
         } else if (bytes >= 1000000) {
             value = bytes / 1000000
-            unit = "Mb"
+            unit = "MB"
         } else if (bytes >= 1000) {
             value = bytes / 1000
-            unit = "Kb"
+            unit = "kB"
         } else {
             printf "%d B", bytes
             exit
@@ -156,7 +156,7 @@ format_bytes_gib() {
     local bytes="$1"
 
     command awk -v bytes="$bytes" 'BEGIN {
-        printf "%.0f Gb", bytes / 1073741824
+        printf "%.0f GiB", bytes / 1073741824
     }'
 }
 
@@ -275,6 +275,7 @@ get_network_traffic() {
 
 get_top_process() {
     local sort_key="$1"
+    local min_usage="$2"
     local top_process
     local self_pid="$$"
     local shell_pid="${BASHPID:-$$}"
@@ -282,12 +283,15 @@ get_top_process() {
     case "$sort_key" in
         pcpu|pmem) ;;
         *)
-            printf "n/a"
             return
             ;;
     esac
 
-    top_process=$(command ps -eo pid=,ppid=,user=,"$sort_key"=,comm= --sort=-"$sort_key" 2>/dev/null | command awk -v red="$red" -v reset="$W" -v self_pid="$self_pid" -v shell_pid="$shell_pid" '
+    if ! [[ "$min_usage" =~ ^[0-9]+$ ]]; then
+        min_usage=0
+    fi
+
+    top_process=$(command ps -eo pid=,ppid=,user=,"$sort_key"=,comm= --sort=-"$sort_key" 2>/dev/null | command awk -v red="$red" -v reset="$W" -v self_pid="$self_pid" -v shell_pid="$shell_pid" -v min_usage="$min_usage" '
         NF >= 5 {
             pid = $1
             ppid = $2
@@ -300,6 +304,10 @@ get_top_process() {
             }
             if (command_name == "ps" || command_name == "awk") {
                 next
+            }
+
+            if (usage < min_usage) {
+                exit
             }
 
             gsub(/[[:cntrl:]]/, "", user)
@@ -319,27 +327,38 @@ get_top_process() {
         }
     ')
 
-    if [ -n "$top_process" ]; then
-        printf "%s" "$top_process"
-    else
-        printf "n/a"
-    fi
+    printf "%s" "$top_process"
 }
 
 get_temperature() {
-    local landscape temp
+    local landscape temp zone milli max=0
 
-    landscape=$(trusted_command_path landscape-sysinfo) || return
-    if [ -z "$landscape" ]; then
-        return
+    if landscape=$(trusted_command_path landscape-sysinfo) && [ -n "$landscape" ]; then
+        temp=$("$landscape" --sysinfo-plugins Temperature 2>/dev/null \
+            | command sed 's/ *$//g' \
+            | command sed 's/^ *//g' \
+            | command sed 's/^Temperature: *//g' \
+            | command awk 'NF {print; exit}')
+        temp=$(sanitize_text "$temp")
+        if [ -n "$temp" ]; then
+            printf "%s" "$temp"
+            return
+        fi
     fi
 
-    temp=$("$landscape" --sysinfo-plugins Temperature 2>/dev/null \
-        | command sed 's/ *$//g' \
-        | command sed 's/^ *//g' \
-        | command sed 's/^Temperature: *//g' \
-        | command awk 'NF {print; exit}')
-    sanitize_text "$temp"
+    # Fallback: hottest thermal zone from sysfs (millidegrees Celsius).
+    for zone in /sys/class/thermal/thermal_zone*/temp; do
+        [ -r "$zone" ] || continue
+        read -r milli <"$zone" 2>/dev/null || continue
+        [[ "$milli" =~ ^[0-9]+$ ]] || continue
+        if [ "$milli" -gt "$max" ]; then
+            max=$milli
+        fi
+    done
+
+    if [ "$max" -gt 0 ]; then
+        printf "%d C" $((max / 1000))
+    fi
 }
 
 load_color() {
@@ -358,15 +377,20 @@ load_color() {
     fi
 }
 
-format_load_percent() {
+format_load_points() {
     local load="$1"
-    local processor_count="$2"
 
-    command awk -v load="$load" -v processor_count="$processor_count" 'BEGIN {
-        if (processor_count !~ /^[0-9]+$/ || processor_count < 1) {
-            processor_count = 1
+    command awk -v load="$load" 'BEGIN {
+        if (load !~ /^[0-9]+(\.[0-9]+)?$/) {
+            load = 0
         }
-        printf "%.0f%%", (load / processor_count) * 100
+        printf "%.2f", load
+    }'
+}
+
+load_meets_threshold() {
+    command awk -v l1="$1" -v l5="$2" -v l15="$3" -v threshold="$4" 'BEGIN {
+        exit !(l1 + 0 >= threshold || l5 + 0 >= threshold || l15 + 0 >= threshold)
     }'
 }
 
@@ -374,6 +398,12 @@ get_hostname() {
     local value
 
     value=$(command hostname 2>/dev/null)
+    if [ -z "$value" ]; then
+        value=$(command uname -n 2>/dev/null)
+    fi
+    if [ -z "$value" ] && [ -r /proc/sys/kernel/hostname ]; then
+        read -r value </proc/sys/kernel/hostname
+    fi
     if [ -z "$value" ]; then
         value="unknown"
     fi
@@ -503,8 +533,8 @@ RAM_TOTAL=$(format_bytes_gib "$RAM_TOTAL_BYTES")
 SERVICES=$(get_service_status)
 LOGINS=$(get_login_counts)
 NETWORK_TRAFFIC=$(get_network_traffic)
-CPU_EATER=$(get_top_process "pcpu")
-RAM_EATER=$(get_top_process "pmem")
+CPU_EATER=$(get_top_process "pcpu" 30)
+RAM_EATER=$(get_top_process "pmem" 20)
 
 temp=$(get_temperature)
 temp_lc=$(printf "%s" "$temp" | command tr '[:upper:]' '[:lower:]')
@@ -517,14 +547,9 @@ esac
 LOAD1_COLOR=$(load_color "$LOAD1" "$PROCESSOR_COUNT")
 LOAD5_COLOR=$(load_color "$LOAD5" "$PROCESSOR_COUNT")
 LOAD15_COLOR=$(load_color "$LOAD15" "$PROCESSOR_COUNT")
-LOAD1_PERCENT=$(format_load_percent "$LOAD1" "$PROCESSOR_COUNT")
-LOAD5_PERCENT=$(format_load_percent "$LOAD5" "$PROCESSOR_COUNT")
-LOAD15_PERCENT=$(format_load_percent "$LOAD15" "$PROCESSOR_COUNT")
-
-SERVICES_COLOR="$W"
-if [ "$SERVICES" != "OK" ]; then
-    SERVICES_COLOR="$red"
-fi
+LOAD1_POINTS=$(format_load_points "$LOAD1")
+LOAD5_POINTS=$(format_load_points "$LOAD5")
+LOAD15_POINTS=$(format_load_points "$LOAD15")
 
 LOGINS_COLOR="$W"
 LOGINS_ACTIVE=${LOGINS%% *}
@@ -536,13 +561,21 @@ printf "\n%ssystem info:%s\n" "$W" "$W"
 printf "%s  %-11s : %s%s%s\n" "$W" "Distro" "$W" "$DISTRO" "$W"
 printf "%s  %-11s : %s%s%s\n" "$W" "Kernel" "$W" "$KERNEL" "$W"
 printf "%s  %-11s : %s%s (%s vCPU)%s\n" "$W" "CPU" "$W" "$PROCESSOR_NAME" "$PROCESSOR_COUNT" "$W"
-printf "%s  %-11s : %s%s%s\n" "$W" "CPU eater" "$W" "$CPU_EATER" "$W"
-printf "%s  %-11s : %s%s%s\n" "$W" "RAM eater" "$W" "$RAM_EATER" "$W"
+if [ -n "$CPU_EATER" ]; then
+    printf "%s  %-11s : %s%s%s\n" "$W" "CPU eater" "$W" "$CPU_EATER" "$W"
+fi
+if [ -n "$RAM_EATER" ]; then
+    printf "%s  %-11s : %s%s%s\n" "$W" "RAM eater" "$W" "$RAM_EATER" "$W"
+fi
 printf "%s  %-11s : %s%s%s\n" "$W" "Logins" "$LOGINS_COLOR" "$LOGINS" "$W"
 printf "%s  %-11s : %s%s%s\n" "$W" "Uptime" "$W" "$UPTIME" "$W"
-printf "%s  %-11s : %s%s%s, %s%s%s, %s%s%s (1m, 5m, 15m)\n" "$W" "Load" "$LOAD1_COLOR" "$LOAD1_PERCENT" "$W" "$LOAD5_COLOR" "$LOAD5_PERCENT" "$W" "$LOAD15_COLOR" "$LOAD15_PERCENT" "$W"
+if load_meets_threshold "$LOAD1" "$LOAD5" "$LOAD15" 0.3; then
+    printf "%s  %-11s : %s%s%s, %s%s%s, %s%s%s (1m, 5m, 15m)\n" "$W" "Load" "$LOAD1_COLOR" "$LOAD1_POINTS" "$W" "$LOAD5_COLOR" "$LOAD5_POINTS" "$W" "$LOAD15_COLOR" "$LOAD15_POINTS" "$W"
+fi
 printf "%s  %-11s : %s%s%s\n" "$W" "Traffic" "$W" "$NETWORK_TRAFFIC" "$W"
-printf "%s  %-11s : %s%s%s\n" "$W" "Services" "$SERVICES_COLOR" "$SERVICES" "$W"
+if [ "$SERVICES" != "OK" ]; then
+    printf "%s  %-11s : %s%s%s\n" "$W" "Services" "$red" "$SERVICES" "$W"
+fi
 
 if [ -n "$temp" ]; then
   printf "%s  %-11s : %s%s%s\n" "$W" "Temperature" "$G" "$temp" "$W"

@@ -31,15 +31,26 @@ install_packages() {
   as_root apt-get install -y figlet lolcat
 }
 
+usage() {
+  echo "Usage: $0 [--install-packages|--uninstall]"
+}
+
+action='install'
 case "${1:-}" in
   -h|--help)
-    echo "Usage: $0 [--install-packages]"
+    usage
     exit 0
     ;;
-  ""|--install-packages)
+  "")
+    ;;
+  --install-packages)
+    action='install-packages'
+    ;;
+  --uninstall)
+    action='uninstall'
     ;;
   *)
-    echo "Usage: $0 [--install-packages]" >&2
+    usage >&2
     exit 2
     ;;
 esac
@@ -49,7 +60,16 @@ if [ "$(uname -s)" != "Linux" ]; then
   exit 1
 fi
 
-if [ "${1:-}" = "--install-packages" ]; then
+if [ "$action" = "uninstall" ]; then
+  as_root rm -f "$dest_file"
+  if [ -e "$uname_file" ]; then
+    as_root chmod +x "$uname_file"
+  fi
+  echo "Removed $dest_file and re-enabled $uname_file"
+  exit 0
+fi
+
+if [ "$action" = "install-packages" ]; then
   install_packages
 fi
 

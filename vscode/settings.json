@@ -1,10 +1,10 @@
 {
-  "editor.fontSize": 15,
+  "editor.fontSize": 16,
   "debug.console.fontSize": 16,
-  "terminal.integrated.fontSize": 14,
+  "terminal.integrated.fontSize": 15,
   "chat.editor.fontSize": 14,
   "terminal.integrated.defaultProfile.linux": "zsh",
-  "editor.fontFamily": "'Monaco','SF Mono', 'Iosevka Extended', 'Menlo', 'Consolas', 'Droid Sans Mono', 'Inconsolata', 'Courier New', monospace",
+  "editor.fontFamily": "'0xProto', 'Monaco','SF Mono', 'Iosevka Extended', 'Menlo', 'Consolas', 'Droid Sans Mono', 'Inconsolata', 'Courier New', monospace",
   "window.autoDetectColorScheme": true,
   "editor.fontLigatures": "'ss01', 'ss02', 'ss03', 'ss04', 'ss05', 'ss06', 'ss07', 'ss08', 'calt', 'dlig'",
   "editor.tabSize": 2,
