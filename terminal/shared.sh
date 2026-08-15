@@ -46,10 +46,25 @@ pm="$dev/personal"
 export NODE_REPL_HISTORY=''
 export OLLAMA_NOHISTORY=1
 export OLLAMA_NO_CLOUD=1
+export GH_TELEMETRY=disabled
 export JSBT_FAST=0.5
 export JSBT_QUIET=1
 export MSHOULD_FAST=12
+export MSHOULD_WORKERS=50%
 export MSHOULD_QUIET=1
+
+export BAT_STYLE='-numbers'
+
+
+# Don't print rubbish when SSH disconnects due to bad connection
+ssh() {
+  command ssh "$@"
+  local rc=$?
+
+  printf '\e[?1000l\e[?1002l\e[?1003l\e[?1006l' > /dev/tty
+
+  return $rc
+}
 
 if [ -f "/opt/homebrew/bin/brew" ] && [ -z "${HOMEBREW_PREFIX:-}" ]; then
   # option a): use brew shellenv - slow
@@ -68,6 +83,15 @@ if [ -f "/opt/homebrew/bin/brew" ] && [ -z "${HOMEBREW_PREFIX:-}" ]; then
   export HOMEBREW_AUTO_UPDATE_SECS='2592000' # monthly
   export HOMEBREW_NO_ENV_HINTS=1
   export HOMEBREW_CURLRC=1
+fi
+
+# User-installed tools (claude, codex, ...). zsh never reads ~/.profile, so
+# this must happen here for both shells.
+if [ -d "$HOME/.local/bin" ]; then
+  case ":$PATH:" in
+    *":$HOME/.local/bin:"*) ;;
+    *) export PATH="$HOME/.local/bin:$PATH" ;;
+  esac
 fi
 
 # Disable the less history file.
@@ -253,23 +277,249 @@ gcp() {
   _git_with_utc_dates commit -am "$*" && _git_with_utc_dates push -u origin
 }
 
+pushwork() {
+  local base branch commit remote_ref suffix=1
+  local red="$_color_red" reset="$_color_reset"
+
+  base="$(date +%m%d)-wip" || return 1
+  branch="$base"
+  while :; do
+    if command git show-ref --quiet --verify "refs/heads/$branch" ||
+      command git show-ref --quiet --verify "refs/remotes/origin/$branch"; then
+      :
+    else
+      remote_ref="$(command git ls-remote --heads origin "refs/heads/$branch" 2>/dev/null)" ||
+        return 1
+      [ -n "$remote_ref" ] || break
+    fi
+    suffix=$((suffix + 1))
+    branch="${base}-${suffix}"
+  done
+
+  command git switch -c "$branch" >/dev/null 2>&1 || return 1
+  command git add -A >/dev/null 2>&1 || return 1
+  _git_with_utc_dates commit -m 'WIP' >/dev/null 2>&1 || return 1
+  command git push -u origin "$branch" >/dev/null 2>&1 || return 1
+  commit="$(command git rev-parse --short=8 HEAD)" || return 1
+
+  [ -t 1 ] || { red=''; reset=''; }
+  printf '%s%s%s pushed to %s\n' "$red" "$commit" "$reset" "$branch"
+}
+
+pullwork() {
+  local day="$1" base ref name suffix refs found=0
+
+  case "$day" in
+    [0-9][0-9][0-9][0-9]) ;;
+    *)
+      echo 'Usage: pullwork <MMDD>' >&2
+      return 2
+      ;;
+  esac
+
+  command git pull --ff-only || return 1
+
+  base="${day}-wip"
+  refs="$(command git for-each-ref --sort=version:refname --format='%(refname)' \
+    "refs/remotes/origin/${base}*")" || return 1
+  while IFS= read -r ref; do
+    [ -n "$ref" ] || continue
+    name="${ref#refs/remotes/origin/}"
+    if [ "$name" != "$base" ]; then
+      suffix="${name#"${base}-"}"
+      case "$suffix" in
+        '' | *[!0-9]*) continue ;;
+      esac
+      [ "$suffix" -ge 2 ] || continue
+    fi
+    found=1
+    command git cherry-pick --no-commit "HEAD..origin/$name" || return 1
+  done <<EOF
+$refs
+EOF
+
+  if [ "$found" -eq 0 ]; then
+    echo "pullwork: no branches found for $day" >&2
+    return 1
+  fi
+}
+
+git_resign() {
+  local old_head new_commits commit commit_object unsigned=0
+
+  old_head="$(command git rev-parse --verify HEAD)" || return 1
+  command git pull || return 1
+  if ! command git merge-base --is-ancestor "$old_head" HEAD; then
+    echo 'git_resign: pull did not fast-forward the current history' >&2
+    return 1
+  fi
+
+  new_commits="$(command git rev-list --reverse "${old_head}..HEAD")" || return 1
+  [ -n "$new_commits" ] || return 0
+  while IFS= read -r commit; do
+    commit_object="$(command git cat-file commit "$commit")" || return 1
+    case "$commit_object" in
+      *$'\ngpgsig '* | *$'\ngpgsig-sha256 '*) ;;
+      *)
+        unsigned=1
+        break
+        ;;
+    esac
+  done <<EOF
+$new_commits
+EOF
+
+  [ "$unsigned" -eq 1 ] || return 0
+  command git rebase --force-rebase --rebase-merges --gpg-sign "$old_head" || return 1
+
+  new_commits="$(command git rev-list "${old_head}..HEAD")" || return 1
+  while IFS= read -r commit; do
+    commit_object="$(command git cat-file commit "$commit")" || return 1
+    case "$commit_object" in
+      *$'\ngpgsig '* | *$'\ngpgsig-sha256 '*) ;;
+      *)
+        echo "git_resign: failed to sign commit $commit" >&2
+        return 1
+        ;;
+    esac
+  done <<EOF
+$new_commits
+EOF
+}
+
 gl() {
   git --no-pager log -10 --graph
 }
 
 git_release() {
-  local tag="$1"
+  local tag="$1" version npm_name npm_check npm_status notes_mode notes
 
   if [ -z "$tag" ]; then
     echo 'Usage: git_release <tag>' >&2
     return 2
   fi
 
+  if [ ! -f package.json ]; then
+    echo 'git_release: no package.json in current directory' >&2
+    return 1
+  fi
+  version="$(node -p 'require("./package.json").version')" || return 1
+  if [ "${tag#v}" != "$version" ]; then
+    echo "git_release: tag $tag does not match package.json version $version" >&2
+    return 1
+  fi
+  if [ -f jsr.json ]; then
+    version="$(node -p 'require("./jsr.json").version')" || return 1
+    if [ "${tag#v}" != "$version" ]; then
+      echo "git_release: tag $tag does not match jsr.json version $version" >&2
+      return 1
+    fi
+
+    node <<'NODE' || return 1
+const npm = require('./package.json');
+const jsr = require('./jsr.json');
+
+const fail = (message) => {
+  console.error(`git_release: ${message}`);
+  process.exitCode = 1;
+};
+const shortName = (name) => name.split('/').pop();
+const sortedEntries = (entries) =>
+  entries.sort(([nameA, rangeA], [nameB, rangeB]) =>
+    nameA === nameB ? String(rangeA).localeCompare(String(rangeB)) : nameA.localeCompare(nameB)
+  );
+
+if (shortName(npm.name) !== shortName(jsr.name)) {
+  fail(`package names do not match: ${npm.name} != ${jsr.name}`);
+}
+
+const npmDeps = sortedEntries(
+  Object.entries(npm.dependencies || {}).map(([name, range]) => [shortName(name), range])
+);
+const jsrDeps = sortedEntries(
+  Object.values(jsr.imports || {}).map((specifier) => {
+    const match = /^(?:jsr|npm):((?:@[^/]+\/)?[^@/]+)@(.+)$/.exec(specifier);
+    if (!match) throw new Error(`unsupported jsr.json import: ${specifier}`);
+    return [shortName(match[1]), match[2]];
+  })
+);
+if (JSON.stringify(npmDeps) !== JSON.stringify(jsrDeps)) {
+  fail(
+    `dependencies do not match:\n` +
+      `  package.json: ${JSON.stringify(npmDeps)}\n` +
+      `  jsr.json:     ${JSON.stringify(jsrDeps)}`
+  );
+}
+
+const exportNames = (exports) => {
+  if (exports == null) return [];
+  if (typeof exports === 'string') return ['.'];
+  const names = Object.keys(exports);
+  return (names.some((name) => name.startsWith('.')) ? names : ['.']).sort();
+};
+const npmExports = exportNames(npm.exports);
+const jsrExports = exportNames(jsr.exports);
+if (JSON.stringify(npmExports) !== JSON.stringify(jsrExports)) {
+  fail(
+    `exports do not match:\n` +
+      `  package.json: ${JSON.stringify(npmExports)}\n` +
+      `  jsr.json:     ${JSON.stringify(jsrExports)}`
+  );
+}
+NODE
+  fi
+
+  version="$(node -p 'require("./package.json").version')" || return 1
+  npm_name="$(node -p 'require("./package.json").name')" || return 1
+  npm_check="$(npm view "${npm_name}@${version}" version 2>&1)"
+  npm_status=$?
+  if [ "$npm_status" -eq 0 ]; then
+    echo "git_release: ${npm_name}@${version} already exists on npm" >&2
+    return 1
+  fi
+  case "$npm_check" in
+    *E404*) ;;
+    *)
+      echo "$npm_check" >&2
+      echo "git_release: could not check ${npm_name}@${version} on npm" >&2
+      return 1
+      ;;
+  esac
+
+  npm ci || return 1
+
+  printf 'Release notes: 1) plaintext 2) file 3) generate\nChoice [1-3]: '
+  read -r notes_mode
+  case "$notes_mode" in
+    1)
+      printf 'Notes: '
+      read -r notes
+      ;;
+    2)
+      printf 'Notes file: '
+      read -r notes
+      if [ ! -f "$notes" ]; then
+        echo "git_release: file not found: $notes" >&2
+        return 1
+      fi
+      ;;
+    3) ;;
+    *)
+      echo 'git_release: invalid choice' >&2
+      return 2
+      ;;
+  esac
+
   echo "... releasing $tag"
   _git_with_utc_dates commit -a -m "Release $tag." &&
-    _git_with_utc_dates tag -m '' -- "$tag" &&
+    _git_with_utc_dates tag -s -m '' -- "$tag" &&
     command git push &&
     command git push --tags &&
+    case "$notes_mode" in
+      1) gh release create "$tag" --notes "$notes" ;;
+      2) gh release create "$tag" -F "$notes" ;;
+      3) gh release create "$tag" --generate-notes ;;
+    esac &&
     echo '... complete'
 }
 
@@ -311,6 +561,7 @@ git_cherry() {
     git cherry-pick -n -- "$commit" || break
   done
 }
+alias cherry=git_cherry
 
 git_raw() {
   local hash name email author_date committer_date title sep

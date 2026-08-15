@@ -123,5 +123,6 @@
   },
   "workbench.iconTheme": null,
   "workbench.preferredDarkColorTheme": "Ice Ice OLED",
-  "workbench.preferredLightColorTheme": "MangaMode: Sailor Moon"
+  "workbench.preferredLightColorTheme": "MangaMode: Sailor Moon",
+  "js/ts.updateImportsOnFileMove.enabled": "always"
 }

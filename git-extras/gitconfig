@@ -1,5 +1,6 @@
 [push]
   default = simple
+  autoSetupRemote = true
 [pull]
   rebase = true
 [log]
@@ -30,3 +31,10 @@
   whitespace = red reverse
 [advice]
   statusHints = false
+# Selected via DELTA_FEATURES in ~/.zshrc, which follows LC_TERM_BG alongside
+# BAT_THEME. An explicit light/dark also makes delta skip its OSC 11 background
+# query, which times out over ssh and races `less` when delta is a diffFilter.
+[delta "light-mode"]
+  light = true
+[delta "dark-mode"]
+  dark = true
