@@ -19,7 +19,7 @@ Inside NERDTree, use `o` to open, `i` for a horizontal split, `s` for a vertical
 
 ## Themes
 
-Available themes are `ice` (default), `bubblegum`, `gotham`, `gruvbox`, `ir_black`, `pokemon`, `pyte`, `sailormoon`, and `vantablack`. Switch with `:colorscheme NAME`.
+Available themes are `ice`, `bubblegum`, `gotham`, `gruvbox`, `ir_black`, `pokemon`, `pyte`, `sailormoon`, and `vantablack`. Vim follows the same `LC_TERM_BG` value as bat and delta, choosing `ice` in dark mode and `sailormoon` in light mode; an absent or unknown value defaults to dark. Switch manually with `:colorscheme NAME`.
 
 `ice` is a Vim port of Matthew Holt's [Ice Ice OLED](https://github.com/mholt/ice-ice-oled) theme.
 
@@ -36,6 +36,7 @@ Available themes are `ice` (default), `bubblegum`, `gotham`, `gruvbox`, `ir_blac
 | `<Space>b` | Clear search highlighting |
 | `<Space>s` | Toggle visible whitespace |
 | `<Space>ev` / `<Space>es` | Edit/reload this vimrc |
+| `Command-C` | Copy the visual selection on macOS in Ghostty |
 | `=j` | Format the current buffer as JSON with Python 3 |
 
 ## Requirements

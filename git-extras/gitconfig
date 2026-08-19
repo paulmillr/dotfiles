@@ -3,11 +3,16 @@
   autoSetupRemote = true
 [pull]
   rebase = true
+[init]
+  defaultBranch = main
 [log]
-  date = human
+  date = format:%m/%d %H:%M
 [format]
-  pretty = %Cred%h%Creset%C(yellow)%d%Creset %s %Cgreen(%cd) %C(bold blue)%an %C(yellow)%G?%Creset
+  pretty = %C(5)%h%Creset %s
+[mailmap]
+  file = ~/Developer/personal/dotfiles/git-extras/mailmap
 [core]
+  abbrev = 8
   excludesfile = ~/.gitignore
   pager = delta
   sshCommand = ssh -F /dev/null -o IdentitiesOnly=yes -i ~/.ssh/git
@@ -22,13 +27,13 @@
   conflictstyle = zdiff3
 [mergetool]
   keepBackup = false
-[color "diff"]
-  meta = white dim
-  frag = magenta bold
-  commit = yellow bold
-  old = red bold
-  new = green bold
-  whitespace = red reverse
+#[color "diff"]
+#  meta = white dim
+#  frag = magenta bold
+#  commit = yellow bold
+#  old = red bold
+#  new = green bold
+#  whitespace = red reverse
 [advice]
   statusHints = false
 # Selected via DELTA_FEATURES in ~/.zshrc, which follows LC_TERM_BG alongside

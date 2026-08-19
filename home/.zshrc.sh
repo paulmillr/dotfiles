@@ -230,6 +230,32 @@ if [[ -z "$SSH_CONNECTION" ]] && (( $+commands[defaults] )); then
     export LC_TERM_BG=light
   fi
 fi
+
+# Herdr's persistent server keeps the environment from the SSH login that
+# originally started it, so even brand-new panes otherwise inherit a stale
+# LC_TERM_BG after a later client reconnects.  Cache the value seen by each
+# ordinary SSH login, then let shells spawned inside Herdr recover the newest
+# value.  If multiple SSH clients are connected, the most recent login wins.
+_term_bg_cache_dir="${XDG_CACHE_HOME:-$HOME/.cache}/dotfiles"
+_term_bg_cache="$_term_bg_cache_dir/terminal-background"
+if [[ -n "$SSH_CONNECTION" && -z "$HERDR_ENV" ]]; then
+  case "$LC_TERM_BG" in
+    light|dark)
+      if [[ -d "$_term_bg_cache_dir" ]] || mkdir -m 700 -p -- "$_term_bg_cache_dir" 2>/dev/null; then
+        print -r -- "$LC_TERM_BG" >| "$_term_bg_cache" 2>/dev/null
+        chmod 600 "$_term_bg_cache" 2>/dev/null
+      fi
+      ;;
+  esac
+elif [[ -n "$SSH_CONNECTION" && -n "$HERDR_ENV" && -r "$_term_bg_cache" ]]; then
+  _term_bg_cached="$(<"$_term_bg_cache")"
+  case "$_term_bg_cached" in
+    light|dark) export LC_TERM_BG="$_term_bg_cached" ;;
+  esac
+  unset _term_bg_cached
+fi
+unset _term_bg_cache _term_bg_cache_dir
+
 export BAT_THEME_LIGHT="Monokai Extended Light"
 export BAT_THEME_DARK="Monokai Extended"
 case "$LC_TERM_BG" in

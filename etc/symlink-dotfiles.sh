@@ -68,6 +68,24 @@ cp "$dotfiles/home/.npmrc" "$HOME/.npmrc"
 link "$dotfiles/vim" "$HOME/.vim"
 unm="$(uname)"
 if [ "$unm" = 'Darwin' ]; then
+  ghostty_dir="$HOME/Library/Application Support/com.mitchellh.ghostty"
+  mkdir -p "$ghostty_dir"
+  link "$dotfiles/terminal/config.ghostty" "$ghostty_dir/dotfiles.ghostty"
+
+  # Ghostty loads its macOS config after its XDG config. Include our settings
+  # from the active macOS file so an existing Command+C binding cannot override
+  # them, while preserving the rest of the user's Ghostty configuration.
+  if [ -f "$ghostty_dir/config" ]; then
+    ghostty_config="$ghostty_dir/config"
+  else
+    ghostty_config="$ghostty_dir/config.ghostty"
+  fi
+  ghostty_include='config-file = dotfiles.ghostty'
+  if [ ! -f "$ghostty_config" ] || ! grep -Fqx "$ghostty_include" "$ghostty_config"; then
+    echo "Adding dotfiles include to '$ghostty_config'"
+    printf '\n%s\n' "$ghostty_include" >> "$ghostty_config"
+  fi
+
   vsdir="$HOME/Library/Application Support/Code/User"
 else
   vsdir="${XDG_CONFIG_HOME:-$HOME/.config}/Code/User"

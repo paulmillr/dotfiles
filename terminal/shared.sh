@@ -31,7 +31,9 @@ _color_red=$'\033[31m'
 _color_green=$'\033[32m'
 _color_yellow=$'\033[33m'
 _color_blue=$'\033[34m'
+_color_bold_blue=$'\033[1;34m'
 _color_reset=$'\033[0m'
+_color_cyan=$'\033[35m'
 
 # ==================================================================
 # = Environment variables =
@@ -388,7 +390,31 @@ EOF
 }
 
 gl() {
-  git --no-pager log -10 --graph
+  local count=10 requested
+  local red="$_color_cyan" green="$_color_green" author_color="$_color_bold_blue" reset="$_color_reset"
+  [ -t 1 ] || { red=''; green=''; author_color=''; reset=''; }
+
+  case "${1-}" in
+    -[0-9]*)
+      requested="${1#-}"
+      case "$requested" in
+        *[!0-9]*) ;;
+        *) count="$requested"; shift ;;
+      esac
+      ;;
+  esac
+
+  git --no-pager log -n "$count" --format='%h%x1c%G?%x1c%aN%x1c%aE%x1c%GS%x1c%s' "$@" |
+    awk -v red="$red" -v green="$green" -v author_color="$author_color" -v reset="$reset" '
+      BEGIN { FS = sprintf("%c", 28) }
+      {
+        valid = ($2 == "G" || $2 == "U")
+        mine = ($3 == "ME" && index($5, "<" $4 ">") != 0)
+        checkbox = (valid && mine) ? green "✓" reset " " : ""
+        author = ($3 == "ME") ? "" : " " author_color $3 reset
+        printf "%s%s%s %s%s%s\n", red, $1, reset, checkbox, $6, author
+      }
+    '
 }
 
 git_release() {

@@ -58,6 +58,42 @@ map <S-Insert> <MiddleMouse>
 map! <S-Insert> <MiddleMouse>
 " set clipboard=unnamedplus
 
+" Ghostty forwards Command+C as a Kitty keyboard protocol sequence when it has
+" no terminal selection. Assign that sequence to an otherwise-unused function
+" key so terminal Vim can map it; MacVim reports Command+C as <D-c> directly.
+" Homebrew Vim can write to the + register, while Apple's Vim may need pbcopy.
+if has('macunix')
+	" Vim versions predating 'keyprotocol' do not ask Ghostty to encode the
+	" Command modifier, so enable the protocol explicitly for those versions.
+	if !exists('+keyprotocol') && $TERM =~# 'ghostty'
+		let &t_TI .= "\<Esc>[=1;1u"
+		let &t_TE = "\<Esc>[=0;1u" . &t_TE
+	endif
+
+	execute "set <F35>=\e[99;9u"
+
+	function! s:CopyVisualSelectionToMacClipboard() abort
+		let l:unnamed = getreg('"')
+		let l:unnamed_type = getregtype('"')
+
+		if has('clipboard')
+			normal! gv"+y
+		elseif executable('pbcopy')
+			normal! gvy
+			call system('pbcopy', getreg('"'))
+		else
+			echoerr 'Copy requires Vim clipboard support or pbcopy'
+			return
+		endif
+
+		call setreg('"', l:unnamed, l:unnamed_type)
+		normal! gv
+	endfunction
+
+	xnoremap <silent> <F35> :<C-u>call <SID>CopyVisualSelectionToMacClipboard()<CR>
+	xnoremap <silent> <D-c> :<C-u>call <SID>CopyVisualSelectionToMacClipboard()<CR>
+endif
+
 " Copy filename
 :nmap yY :let @" = expand("%")<CR>
 
@@ -227,7 +263,6 @@ augroup END
 
 
 "------  Color Theme  ------
-set background=dark
 
 " Keep Gruvbox's colors while using a true-black editor background.
 augroup gruvbox_true_black
@@ -247,5 +282,12 @@ augroup END
 
 "------  Terminal Options  ------
 set termguicolors
-colorscheme ice
+" Use the same light/dark answer that the shell passes to bat and delta.  The
+" value is detected on the local Mac and forwarded over SSH in LC_TERM_BG;
+" unknown terminals retain the existing dark default.
+if $LC_TERM_BG ==# 'light'
+	colorscheme sailormoon
+else
+	colorscheme ice
+endif
 set mouse=a
