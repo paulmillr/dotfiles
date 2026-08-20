@@ -6,11 +6,11 @@
 [init]
   defaultBranch = main
 [log]
-  date = format:%m/%d %H:%M
+  date = format:%-m/%-d/%y
 [format]
-  pretty = %C(5)%h%Creset %s
+  pretty = %C(8)%h%Creset %s %C(blue)(%ad)%Creset
 [mailmap]
-  file = ~/Developer/personal/dotfiles/git-extras/mailmap
+  file = ~/Developer/personal/dotfiles/config/git/mailmap
 [core]
   abbrev = 8
   excludesfile = ~/.gitignore
@@ -36,9 +36,10 @@
 #  whitespace = red reverse
 [advice]
   statusHints = false
-# Selected via DELTA_FEATURES in ~/.zshrc, which follows LC_TERM_BG alongside
-# BAT_THEME. An explicit light/dark also makes delta skip its OSC 11 background
-# query, which times out over ssh and races `less` when delta is a diffFilter.
+# Selected via DELTA_FEATURES in config/shell/shared.sh, which follows
+# LC_TERM_BG alongside BAT_THEME. An explicit light/dark also makes delta skip
+# its OSC 11 background query, which times out over ssh and races `less` when
+# delta is a diffFilter.
 [delta "light-mode"]
   light = true
 [delta "dark-mode"]

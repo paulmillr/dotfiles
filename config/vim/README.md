@@ -19,9 +19,11 @@ Inside NERDTree, use `o` to open, `i` for a horizontal split, `s` for a vertical
 
 ## Themes
 
-Available themes are `ice`, `bubblegum`, `gotham`, `gruvbox`, `ir_black`, `pokemon`, `pyte`, `sailormoon`, and `vantablack`. Vim follows the same `LC_TERM_BG` value as bat and delta, choosing `ice` in dark mode and `sailormoon` in light mode; an absent or unknown value defaults to dark. Switch manually with `:colorscheme NAME`.
+Available themes are `ice`, `bubblegum`, `gotham`, `gruvbox`, `ir_black`, `pokemon`, `prismatic`, `pyte`, `sailormoon`, and `vantablack`. Vim follows the same `LC_TERM_BG` value as bat and delta, choosing `ice` in dark mode and `sailormoon` in light mode; an absent or unknown value defaults to dark. Switch manually with `:colorscheme NAME`.
 
 `ice` is a Vim port of Matthew Holt's [Ice Ice OLED](https://github.com/mholt/ice-ice-oled) theme.
+
+`prismatic` is a Vim port of Chen Hui Jing's colourful front-end-focused [Prismatic](https://github.com/huijing/Prismatic) theme.
 
 `pokemon` and `sailormoon` are Vim ports of Marko Nikolajevic's [MangaMode](https://github.com/MarkoNikolajevic/manga-mode-theme) themes. `vantablack` ports Bjarne Oeverli's [VS Code Vantablack](https://github.com/bjarneo/vantablack-vscode).
 

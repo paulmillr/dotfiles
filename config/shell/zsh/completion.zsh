@@ -12,7 +12,7 @@ if [[ "$TERM" == 'dumb' ]]; then
 fi
 
 # Add zsh-completions to $fpath.
-_completion_dir="${${(%):-%x}:A:h}/completion/src"
+_completion_dir="${${(%):-%x}:A:h:h:h:h}/vendor/zsh-completions/src"
 fpath=("$_completion_dir" $fpath)
 unset _completion_dir
 

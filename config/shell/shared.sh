@@ -1,5 +1,5 @@
 # Shared environment variables, aliases and functions, sourced by both
-# zsh (via .zshrc.sh) and bash.
+# zsh (via home/.zshrc) and bash.
 #
 # Kept bash/zsh-compatible on purpose: no zsh-only parameter-expansion flags
 # (${(z)}, ${(f)}, ${(L)}, ...), glob qualifiers, or emulate/setopt calls,
@@ -32,6 +32,7 @@ _color_green=$'\033[32m'
 _color_yellow=$'\033[33m'
 _color_blue=$'\033[34m'
 _color_bold_blue=$'\033[1;34m'
+_color_gray=$'\033[38;5;8m'
 _color_reset=$'\033[0m'
 _color_cyan=$'\033[35m'
 
@@ -39,7 +40,7 @@ _color_cyan=$'\033[35m'
 # = Environment variables =
 # ==================================================================
 # zsh-only env setup (path dedup, ~/.private-env, TMPPREFIX) stays in
-# home/.zshrc.sh; everything here must work in bash too.
+# config/shell/zsh/zshrc.zsh; everything here must work in bash too.
 
 # Commonly used directories.
 dev="$HOME/Developer"
@@ -119,6 +120,75 @@ if [ -z "${SSH_AUTH_SOCK:-}" ] && [ -S "$_shared_gpg_sock" ]; then
   export SSH_AUTH_SOCK="$_shared_gpg_sock"
 fi
 unset _shared_gpg_sock
+
+if [ -t 0 ]; then
+  export GPG_TTY="$(tty)" # For git commit signing
+fi
+
+# bat picks light vs dark by asking the terminal for its background colour
+# (an OSC 11 query) and giving up if the reply is slow. Over ssh that reply
+# has to cross the network, and since TERM arrives as xterm-256color bat
+# can't recognise the terminal to allow it a longer budget -- so it times out
+# and quietly falls back to dark. Prefer an explicit answer forwarded by the
+# client in LC_TERM_BG (sshd already accepts LC_*, the same trick iTerm2 uses
+# for LC_TERMINAL); probe only when nobody told us.
+#
+# BAT_THEME has to name a real theme: unlike --theme it does not accept the
+# "light"/"dark" aliases, and warns "Unknown theme" if given one.
+#
+# delta needs the same answer, and needs it twice over: it has its own OSC 11
+# probe for the diff backgrounds (with the same ssh timeout), but its
+# syntax-theme just reads BAT_THEME -- so detection alone flips the +/- hunk
+# backgrounds and leaves the code inside them highlighted for the other one.
+# The `+` prefix adds to the features from gitconfig, keeping navigate = true.
+# Nothing produces LC_TERM_BG on its own: it is our own name, not something any
+# terminal implements. iTerm2 really does export LC_TERMINAL, which is why that
+# trick works for free; Ghostty exports TERM/GHOSTTY_* and nothing about the
+# background. So the client end has to answer. `defaults` exists only on macOS
+# and only a non-ssh shell sits at a real terminal, so the two tests together
+# scope this to the laptop. This tracks the system appearance, which is right
+# when Ghostty is configured `theme = light:...,dark:...`; if yours is pinned to
+# one theme, replace the whole block with a plain export of that value.
+if [ -z "${SSH_CONNECTION:-}" ] && is-callable defaults; then
+  if [ "$(command defaults read -g AppleInterfaceStyle 2>/dev/null)" = 'Dark' ]; then
+    export LC_TERM_BG=dark
+  else
+    export LC_TERM_BG=light
+  fi
+fi
+
+# Herdr's persistent server keeps the environment from the SSH login that
+# originally started it, so even brand-new panes otherwise inherit a stale
+# LC_TERM_BG after a later client reconnects. Cache the value seen by each
+# ordinary SSH login, then let shells spawned inside Herdr recover the newest
+# value. If multiple SSH clients are connected, the most recent login wins.
+_term_bg_cache_dir="${XDG_CACHE_HOME:-$HOME/.cache}/dotfiles"
+_term_bg_cache="$_term_bg_cache_dir/terminal-background"
+if [ -n "${SSH_CONNECTION:-}" ] && [ -z "${HERDR_ENV:-}" ]; then
+  case "${LC_TERM_BG:-}" in
+    light|dark)
+      if [ -d "$_term_bg_cache_dir" ] || mkdir -m 700 -p "$_term_bg_cache_dir" 2>/dev/null; then
+        printf '%s\n' "$LC_TERM_BG" >| "$_term_bg_cache" 2>/dev/null
+        chmod 600 "$_term_bg_cache" 2>/dev/null
+      fi
+      ;;
+  esac
+elif [ -n "${SSH_CONNECTION:-}" ] && [ -n "${HERDR_ENV:-}" ] && [ -r "$_term_bg_cache" ]; then
+  _term_bg_cached="$(command cat "$_term_bg_cache" 2>/dev/null)"
+  case "$_term_bg_cached" in
+    light|dark) export LC_TERM_BG="$_term_bg_cached" ;;
+  esac
+  unset _term_bg_cached
+fi
+unset _term_bg_cache _term_bg_cache_dir
+
+export BAT_THEME_LIGHT="Monokai Extended Light"
+export BAT_THEME_DARK="Monokai Extended"
+case "${LC_TERM_BG:-}" in
+  light) export BAT_THEME="$BAT_THEME_LIGHT"; export DELTA_FEATURES="+light-mode" ;;
+  dark)  export BAT_THEME="$BAT_THEME_DARK";  export DELTA_FEATURES="+dark-mode"  ;;
+  *)     export BAT_THEME="$BAT_THEME_DARK";  export DELTA_FEATURES="+dark-mode"  ;;
+esac
 
 # ==================================================================
 # = OS-specific aliases =
@@ -390,9 +460,10 @@ EOF
 }
 
 gl() {
-  local count=10 requested
-  local red="$_color_cyan" green="$_color_green" author_color="$_color_bold_blue" reset="$_color_reset"
-  [ -t 1 ] || { red=''; green=''; author_color=''; reset=''; }
+  local count=10 requested current_year
+  local gray="$_color_gray" green="$_color_green" blue="$_color_blue" reset="$_color_reset"
+  [ -t 1 ] || { gray=''; green=''; blue=''; reset=''; }
+  current_year="$(date +%y)"
 
   case "${1-}" in
     -[0-9]*)
@@ -404,15 +475,17 @@ gl() {
       ;;
   esac
 
-  git --no-pager log -n "$count" --format='%h%x1c%G?%x1c%aN%x1c%aE%x1c%GS%x1c%s' "$@" |
-    awk -v red="$red" -v green="$green" -v author_color="$author_color" -v reset="$reset" '
+  git --no-pager log -n "$count" --date=format:'%-m/%-d/%y' --format='%h%x1c%G?%x1c%aN%x1c%aE%x1c%GS%x1c%s%x1c%ad' "$@" |
+    awk -v gray="$gray" -v green="$green" -v blue="$blue" -v reset="$reset" -v current_year="$current_year" '
       BEGIN { FS = sprintf("%c", 28) }
       {
         valid = ($2 == "G" || $2 == "U")
         mine = ($3 == "ME" && index($5, "<" $4 ">") != 0)
         checkbox = (valid && mine) ? green "✓" reset " " : ""
-        author = ($3 == "ME") ? "" : " " author_color $3 reset
-        printf "%s%s%s %s%s%s\n", red, $1, reset, checkbox, $6, author
+        author = ($3 == "ME") ? "" : " " gray $3 reset
+        display_date = $7
+        sub("/" current_year "$", "", display_date)
+        printf "%s%s%s %s%s %s(%s)%s%s\n", gray, $1, reset, checkbox, $6, blue, display_date, reset, author
       }
     '
 }

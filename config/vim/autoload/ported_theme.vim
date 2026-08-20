@@ -1,4 +1,4 @@
-" Shared Vim highlight renderer for the VS Code theme ports in colors/.
+" Shared Vim highlight renderer for editor theme ports in colors/.
 
 function! s:nearest_cube(value) abort
 	let l:levels = [0, 95, 135, 175, 215, 255]
@@ -56,6 +56,10 @@ function! s:highlight(group, foreground, background, style) abort
 	execute 'highlight ' . a:group
 		\ . ' guifg=' . l:foreground . ' guibg=' . l:background . ' gui=' . l:style
 		\ . ' ctermfg=' . s:cterm(l:foreground) . ' ctermbg=' . s:cterm(l:background) . ' cterm=' . l:style
+endfunction
+
+function! ported_theme#highlight(group, foreground, background, style) abort
+	call s:highlight(a:group, a:foreground, a:background, a:style)
 endfunction
 
 function! ported_theme#apply(name, background, palette) abort

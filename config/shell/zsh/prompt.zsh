@@ -22,7 +22,7 @@ function get-vcs-info {
   vcs_info=" ${ref}${dirty}"
 }
 
-function prompt_szsh_setup {
+function _zsh_prompt_setup {
   setopt LOCAL_OPTIONS
   unsetopt XTRACE KSH_ARRAYS
   autoload -Uz add-zsh-hook
@@ -36,4 +36,5 @@ function prompt_szsh_setup {
   SPROMPT='zsh: correct %F{red}%R%f to %F{green}%r%f [nyae]? '
 }
 
-prompt_szsh_setup "$@"
+_zsh_prompt_setup "$@"
+unfunction _zsh_prompt_setup

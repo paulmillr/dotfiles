@@ -1,7 +1,7 @@
 # Load zsh-syntax-highlighting.
 
-function _terminal_highlight_load() {
-  local plugin="${${(%):-%x}:A:h}/highlight/zsh-syntax-highlighting.zsh"
+function _zsh_highlighting_load() {
+  local plugin="${${(%):-%x}:A:h:h:h:h}/vendor/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 
   if [[ ! -r "$plugin" ]]; then
     print -u2 "zsh-syntax-highlighting is unavailable: $plugin"
@@ -19,9 +19,9 @@ function _terminal_highlight_load() {
 () {
   local rc
 
-  _terminal_highlight_load
+  _zsh_highlighting_load
   rc=$?
-  unfunction _terminal_highlight_load
+  unfunction _zsh_highlighting_load
   return "$rc"
 }
 return $?

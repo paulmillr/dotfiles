@@ -4,8 +4,8 @@
 # Displays resource usage, etc.
 #
 # apt install figlet lolcat
-# chmod +x linux-startup.sh
-# install -m 0755 linux-startup.sh /etc/update-motd.d/50-sysinfo
+# chmod +x motd.sh
+# install -m 0755 motd.sh /etc/update-motd.d/50-sysinfo
 # truncate -s 0 /etc/motd && chmod -x /etc/update-motd.d/10-uname
 
 export PATH="/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/sbin:/usr/local/bin"

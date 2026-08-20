@@ -5,7 +5,7 @@ PATH='/usr/sbin:/usr/bin:/sbin:/bin'
 export PATH
 
 script_dir=$(CDPATH='' cd "$(dirname "$0")" && pwd -P)
-source_file="$script_dir/linux-startup.sh"
+source_file="$script_dir/motd.sh"
 dest_file="/etc/update-motd.d/50-sysinfo"
 uname_file="/etc/update-motd.d/10-uname"
 

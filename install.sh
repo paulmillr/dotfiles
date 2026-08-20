@@ -40,12 +40,12 @@ main() {
 
   git -C "$repo" submodule update --init --recursive --depth 1
   secure_path_tree "$repo"
-  sh "$repo/etc/symlink-dotfiles.sh"
+  sh "$repo/scripts/link.sh" --overwrite
 
   # Optional: remove .git directories
-  # rm -rf .git vim/.git terminal/completion/.git terminal/highlight/.git .gitmodules
+  # rm -rf .git vendor/zsh-completions/.git vendor/zsh-syntax-highlighting/.git .gitmodules
   # Optional: remove scripts
-  # rm install.sh etc/symlink-dotfiles.sh etc/install-linux-startup.sh README.md
+  # rm install.sh scripts/link.sh scripts/linux/install-motd.sh README.md
 }
 
 # The whole script body lives in main() so a truncated `curl | sh`

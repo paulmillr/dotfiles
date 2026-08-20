@@ -5,7 +5,17 @@ Colourful & robust configuration files and utilities for Mac, Linux and BSD. Ins
 curl -L https://git.io/pmdot | sh
 ```
 
-The short URL expands to GitHub-hosted `./install.sh`, and then `./etc/symlink-dotfiles.sh`, which can be easily audited.
+The short URL expands to GitHub-hosted `./install.sh`, and then `./scripts/link.sh`, which can be easily audited.
+
+When invoked directly, the linker leaves conflicting files and symlinks untouched by default, prints their paths in red, and exits unsuccessfully. Existing correct links and identical copied files are accepted, so normal reruns remain idempotent. To replace conflicts explicitly, run:
+
+```sh
+./scripts/link.sh --overwrite
+```
+
+Displaced paths are preserved as `.bak`, `.bak.1`, and so on. Set `NO_COLOR` to disable colored output.
+
+The top-level `install.sh` invokes the linker with `--overwrite`, so a full installation updates existing dotfiles while preserving backups.
 
 ## Features
 
@@ -20,7 +30,7 @@ The short URL expands to GitHub-hosted `./install.sh`, and then `./etc/symlink-d
     * `tarbz2`, `untarbz2` - best archive compression. Utilizes parallel `pbzip2` when available.
     * `ram safari` — show app RAM usage
     * `curl http://site/v1/api.json | json` - pretty-print JSON
-* `git-extras` - useful git functions, defined in `home/.gitconfig`:
+* Git configuration and useful functions, loaded from `config/git/config`:
     * Opinionated `git log`, `git graph`
     * `gcp` for fast `git commit -m ... && git push`
     * `git sign` for PGP-signed git
@@ -29,11 +39,23 @@ The short URL expands to GitHub-hosted `./install.sh`, and then `./etc/symlink-d
     * `git_release` — commit and tag the commit. Publishes to NPM for node projects.
     * `git url` - opens GitHub repo for current git repo.
     * `git-changelog`, `git-setup` etc.
-* `etc` — MacOS fine tuning
-* `vscode` — Sublime Text theme & settings
+* `scripts/macos/defaults.sh` — macOS fine tuning
+* `config/vscode` — Sublime Text theme & settings
 * Sets terminal tab and window title to current directory
 * [homesick](https://github.com/technicalpickles/homesick) /
   [homeshick](https://github.com/andsens/homeshick)-compatible
+
+## Repository layout
+
+* `home/` — entrypoint files installed directly in `$HOME`.
+* `config/` — configuration for the shell, Git, Ghostty, terminal themes, Vim, and VS Code.
+* `vendor/` — pinned third-party Zsh submodules.
+* `scripts/` — linking and platform setup scripts.
+* `tests/` — syntax and clean-home installation smoke tests.
+
+`home/.zshrc` is intentionally small: it resolves the checkout through its symlink and sources `config/shell/zsh/zshrc.zsh`.
+
+Run the smoke test with `./tests/smoke.sh`.
 
 ## Git setup
 
