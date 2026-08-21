@@ -35,15 +35,14 @@ main() {
       echo "$repo already exists but is not a git checkout" >&2
       exit 1
     fi
-    git clone --filter=blob:none --depth 1 --recurse-submodules --shallow-submodules https://github.com/paulmillr/dotfiles.git "$repo"
+    git clone --filter=blob:none --depth 1 https://github.com/paulmillr/dotfiles.git "$repo"
   fi
 
-  git -C "$repo" submodule update --init --recursive --depth 1
   secure_path_tree "$repo"
   sh "$repo/scripts/link.sh" --overwrite
 
-  # Optional: remove .git directories
-  # rm -rf .git vendor/zsh-completions/.git vendor/zsh-syntax-highlighting/.git .gitmodules
+  # Optional: remove Git metadata
+  # rm -rf .git
   # Optional: remove scripts
   # rm install.sh scripts/link.sh scripts/linux/install-motd.sh README.md
 }

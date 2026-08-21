@@ -1,0 +1,907 @@
+#compdef cmake -value-,CMAKE_GENERATOR,-default-
+# ------------------------------------------------------------------------------
+# Copyright (c) 2017 Github zsh-users - https://github.com/zsh-users
+# All rights reserved.
+#
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions are met:
+#     * Redistributions of source code must retain the above copyright
+#       notice, this list of conditions and the following disclaimer.
+#     * Redistributions in binary form must reproduce the above copyright
+#       notice, this list of conditions and the following disclaimer in the
+#       documentation and/or other materials provided with the distribution.
+#     * Neither the name of the zsh-users nor the
+#       names of its contributors may be used to endorse or promote products
+#       derived from this software without specific prior written permission.
+#
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+# ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+# WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+# DISCLAIMED. IN NO EVENT SHALL ZSH-USERS BE LIABLE FOR ANY
+# DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+# (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+# LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+# ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+# SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+# -------------------------------------------------------------------------
+# Description
+# -----------
+#
+#  Completion script for CMake 4.4.0 (https://cmake.org).
+#
+# -------------------------------------------------------------------------
+# Authors
+# -------
+#
+#  * Scott M. Kroll <skroll@gmail.com> (initial version)
+#  * Paul Seyfert <pseyfert.mathphys@gmail.com> (handling of --build and updates)
+#  * Norbert Lange <nolange79@gmail.com> (presets, command mode, updates)
+#
+# -------------------------------------------------------------------------
+# Notes
+# -----
+#
+#   * By default only C and C++ languages are supported for compiler flag
+#     variables. To define your own list of languages:
+#
+#       cmake_langs=('C'   'C'
+#                    'CXX' 'C++')
+#       zstyle ':completion:*:cmake:*' languages $cmake_langs
+#
+# -------------------------------------------------------------------------
+
+local -a cmake_build_options=(
+  '-S[Explicitly specify a source directory]:source directory:_path_files -/'
+  '-B[Explicitly specify a build directory]:build directory:_path_files -/'
+  '-C[Pre-load a script to populate the cache]:initial cache:_files'
+  '*-D-[Create a cmake cache entry]:property:_cmake_define_property'
+  '*-U[Remove matching entries from CMake cache]:globbing expression'
+  '-G[Specify a makefile generator]:generator:_cmake_generators'
+  '-T[Specify toolset name if supported by generator]:toolset name'
+  '-A[Specify platform name if supported by generator]:platform name'
+  '--toolchain[Specify toolchain file]: :_files'
+  '--install-prefix[Specify install directory]: :_path_files -/'
+  '--project-file[Specify an alternate project file name]:name'
+
+  # Warnings
+  '(-Wdev)-Wno-dev[Suppress/Enable developer warnings]'
+  '(-Wno-dev)-Wdev[Suppress/Enable developer warnings]'
+  '(-Wdeprecated)-Wno-deprecated[Suppress/Enable deprecation warnings]'
+  '(-Wno-deprecated)-Wdeprecated[Suppress/Enable deprecation warnings]'
+  '(-Werror=dev)-Wno-error=dev[Make developer warnings (not) errors]'
+  '(-Wno-error=dev)-Werror=dev[Make developer warnings (not) errors]'
+  '(-Wno-error=deprecated)-Werror=deprecated[Make deprecated macro and function warnings (not) errors]'
+  '(-Werror=deprecated)-Wno-error=deprecated[Make deprecated macro and function warnings (not) errors]'
+
+  '--preset=[Specify a configure preset]:preset:_cmake_presets'
+  '--presets-file=[Specify the path to a presets file]:file:_files'
+  '--list-presets[List available presets]'
+  '--workflow[Run a workflow preset]'
+
+  '-E[CMake command mode]:command:_cmake_commands'
+
+  '-L-[List cache variables]::_values "options" "[non-advanced cache variables]" "A[advanced cache variables]" "H[non-advanced cached variables with help]" "AH[advanced cache variables with help]"'
+  '--fresh[Configure a fresh build tree, removing any existing cache file]'
+
+  '--build[Build a CMake-generated project binary tree]::project directory:_path_files -/'
+  '--install[Install a CMake-generated project binary tree]:project directory:_path_files -/'
+  '--open[Open generated project in the associated application]:project directory:_path_files -/'
+
+  '-N[View mode only]'
+  '-P[Process script mode]:script:_files'
+
+  '--find-package[Legacy pkg-config like mode. Do not use]'
+
+  '--graphviz=[Generate graphviz of dependencies, see CMakeGraphVizOptions.cmake for more]:graphviz output:_files'
+  '--system-information[Dump information about this system]::system information output:_files'
+  '--print-config-dir[Print CMake config directory for user-wide FileAPI queries]'
+
+  '--log-level=[Set the verbosity of messages from CMake files]:log level:(ERROR WARNING NOTICE STATUS VERBOSE DEBUG TRACE)'
+  '--log-context[Prepend log messages with context, if given]'
+
+  '--debug-trycompile[Do not delete the try_compile build tree. Only useful on one try_compile at a time]'
+  '--debug-output[Put cmake in a debug mode]'
+  '--debug-find[Put cmake find in a debug mode]'
+  '--debug-find-pkg=[Limit cmake debug-find to the comma-separated list of packages]:packages'
+  '--debug-find-var=[Limit cmake debug-find to the comma-separated list of result variables]:variables'
+
+  '(--trace-expand)--trace[Put cmake in trace mode]'
+  '(--trace)--trace-expand[Put cmake in trace mode with variable expansion]'
+  '--trace-format=[Set the output format of the trace]:trace format:(human json-v1)'
+  '*--trace-source[Trace only this CMake file/module. Multiple options allowed]:filename:_files'
+  '--trace-redirect[Redirect trace output to a file instead of stderr]:trace output:_files'
+
+  '--warn-uninitialized[Warn about uninitialized values]'
+  '--no-warn-unused-cli[Do not warn about command line options]'
+  '--warn-unused-vars[Warn about unused variables]'
+  '--check-system-vars[Find problems with variable usage in system files]'
+  '--compile-no-warning-as-error[Ignore COMPILE_WARNING_AS_ERROR property and CMAKE_COMPILE_WARNING_AS_ERROR variable]'
+  '--link-no-warning-as-error[Ignore LINK_WARNING_AS_ERROR and CMAKE_LINK_WARNING_AS_ERROR]'
+
+  '--profiling-format[Output data for profiling CMake scripts]:profiling format:(google-trace)'
+  '--profiling-output[Select an output path for the profiling data]:filename:_files'
+
+  ':cmake project:_path_files -/'
+)
+
+# ------------------------
+# _cmake_generator_options
+#
+# arguments are $1: build working directory (top level Makefile or build.ninja file)
+#               $2: position of "--" in the command line
+# ------------------------
+(( $+functions[_cmake_generator_options] )) ||
+_cmake_generator_options() {
+  # pass only the part of the command line starting at "--" to the completion
+  shift (( $2 - 1 )) words
+  (( CURRENT = $CURRENT + 1 - $2 ))
+  if [ -f $1/Makefile ]
+  then
+    $_comps[make]
+  elif [ -f $1/build.ninja ]
+  then
+    $_comps[ninja]
+  fi
+}
+
+# ----------------------
+# _cmake_build_presets
+# ----------------------
+(( $+functions[_cmake_build_presets] )) ||
+_cmake_build_presets() {
+  local list_presets=(${(f)"$(cmake --list-presets=build 2>/dev/null |
+    sed -n -e 's,^[[:space:]]*"\([^"]*\)"[[:space:]]*-[[:space:]]*\(.*\),\1:\2,p' \
+           -e 's,^[[:space:]]*"\([^"]*\)"[[:space:]]*$,\1,p')"})
+
+  _describe 'build presets' list_presets
+}
+
+# ----------------------
+# _cmake_json_field
+#
+# Given a JSON string $1, returns the string value of the first  "<key>": "<value>"  pair, where key is $2.
+# Handles arbitrary whitespace/newlines between tokens. Returns empty if not found.
+# ----------------------
+(( $+functions[_cmake_json_field] )) ||
+_cmake_json_field() {
+  local json="$1" key="$2"
+  local -a match mbegin mend
+  # Non-greedy match of:  "key" <ws> : <ws> " value "
+  if [[ $json =~ "\"$key\"[[:space:]]*:[[:space:]]*\"([^\"]*)\"" ]]; then
+    print -r -- "$match[1]"
+  fi
+}
+
+# ----------------------
+# _cmake_json_preset_block
+#
+# Slice out one preset object (by its "name") from a presets-array section
+# (the text following the "buildPresets"/"configurePresets" key). Returns the
+# object's text from its "name" entry up to the start of the next preset's
+# "name" entry.
+# ----------------------
+(( $+functions[_cmake_json_preset_block] )) ||
+_cmake_json_preset_block() {
+  local section="$1" name="$2"
+  local after="${section#*\"name\"[[:space:]]#:[[:space:]]#\"$name\"}"
+  [[ $after == "$section" ]] && return 1
+  print -r -- "${after%%\"name\"[[:space:]]#:*}"
+}
+
+# ----------------------
+# _cmake_json_inherited_field
+#
+# Look up $field on preset $name inside array-section $section, following
+# "inherits" (a string or an array of strings) when the preset itself
+# doesn't set the field, depth-first with first-match-wins -- matching
+# CMake's own resolution order. $4 is an internal "seen names" guard
+# against cyclic (invalid) inherits.
+# ----------------------
+(( $+functions[_cmake_json_inherited_field] )) ||
+_cmake_json_inherited_field() {
+  local section="$1" name="$2" field="$3" seen="$4"
+  [[ " $seen " == *" $name "* ]] && return 1
+
+  local block
+  block=$(_cmake_json_preset_block "$section" "$name") || return 1
+
+  local value
+  value=$(_cmake_json_field "$block" "$field")
+  if [[ -n $value ]]; then
+    print -r -- "$value"
+    return 0
+  fi
+
+  local parent
+  local -a match mbegin mend
+  if [[ $block =~ '"inherits"[[:space:]]*:[[:space:]]*\[([^]]*)\]' ]]; then
+    for parent in ${(s:,:)match[1]}; do
+      parent=${parent//[\"[:space:]]/}
+      [[ -z $parent ]] && continue
+      value=$(_cmake_json_inherited_field "$section" "$parent" "$field" "$seen $name") && \
+        { print -r -- "$value"; return 0 }
+    done
+  elif [[ $block =~ '"inherits"[[:space:]]*:[[:space:]]*"([^"]*)"' ]]; then
+    _cmake_json_inherited_field "$section" "$match[1]" "$field" "$seen $name"
+    return
+  fi
+  return 1
+}
+
+# ----------------------
+# _cmake_json_preset_dir
+#
+# build-preset name -> binaryDir
+#   $1 = full JSON text (both preset files concatenated)
+#   $2 = build preset name
+#
+# Steps:
+#   a) Find the build preset's "configurePreset" (following "inherits" if needed).
+#   b) Find that configure preset's "binaryDir" (following "inherits" if needed).
+#   c) Expand the ${sourceDir}/${presetName} macros and strip a trailing slash.
+# ----------------------
+(( $+functions[_cmake_json_preset_dir] )) ||
+_cmake_json_preset_dir() {
+  emulate -L zsh
+  setopt extendedglob
+  local json="$1" name="$2"
+
+  # Restrict the "name" search to the right array so a configurePreset and
+  # a buildPreset sharing the same name (a common CMakePresets pattern)
+  # don't get confused for one another.
+  local build_section="${json#*\"buildPresets\"}"
+  local configure_section="${json#*\"configurePresets\"}"
+
+  local configPreset
+  configPreset=$(_cmake_json_inherited_field "$build_section" "$name" configurePreset)
+  [[ -z $configPreset ]] && return
+
+  local bd
+  bd=$(_cmake_json_inherited_field "$configure_section" "$configPreset" binaryDir)
+  [[ -z $bd ]] && return
+
+  # --- c) expand macros ---
+  bd="${bd//\$\{sourceDir\}/$PWD}"
+  bd="${bd//\$\{presetName\}/$configPreset}"
+  bd="${bd%/}"
+  print -r -- "$bd"
+}
+
+# --------------------------
+# _cmake_preset_build_dir
+#
+# Resolves the build directory for a given build preset name.
+#
+# Strategy (no external deps beyond the cmake/make/ninja already used elsewhere in this file):
+#   1. Read CMakePresets.json / CMakeUserPresets.json as one string and pull
+#      out, with zsh parameter expansion + the (M)/regex flags:
+#        build preset "<name>"  ->  its "configurePreset"
+#        that configure preset  ->  its "binaryDir"
+#      Then expand the ${sourceDir} macro.
+#      Inherited binaryDir (preset "inherits") is intentionally NOT followed here —
+#      it is rare and the glob fallback below handles those cases.
+#   2. Fall back to a BFS glob for the nearest CMakeCache.txt when step 1 finds nothing.
+# --------------------------
+(( $+functions[_cmake_preset_build_dir] )) ||
+_cmake_preset_build_dir() {
+  local preset_name="$1"
+
+  if [[ -n "$preset_name" ]]; then
+    local json="" f
+    for f in CMakePresets.json CMakeUserPresets.json; do
+      [[ -f $f ]] && json+=$(<$f)$'\n'
+    done
+
+    if [[ -n $json ]]; then
+      local dir
+      dir=$(_cmake_json_preset_dir "$json" "$preset_name")
+      [[ -n "$dir" && -d "$dir" ]] && { print -r -- "$dir"; return 0 }
+    fi
+  fi
+
+  # Fallback: BFS glob — level by level, stop at first match, no subprocess.
+  local -a matches
+  local pattern
+  for pattern in \
+    'CMakeCache.txt' \
+    '*/CMakeCache.txt' \
+    '*/*/CMakeCache.txt' \
+    '*/*/*/CMakeCache.txt' \
+    '*/*/*/*/CMakeCache.txt' \
+    '*/*/*/*/*/CMakeCache.txt'
+  do
+    matches=( $~pattern(N[1]) )
+    (( $#matches )) && { print -r -- ${matches[1]:h}; return 0 }
+  done
+}
+
+
+# --------------
+# _cmake_presets
+# --------------
+(( $+functions[_cmake_presets] )) ||
+_cmake_presets() {
+  local invoke=(${(Q)words})
+  invoke[$CURRENT]=()
+  # drop a dangling --preset/--preset=... so it doesn't swallow --list-presets as its value
+  invoke=(${invoke:#--preset})
+  invoke=(${invoke:#--preset=*})
+  # TODO: remove all arguments -* except -S
+
+  local list_presets=(${(f)"$(${invoke} --list-presets 2>/dev/null |
+    sed -n -e 's,^[[:space:]]*"\([^"]*\)"[[:space:]]*-[[:space:]]*\(.*\),\1:\2,p' \
+           -e 's,^[[:space:]]*"\([^"]*\)"[[:space:]]*$,\1,p')"})
+
+  _describe 'presets' list_presets
+}
+
+# --------------
+# _cmake_targets
+# --------------
+typeset -gA _cmake_targets_cache
+(( $+functions[_cmake_targets] )) ||
+_cmake_targets() {
+  local dir="$1"
+  local -a targets=()
+  local file mtime key
+
+  if [[ -f "${dir}/Makefile" && $+commands[make] ]]; then
+    file="${dir}/Makefile"
+  elif [[ -f "${dir}/build.ninja" && $+commands[ninja] ]]; then
+    file="${dir}/build.ninja"
+  fi
+
+  if [[ -n $file ]]; then
+    zmodload -F zsh/stat b:zstat 2>/dev/null
+    mtime=$(zstat +mtime "$file" 2>/dev/null)
+    key="${file:A}:${mtime}"
+    if (( $+_cmake_targets_cache[$key] )); then
+      targets=(${(f)_cmake_targets_cache[$key]})
+    else
+      if [[ $file == */Makefile ]]; then
+        # `make help` doesn't work for Makefiles in general, but for CMake generated Makefiles it does.
+        targets=(${(f)"$(make -f $file help 2>/dev/null | awk '/^\.\.\./ { print $2 }')"})
+      else
+        # `ninja help` doesn't seem to be the list of targets we're interested in
+        targets=(${(f)"$(ninja -C $dir -t targets all 2>/dev/null | awk -F: '{print $1}' )"})
+      fi
+      _cmake_targets_cache[$key]="${(F)targets}"
+    fi
+  fi
+
+  _describe 'build targets' targets
+}
+
+_cmake_suggest_builddirs() {
+  _alternative ':current directory:(.)' 'directory::_directories' && return 0
+}
+
+_cmake_suggest_installdirs() {
+  _alternative ':current directory:(.)' 'directory::_directories' && return 0
+}
+
+_cmake_on_build() {
+  local build_extras=(
+    '--[Native build tool options]'
+    '--target[specify build target]'
+    '--clean-first[build target clean first]'
+    '--config[For multi-configuration tools]'
+    '--parallel[maximum number of build processes]'
+    '--use-stderr'
+    '--preset[Specify a build preset]:preset:_cmake_build_presets'
+    '--list-presets[List available build presets]'
+  )
+  local -a undescribed_build_extras=(${build_extras%%\[*})
+
+  local in_build=false
+  local dash_dash_position=-1
+  local build_at=$CURRENT
+  for ((i = (($CURRENT - 1)); i > 1 ; i--)); do
+    if [[ $words[$i] == --build ]]; then
+      in_build=true
+      build_at=$i
+      (( difference = $CURRENT - $i ))
+    elif [[ $words[$i] == -- ]]; then
+      dash_dash_position=$i
+    fi
+  done
+
+  # check if build mode has been left
+  local out_of_build=false
+  for ((i = (($CURRENT - 1)); i > (($build_at + 1)); i--)); do
+    # don't check the word after --build (should be a directory)
+    # strip a possible "=value" suffix so --target=foo matches like --target
+    local _wi=${words[$i]%%=*}
+    if [[ ${undescribed_build_extras[(r)$_wi]} == $_wi ]]; then
+      continue
+    fi
+
+    if [[ $words[(($i - 1))] == --target ]]; then continue ; fi
+    if [[ $words[(($i - 1))] == --config ]]; then continue ; fi
+    if [[ $words[(($i - 1))] == --parallel ]] ; then continue ; fi
+    if [[ $words[(($i - 1))] == --preset ]] ; then continue ; fi
+    out_of_build=true
+  done
+
+  if (( $dash_dash_position > 0 )) ; then
+    local _build_first=$words[(($build_at + 1))]
+    [[ $_build_first != --* ]] && _cmake_generator_options $_build_first $dash_dash_position && return 0
+  fi
+
+  if [[ "$in_build" == false ]] ; then
+    # no --build seen, complete normally
+    _arguments -s \
+      - build_opts \
+      "$cmake_build_options[@]" \
+      - build_cmds \
+      "$cmake_suggest_build[@]" && return 0
+  elif [[ "$difference" -eq 1 && $words[$CURRENT] == --preset=* ]] ; then
+    # --build --preset=<TAB> as the very first arg (joined form)
+    compset -P '*='
+    _cmake_build_presets && return 0
+  elif [[ "$difference" -eq 1 && $words[$CURRENT] == --target=* ]] ; then
+    # --build --target=<TAB> as the very first arg (joined form, implicit '.' dir)
+    compset -P '*='
+    _cmake_targets "." && return 0
+  elif [[ "$difference" -eq 1 ]] ; then
+    # completing first arg after --build: dir, --preset, or --list-presets
+    _alternative \
+      ':current directory:(.)' \
+      'directory::_directories' \
+      'preset-flags:flag:((--preset\:"Specify a build preset" --list-presets\:"List available build presets"))' && return 0
+  elif [[ $words[(($CURRENT - 1))] == --preset || $words[$CURRENT] == --preset=* ]] ; then
+    # after --build --preset or --build --preset=, complete build presets
+    compset -P '*='
+    _cmake_build_presets && return 0
+  elif [[ $words[(($CURRENT - 1))] == --target || $words[$CURRENT] == --target=* ]] ; then
+    # after --build <dir|--preset name> --target(=), suggest targets
+    compset -P '*='
+    local _tgt_first=$words[(($build_at + 1))]
+    local _preset_name=
+    if [[ $_tgt_first == --preset=* ]]; then
+      _preset_name=${_tgt_first#--preset=}
+    elif [[ $_tgt_first == --preset ]]; then
+      _preset_name=$words[(($build_at + 2))]
+    fi
+    if [[ -n $_preset_name ]]; then
+      local _tgt_dir=$(_cmake_preset_build_dir "$_preset_name")
+      [[ -n "$_tgt_dir" ]] && _cmake_targets "$_tgt_dir"
+    elif [[ $_tgt_first != --* ]]; then
+      _cmake_targets "$_tgt_first"
+    fi
+    return 0
+  elif [[ $words[(($CURRENT - 1))] == --config ]] ; then
+    # after --build <dir> --config, no idea
+    return 0
+  elif [[ $words[(($CURRENT - 1))] == --parallel ]] ; then
+    # after --build <dir> --parallel
+    return 0
+  elif [ "$out_of_build" = true ] ; then
+    # after --build <dir> --<not a --build option>, suggest other cmake_build_options (like -Wno-dev)
+    _arguments "$cmake_build_options[@]" && return 0
+  else
+    # after --build <dir>, suggest other cmake_build_options (like -Wno-dev) or --build options (like --clean-first)
+    _arguments "$build_extras[@]" "$cmake_build_options[@]" && return 0
+  fi
+}
+
+_cmake_on_install() {
+  local build_extras=(
+    '--[Native build tool options]'
+    '--prefix[Override the installation prefix, CMAKE_INSTALL_PREFIX]'
+    '--config[For multi-configuration generators(e.g. Visual Studio)]'
+    '--component[Component-based install]'
+    '--strip[Strip before installing.]'
+  )
+
+  local -a undescribed_build_extras=(${build_extras%%\[*})
+
+  local in_build=false
+  local dash_dash_position=-1
+  local build_at=$CURRENT
+  for ((i = (($CURRENT - 1)); i > 1 ; i--)); do
+    if [[ $words[$i] == --install ]]; then
+      in_build=true
+      build_at=$i
+      (( difference = $CURRENT - $i ))
+    elif [[ $words[$i] == -- ]]; then
+      dash_dash_position=$i
+    fi
+  done
+
+  local out_of_build=false
+  for ((i = (($CURRENT - 1)); i > (($build_at + 1)); i--)); do
+    # don't check the word after --install (should be a directory)
+    # strip a possible "=value" suffix so --prefix=foo matches like --prefix
+    local _wi=${words[$i]%%=*}
+    if [[ ${undescribed_build_extras[(r)$_wi]} == $_wi ]] ; then continue ; fi
+    if [[ $words[(($i - 1))] == --prefix ]]; then continue ; fi
+    if [[ $words[(($i - 1))] == --config ]]; then continue ; fi
+    if [[ $words[(($i - 1))] == --component ]]; then continue ; fi
+    out_of_build=true
+  done
+
+  if (( $dash_dash_position > 0 )) ; then
+    _cmake_generator_options $words[(($build_at + 1))] $dash_dash_position && return 0
+  fi
+
+  if [[ "$in_build" == false || "$difference" -eq 1 ]] ; then
+    # either there is no --install or completing the directory after --install
+    _arguments -s \
+      - build_opts \
+      "$cmake_build_options[@]" \
+      - build_cmds \
+      "$cmake_suggest_install[@]" && return 0
+  elif [[ $words[(($CURRENT - 1))] == --prefix ]] ; then
+    # after --install <dir> --prefix, no idea
+    return 0
+  elif [[ $words[(($CURRENT - 1))] == --config ]] ; then
+    # after --install <dir> --config, no idea
+    return 0
+  elif [[ $words[(($CURRENT - 1))] == --component ]] ; then
+    # after --build <dir> --component, no idea
+    return 0
+  elif [ "$out_of_build" = true ] ; then
+    # after --build <dir> --<not a --build option>, suggest other cmake_build_options (like -Wno-dev)
+    _arguments "$cmake_build_options[@]" && return 0
+  else
+    # after --build <dir>, suggest other cmake_build_options (like -Wno-dev) or --build options (like --clean-first)
+    _arguments "$build_extras[@]" "$cmake_build_options[@]" && return 0
+  fi
+}
+
+local -a cmake_help_actions=(
+  '(- 1)'{--help,-help,-usage,-h,-H}'[Print usage information and exit]'
+  '(- 1)'{--version,-version}'[Print version number and exit]'
+  '(- 1)--help-full[Print all help manuals and exit]'
+  '(- 1)--help-manual[Print one help manual and exit]:module-name: _cmake_list_names --help-manual-list "manual name"'
+  '(- 1)--help-manual-list[List help manuals available and exit]'
+  '(- 1)--help-command[Print help for one command and exit]:command-name: _cmake_list_names --help-command-list "command name"'
+  '(- 1)--help-command-list[List commands with help available and exit]'
+  '(- 1)--help-commands[Print cmake-commands manual and exit]'
+  '(- 1)--help-module[Print help for one module and exit]:module-name: _cmake_list_names --help-module-list "module name"'
+  '(- 1)--help-module-list[List modules with help available and exit]'
+  '(- 1)--help-modules[Print cmake-modules manual and exit]'
+  '(- 1)--help-policy[Print help for one policy and exit]:policy-name: _cmake_list_names --help-policy-list "policy name"'
+  '(- 1)--help-policy-list[List policies with help available and exit]'
+  '(- 1)--help-policies[Print cmake-policies manual and exit]'
+  '(- 1)--help-property[Print help for one property and exit]:property-name: _cmake_list_names --help-property-list "property name" brakremove'
+  '(- 1)--help-property-list[List properties with help available and exit]'
+  '(- 1)--help-properties[Print cmake-properties manual and exit]'
+  '(- 1)--help-variable[Print help for one variable and exit]:variable-name: _cmake_list_names --help-variable-list "variable name" brakremove'
+  '(- 1)--help-variable-list[List variables with help available and exit]'
+  '(- 1)--help-variables[Print cmake-variables manual and exit]'
+)
+
+# -----------------
+# _cmake_list_names
+# -----------------
+(( $+functions[_cmake_list_names] )) ||
+_cmake_list_names() {
+  local command="$@[1]"
+  local desc="$@[2]"
+  local opts=($@[3])
+  local list_names=(${(f)"$($service $command 2> /dev/null)"})
+  # Older CMake (< 3.0) writes out the version
+  list_names=(${^list_names##cmake version*})
+
+  if [[ ${opts[(i)brakremove]} -le ${#opts} ]]; then
+    list_names=(${^list_names//\[/\\\[})
+    list_names=(${^list_names//\]/\\\]})
+  fi
+
+  _values ${desc} ${list_names[@]:-1} && return 0
+}
+
+# ----------------------
+# _cmake_define_property
+# ----------------------
+(( $+functions[_cmake_define_property] )) ||
+_cmake_define_property() {
+  if compset -P '*='; then
+    _wanted property-values expl 'property value' _cmake_define_property_values ${${IPREFIX%=}#-D} && return 0
+  else
+    _wanted property-names expl 'property name' _cmake_define_property_names -qS= && return 0
+  fi
+}
+
+# ----------------------------
+# _cmake_define_property_names
+# ----------------------------
+(( $+functions[_cmake_define_property_names] )) ||
+_cmake_define_property_names() {
+  local alternatives=(
+    'common-property-names:common property name:_cmake_define_common_property_names -qS='
+  )
+
+  # --find-package (cmake's legacy pkg-config-like mode) requires
+  # -DNAME=, -DLANGUAGE=, -DCOMPILER_ID= and -DMODE= to be set, see
+  # Modules/CMakeFindPackageMode.cmake. Suggest them whenever
+  # --find-package is present on the command line.
+  if (( ${words[(I)--find-package]} )); then
+    alternatives+=('find-package-property-names:find-package property name:_cmake_find_package_property_names -qS=')
+  fi
+
+  local -A cmake_langs
+  zstyle -a ":completion:${curcontext}:" languages cmake_langs
+  [[ $#cmake_langs -eq 0 ]] && cmake_langs=('C' 'C' 'CXX' 'C++')
+
+  for cmake_lang in ${(k)cmake_langs}; do
+    cmake_lang_desc="${cmake_langs[$cmake_lang]}"
+    alternatives+=("${cmake_lang//:/-}-property-names:${cmake_lang_desc} language property name:_cmake_define_lang_property_names -qS= ${cmake_lang} ${cmake_lang_desc}")
+  done
+
+  _alternative "${alternatives[@]}"
+}
+
+# ---------------------------------
+# _cmake_define_lang_property_names
+# ---------------------------------
+(( $+functions[_cmake_define_lang_property_names] )) ||
+_cmake_define_lang_property_names() {
+  local cmake_lang="$@[-2]"
+  local cmake_lang_desc="$@[-1]"
+  local -a properties=(
+    "CMAKE_${cmake_lang}_COMPILER:${cmake_lang_desc} compiler"
+    "CMAKE_${cmake_lang}_COMPILER_LAUNCHER:${cmake_lang_desc} compiler launcher (e.g. ccache)"
+    "CMAKE_${cmake_lang}_FLAGS:${cmake_lang_desc} compiler flags for all builds"
+    "CMAKE_${cmake_lang}_FLAGS_DEBUG:${cmake_lang_desc} compiler flags for all Debug build"
+    "CMAKE_${cmake_lang}_FLAGS_RELEASE:${cmake_lang_desc} compiler flags for all Release build"
+    "CMAKE_${cmake_lang}_FLAGS_MINSIZREL:${cmake_lang_desc} compiler flags for all MinSizRel build"
+    "CMAKE_${cmake_lang}_FLAGS_RELWITHDEBINFO:${cmake_lang_desc} compiler flags for all RelWithDebInfo build"
+    "CMAKE_${cmake_lang}_STANDARD:${cmake_lang_desc} language standard"
+    "CMAKE_${cmake_lang}_STANDARD_REQUIRED:${cmake_lang_desc} language standard is required"
+    "CMAKE_${cmake_lang}_EXTENSIONS:${cmake_lang_desc} enable compiler specific extensions"
+  )
+
+  _describe -t "${cmake_lang//:/-}-property-names" "${cmake_lang_desc} property name" properties $@[0,-3] && return 0
+}
+
+# ------------------------------------
+# _cmake_find_package_property_names
+# ------------------------------------
+(( $+functions[_cmake_find_package_property_names] )) ||
+_cmake_find_package_property_names() {
+  local -a properties=(
+    'NAME:Name of the package to search for, e.g. JPEG'
+    'LANGUAGE:Language context for the search (C, CXX or Fortran)'
+    'COMPILER_ID:Compiler identification to use, e.g. GNU'
+    'MODE:Search mode (EXIST, COMPILE or LINK)'
+  )
+
+  _describe -t 'find-package-property-names' 'find-package property name' properties "$@"
+}
+
+# -----------------------------------
+# _cmake_define_common_property_names
+# -----------------------------------
+(( $+functions[_cmake_define_common_property_names] )) ||
+_cmake_define_common_property_names() {
+  local -a properties=(
+    'CMAKE_MODULE_PATH:Search path for CMake modules (FindPROJECT.cmake)'
+    'CMAKE_PREFIX_PATH:Search path for installations (PROJECTConfig.cmake)'
+    'CMAKE_BUILD_TYPE:Specifies the build type for make based generators'
+    'BUILD_SHARED_LIBS:Global flag to cause add_library() to create shared libraries if on'
+    'CMAKE_TOOLCHAIN_FILE:Absolute or relative path to a CMake script which sets up toolchain related variables'
+    'CMAKE_COLOR_MAKEFILE:Enables/disables color output when using the Makefile generator'
+    'CMAKE_INSTALL_PREFIX:Install directory used by install'
+    'CMAKE_EXPORT_COMPILE_COMMANDS:Enable/disable output of compilation database during generation'
+    'CMAKE_RULE_MESSAGES:Specify whether to report a message for each make rule'
+    'CMAKE_VERBOSE_MAKEFILE:Enable verbose output from Makefile builds'
+    'CMAKE_UNITY_BUILD:Batch include source files'
+  )
+
+  _describe -t 'common-property-names' 'common property name' properties "$@"
+}
+
+# ----------------------------
+# _cmake_define_property_values
+# ----------------------------
+(( $+functions[_cmake_define_property_values] )) ||
+_cmake_define_property_values() {
+  local ret=1
+  local build_types=('Debug' 'Release' 'RelWithDebInfo' 'MinSizeRel')
+  local c_standards=(90 99 11 17 23)
+  local cxx_standards=(98 11 14 17 20 23)
+
+  setopt localoptions extendedglob
+  case $@[-1] in
+    (CMAKE_BUILD_TYPE)
+      _wanted build-types expl 'build type' _values 'build type' ${build_types[@]} && ret=0
+      ;;
+    (BUILD_SHARED_LIBS)
+      _wanted booleans expl 'boolean' _cmake_booleans && ret=0
+      ;;
+    (CMAKE_CXX_STANDARD)
+      _wanted cxx-standards expl 'cxx standard' _values 'cxx standard' ${cxx_standards[@]} && ret=0
+      ;;
+    (CMAKE_C_STANDARD)
+      _wanted c-standards expl 'c standard' _values 'c standard' ${c_standards[@]} && ret=0
+      ;;
+    (CMAKE_TOOLCHAIN_FILE)
+      _wanted toolchain-files expl 'file' _cmake_toolchain_files && ret=0
+      ;;
+    (CMAKE_COLOR_MAKEFILE)
+      _wanted booleans expl 'boolean' _cmake_booleans && ret=0
+      ;;
+    (CMAKE_RULE_MESSAGES)
+      _wanted booleans expl 'boolean' _cmake_booleans && ret=0
+      ;;
+    (CMAKE_VERBOSE_MAKEFILE)
+      _wanted booleans expl 'boolean' _cmake_booleans && ret=0
+      ;;
+    (CMAKE_UNITY_BUILD)
+      _wanted booleans expl 'boolean' _cmake_booleans && ret=0
+      ;;
+    (NAME)
+      _message -e package-name 'package name to search for, e.g. JPEG' && ret=0
+      ;;
+    (LANGUAGE)
+      _wanted languages expl 'language' _values 'language' 'C' 'CXX' 'Fortran' && ret=0
+      ;;
+    (COMPILER_ID)
+      _wanted compiler-ids expl 'compiler id' _values 'compiler id' \
+        'GNU' 'Clang' 'AppleClang' 'MSVC' 'Intel' 'IntelLLVM' 'PGI' 'XL' 'Cray' 'Fujitsu' 'SunPro' 'HP' 'Compaq' 'Borland' 'Watcom' && ret=0
+      ;;
+    (MODE)
+      _wanted modes expl 'find-package mode' _values 'mode' 'EXIST' 'COMPILE' 'LINK' && ret=0
+      ;;
+    (CMAKE_INSTALL_PREFIX)
+      _files -/ && ret=0
+      ;;
+    (CMAKE_EXPORT_COMPILE_COMMANDS)
+      _wanted booleans expl 'boolean' _cmake_booleans && ret=0
+      ;;
+    (CMAKE_*_COMPILER)
+      _wanted compilers expl 'compiler' _cmake_compilers && ret=0
+      ;;
+    (CMAKE_*_COMPILER_LAUNCHER)
+      _wanted compilers expl 'compiler launcher' _cmake_launchers && ret=0
+      ;;
+    (CMAKE_*_FLAGS(|_?*))
+      _message -e compiler-flags 'compiler flags' && _dispatch $service -value-,CPPFLAGS,-default- && ret=0
+      ;;
+    (CMAKE_*_STANDARD_REQUIRED)
+      _wanted booleans expl 'boolean' _cmake_booleans && ret=0
+      ;;
+    (CMAKE_*_EXTENSIONS)
+      _wanted booleans expl 'boolean' _cmake_booleans && ret=0
+      ;;
+    (*)
+      _files && ret=0
+      ;;
+  esac
+
+  return ret
+}
+
+# -----------------
+# _cmake_generators
+# -----------------
+(( $+functions[_cmake_generators] )) ||
+_cmake_generators() {
+  local -a generators=(
+    ${(f)"$(cmake --help | awk '/^Generators/{flag=1} flag && /^[* ] [^ ]/ {sub(/^[* ] /, ""); sub(/=.*$/, ""); sub(/\[arch\]/, ""); sub(/ *$/, ""); print}')"}
+  )
+
+  _describe -t generators 'generator' generators
+}
+
+# ----------------------
+# _cmake_toolchain_files
+# ----------------------
+(( $+functions[_cmake_toolchain_files] )) ||
+_cmake_toolchain_files() {
+  _files -g '*\.cmake*'
+}
+
+(( $+functions[_cmake_booleans] )) ||
+_cmake_booleans() {
+  _values booleans 'YES' 'NO'
+}
+
+# ---------------
+# _cmake_compilers
+#
+# by default just executable commands, but can be overridden by users.
+# ---------------
+(( $+functions[_cmake_compilers] )) ||
+_cmake_compilers() {
+  _command_names -e
+}
+
+# ---------------
+# _cmake_launchers
+#
+# by default just executable commands, but can be overridden by users.
+# useful commands might be ccache, distcc, ...
+# ---------------
+(( $+functions[_cmake_launchers] )) ||
+_cmake_launchers() {
+  _command_names -e
+}
+
+(( $+functions[_cmake_commands] )) ||
+_cmake_commands() {
+  local -a commands=(
+    'bin2c:Turn a binary file into a C array'
+    'capabilities:Report capabilities built into cmake in JSON format'
+    'cat:concat the files and print them to the standard output'
+    'chdir:run command in a given directory'
+    'compare_files:check if file1 is same as file2'
+    'copy:copy files to destination (either file or directory)'
+    'copy_directory:copy content of <dir>... directories to destination directory'
+    'copy_directory_if_different:copy changed content of <dir>... directories to destination directory'
+    'copy_directory_if_newer:copy newer content of <dir>... directories to destination directory'
+    'copy_if_different:copy files if it has changed'
+    'copy_if_newer:copy files if source is newer than destination'
+    'echo:displays arguments as text'
+    'echo_append:displays arguments as text but no new line'
+    'env:run command in a modified environment'
+    'environment:display the current environment'
+    'make_directory:create parent and <dir> directories'
+    'md5sum:create MD5 checksum of files'
+    'sha1sum:create SHA1 checksum of files'
+    'sha224sum:create SHA224 checksum of files'
+    'sha256sum:create SHA256 checksum of files'
+    'sha384sum:create SHA384 checksum of files'
+    'sha512sum:create SHA512 checksum of files'
+    'remove:remove the file(s), use -f to force it'
+    'remove_directory:remove directories and their contents'
+    'rename:rename a file or directory (on one volume)'
+    'rm:remove files or directories'
+    'server:start cmake in server mode'
+    'sleep:sleep for given number of seconds'
+    'tar:create or extract a tar or zip archive'
+    'time:run command and display elapsed time'
+    'touch:touch a <file>'
+    'touch_nocreate:touch a <file> but do not create it'
+    'create_symlink:create a symbolic link new -> old'
+    'create_hardlink:create a hard link new -> old'
+    'true:do nothing with an exit code of 0'
+    'false:do nothing with an exit code of 1'
+  )
+
+  _describe -t commands 'command' commands
+}
+
+local -a cmake_suggest_build=(
+  '--build[build]:build dir:_cmake_suggest_builddirs'
+)
+
+local -a cmake_suggest_install=(
+  '--install[install]:install dir:_cmake_suggest_installdirs'
+)
+
+if [[ "$service" = -value-*CMAKE_GENERATOR* ]]; then
+  _cmake_generators
+elif [ $CURRENT -eq 2 ] ; then
+  _arguments -s \
+    - help \
+      "$cmake_help_actions[@]" \
+    - command \
+      '-E[CMake command mode]:command:_cmake_commands' \
+    - build_opts \
+      "$cmake_build_options[@]" \
+    - build_cmds \
+      "$cmake_suggest_build[@]" \
+    - install_cmds \
+      "$cmake_suggest_install[@]" && return 0
+elif [[ $words[2] == --build ]] ; then
+  _cmake_on_build
+elif [[ $words[2] == --install ]] ; then
+  _cmake_on_install
+elif [[ $words[2] == --help-* ]] ; then
+  _arguments "$cmake_help_actions[@]"
+else
+  _arguments "$cmake_build_options[@]"
+fi
+
+# Local Variables:
+# mode: Shell-Script
+# sh-indentation: 2
+# indent-tabs-mode: nil
+# sh-basic-offset: 2
+# End:
+# vim: ft=zsh sw=2 ts=2 et

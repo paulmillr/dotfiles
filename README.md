@@ -48,8 +48,7 @@ The top-level `install.sh` invokes the linker with `--overwrite`, so a full inst
 ## Repository layout
 
 * `home/` — entrypoint files installed directly in `$HOME`.
-* `config/` — configuration for the shell, Git, Ghostty, terminal themes, Vim, and VS Code.
-* `vendor/` — pinned third-party Zsh submodules.
+* `config/` — configuration for the shell, Git, Ghostty, terminal themes, Vim, and VS Code, including vendored Zsh plugins under `config/shell/zsh/vendor/`.
 * `scripts/` — linking and platform setup scripts.
 * `tests/` — syntax and clean-home installation smoke tests.
 

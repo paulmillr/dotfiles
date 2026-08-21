@@ -185,7 +185,7 @@ for location in "$dotfiles"/home/.*; do
   [ -f "$location" ] || continue
   file="${location##*/}"
   case "$file" in
-    .gitconfig|.npmrc)
+    .bashrc|.gitconfig|.npmrc)
       continue
       ;;
   esac

@@ -1,0 +1,45 @@
+#compdef age age-keygen
+# ------------------------------------------------------------------------------
+# Description
+# -----------
+#
+#  Completion script for age 1.2.1 (https://github.com/FiloSottile/age).
+#
+# ------------------------------------------------------------------------------
+# Authors
+# -------
+#
+#  * Hydrargyrum (https://github.com/hydrargyrum)
+#
+# ------------------------------------------------------------------------------
+
+case $service in
+  (age)
+    _arguments \
+      -A '-*' \
+      '(- *)'{-h,--help}'[show help message and exit]' \
+      '(-e --encrypt -d --decrypt)'{-e,--encrypt}'[Encrypt the input to the output. Default if omitted]' \
+      '(-e --encrypt -d --decrypt -a --armor -p --passphrase -r --recipient -R --recipients-file)'{-d,--decrypt}'[Decrypt the input to the output]' \
+      '(-o --output)'{-o,--output=}'[Write the result to the given file]:OUTPUT:_files' \
+      '(-a --armor -d --decrypt)'{-a,--armor}'[Encrypt to a PEM encoded format]' \
+      '(-p --passphrase -d --decrypt)'{-p,--passphrase}'[Encrypt with a passphrase]' \
+      '(-d --decrypt)'\*{-r,--recipient=}'[Encrypt to the explicitly specified RECIPIENT]:RECIPIENT:' \
+      '(-d --decrypt)'\*{-R,--recipients-file=}'[Encrypt to the RECIPIENTS listed in the file at PATH]:RECIPIENTS_FILE:_files' \
+      \*{-i,--identity=}'[Use the given identify file]:IDENTITY:_files' \
+      :INPUT:_files
+    ;;
+  (age-keygen)
+    _arguments \
+      '(-o --output)'{-o,--output}'[write the result to the given file]:file:_files' \
+      '-y[convert an identity file to a recipients file]' \
+      '*:input'
+    ;;
+esac
+
+# Local Variables:
+# mode: Shell-Script
+# sh-indentation: 2
+# indent-tabs-mode: nil
+# sh-basic-offset: 2
+# End:
+# vim: ft=zsh sw=2 ts=2 et

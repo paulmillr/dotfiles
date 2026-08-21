@@ -8,15 +8,6 @@
 # so this file behaves the same way in both shells.
 
 # ==================================================================
-# = Shell options =
-# ==================================================================
-
-# Don't let `>` clobber an existing file; use `>|` to force (portable).
-# `set -o` is POSIX, so unlike `setopt` it applies in both bash and zsh.
-# (In zsh this also blocks `>>` from creating a new file.)
-set -o noclobber
-
-# ==================================================================
 # = Helpers =
 # ==================================================================
 
@@ -49,6 +40,7 @@ pm="$dev/personal"
 export NODE_REPL_HISTORY=''
 export OLLAMA_NOHISTORY=1
 export OLLAMA_NO_CLOUD=1
+export DO_NOT_TRACK=1
 export GH_TELEMETRY=disabled
 export JSBT_FAST=0.5
 export JSBT_QUIET=1

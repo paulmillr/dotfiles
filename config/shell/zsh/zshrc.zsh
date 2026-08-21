@@ -103,17 +103,68 @@ if [[ -n "$HISTFILE" ]]; then
   unset _histdir
 fi
 
-# Load main files.
-# To benchmark startup: brew install coreutils, uncomment lines
-# echo "Load start\t" $(gdate "+%s-%N")
 _zshrc_source_trusted "$curr/config/shell/shared.sh"
+
 # Completion and syntax highlighting only matter on a real terminal;
 # skip them in tty-less shells (e.g. tool-spawned `zsh -i -c ...`).
 if [[ -t 1 ]]; then
-  _zshrc_source_trusted "$curr/config/shell/zsh/completion.zsh"
-  _zshrc_source_trusted "$curr/config/shell/zsh/highlighting.zsh"
+  if [[ "$TERM" != dumb ]]; then
+    fpath=("$curr/config/shell/zsh/vendor/completions/src" $fpath)
+
+    # Keep generated completion data private. Fall back to an uncached
+    # initialization if the cache path is unsafe or unusable.
+    () {
+      local cache_dir="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/completion"
+
+      autoload -Uz compinit
+      if [[ ! -L "$cache_dir" ]] &&
+        { [[ -d "$cache_dir" ]] || mkdir -m 700 -p "$cache_dir"; } &&
+        [[ -O "$cache_dir" ]] && chmod 700 "$cache_dir" 2> /dev/null; then
+        compinit -i -d "$cache_dir/zcompdump"
+        zstyle ':completion:*' use-cache yes
+        zstyle ':completion:*' cache-path "$cache_dir"
+      else
+        print -u2 "Ignoring unsafe completion cache directory: $cache_dir"
+        compinit -i -D
+      fi
+    }
+
+    setopt COMPLETE_IN_WORD ALWAYS_TO_END PATH_DIRS AUTO_MENU AUTO_LIST AUTO_PARAM_SLASH
+    unsetopt MENU_COMPLETE FLOW_CONTROL CASE_GLOB
+
+    # Case-insensitive, partial-word, substring, and typo-tolerant matching.
+    zstyle ':completion:*' matcher-list \
+      'm:{a-zA-Z}={A-Za-z}' \
+      'r:|[._-]=* r:|=*' \
+      'l:|=* r:|=*'
+    zstyle ':completion:*' completer _complete _match _approximate
+    zstyle ':completion:*:match:*' original only
+    zstyle -e ':completion:*:approximate:*' max-errors \
+      'reply=($((($#PREFIX + $#SUFFIX) / 3))numeric)'
+
+    # Selection menu and descriptions.
+    zstyle ':completion:*' menu select
+    zstyle ':completion:*' verbose yes
+    zstyle ':completion:*' group-name ''
+    zstyle ':completion:*:descriptions' format ' %F{yellow}-- %d --%f'
+    zstyle ':completion:*:corrections' format ' %F{green}-- %d (errors: %e) --%f'
+    zstyle ':completion:*:warnings' format ' %F{red}-- no matches found --%f'
+    zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
+
+    # Useful context-specific behavior.
+    zstyle ':completion:*:functions' ignored-patterns '(_*|pre(cmd|exec))'
+    zstyle ':completion:*' squeeze-slashes true
+    zstyle ':completion:*:*:cd:*' tag-order local-directories directory-stack path-directories
+    zstyle ':completion:*:*:*:*:processes' command 'ps -u "$USER" -o pid,user,comm -w'
+    zstyle ':completion:*:*:kill:*' menu select
+    zstyle ':completion:*:*:kill:*' insert-ids single
+    zstyle ':completion:*:manuals' separate-sections true
+    zstyle ':completion:*:manuals.(^1*)' insert-sections true
+  fi
+
+  ZSH_HIGHLIGHT_HIGHLIGHTERS=(main)
+  source -- "$curr/config/shell/zsh/vendor/highlighting/zsh-syntax-highlighting.zsh"
 fi
-# echo "Load end\t" $(gdate "+%s-%N")
 
 # Key bindings.
 # Pick the keymap explicitly. Left to itself, zsh picks vi mode whenever
@@ -180,5 +231,42 @@ fi
 
 unfunction _zshrc_bindkeys
 
-# Load and execute the prompt theming system.
-_zshrc_source_trusted "$curr/config/shell/zsh/prompt.zsh"
+# Simple prompt.
+#
+# dotfiles ❯ (default)
+# dotfiles master ❯ (in git repository)
+# root@serv dotfiles master ❯ (with SSH)
+#
+# * is appended to the Git branch name if the repository is dirty.
+# ❯ is green or red depending on previous command exit status.
+vcs_info=''
+setopt PROMPT_CR PROMPT_PERCENT PROMPT_SUBST
+
+function get-vcs-info {
+  local ref
+  local dirty=''
+  local git_status
+
+  vcs_info=''
+  ref=$(command git symbolic-ref --short -q HEAD 2> /dev/null) || return 0
+  git_status=$(command git status --porcelain=v1 --ignore-submodules=all 2> /dev/null) || return 0
+  [[ -n "$git_status" ]] && dirty='*'
+  vcs_info=" ${ref}${dirty}"
+}
+
+function _zsh_prompt_setup {
+  setopt LOCAL_OPTIONS
+  unsetopt XTRACE KSH_ARRAYS
+  autoload -Uz add-zsh-hook
+  add-zsh-hook precmd get-vcs-info
+  # add-zsh-hook chpwd list-files
+  # if [[ -n "${SSH_TTY:-}" ]]; then
+  #   prompt_ssh_info='%n@%m '
+  # fi
+  PROMPT='%F{12}%1~%f${vcs_info}%(!.%B%F{red}#%f%b.%B %(?.%F{green}.%F{red})❯%f%b) '
+  RPROMPT=''
+  SPROMPT='zsh: correct %F{red}%R%f to %F{green}%r%f [nyae]? '
+}
+
+_zsh_prompt_setup "$@"
+unfunction _zsh_prompt_setup
