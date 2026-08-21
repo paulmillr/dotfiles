@@ -8,7 +8,7 @@
 [log]
   date = format:%-m/%-d/%y
 [format]
-  pretty = %C(8)%h%Creset %s %C(blue)(%ad)%Creset
+  pretty = %C(8)%h%Creset %C(green)%G?%Creset %s %C(blue)(%ad)%Creset%x20%C(8)%aN%Creset%C(yellow)%(decorate:prefix=%x20[,suffix=],separator=%x2C ,pointer=%x2C ,tag=tag: )%Creset
 [mailmap]
   file = ~/Developer/personal/dotfiles/config/git/mailmap
 [core]
@@ -16,6 +16,8 @@
   excludesfile = ~/.gitignore
   pager = delta
   sshCommand = ssh -F /dev/null -o IdentitiesOnly=yes -i ~/.ssh/git
+[pager]
+  log = "\"$HOME/Developer/personal/dotfiles/scripts/git-log-format.sh\" | delta"
 [diff]
   colorMoved = default
   tool = delta

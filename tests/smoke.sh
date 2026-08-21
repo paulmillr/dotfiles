@@ -12,6 +12,7 @@ for completion in certbot chromium cmake diskutil golang httpie mkcert nftables 
 done
 test "$(find "$dotfiles/config/shell/zsh/vendor/completions/src" -type f | wc -l)" -eq 33
 test -r "$dotfiles/config/shell/zsh/vendor/highlighting/zsh-syntax-highlighting.zsh"
+test -x "$dotfiles/scripts/git-log-format.sh"
 test -r "$dotfiles/config/shell/zsh/vendor/highlighting/highlighters/main/main-highlighter.zsh"
 test ! -e "$dotfiles/.gitmodules"
 test ! -e "$dotfiles/config/shell/zsh/vendor/completions/.git"
@@ -120,6 +121,106 @@ zsh -dfc '
   test "$BAT_THEME" = "$BAT_THEME_LIGHT" || exit 1
   test "$DELTA_FEATURES" = "+light-mode" || exit 1
 '
+
+# git log owns the formatting; gl is its ten-commit shorthand.
+gl_repo="$test_root/gl-repo"
+git init -q -b main "$gl_repo"
+(
+  cd "$gl_repo"
+  git config user.name 'Test User'
+  git config user.email 'test@example.com'
+  printf 'first\n' > tracked
+  git add tracked
+  git -c commit.gpgSign=false commit -q -m 'First commit'
+  printf 'second\n' >> tracked
+  git add tracked
+  git -c commit.gpgSign=false commit -q -m 'Second commit'
+  git update-ref refs/remotes/origin/main HEAD
+)
+git_log_output=$(
+  cd "$gl_repo"
+  HOME="$test_home" git --no-pager log -2
+)
+case "$(printf '%s\n' "$git_log_output" | sed -n '1p')" in
+  *' N Second commit '*' [HEAD, main, origin/main]') ;;
+  *)
+    echo 'Expected git log to show signature status and branch references' >&2
+    exit 1
+    ;;
+esac
+case "$(printf '%s\n' "$git_log_output" | sed -n '2p')" in
+  *' N First commit '*) ;;
+  *)
+    echo 'Expected git log to show signature status on undecorated commits' >&2
+    exit 1
+    ;;
+esac
+yellow=$(printf '\033[33m')
+git_log_color_refs=$(
+  cd "$gl_repo"
+  HOME="$test_home" git --no-pager log --color=always -1
+)
+printf '%s\n' "$git_log_color_refs" |
+  grep -F "${yellow} [HEAD, main, origin/main]" >/dev/null
+gray=$(printf '\033[90m')
+green=$(printf '\033[32m')
+blue=$(printf '\033[34m')
+reset=$(printf '\033[m')
+git_log_color_output=$(
+  printf '%s\n' \
+    "${gray}deadbeef${reset} ${green}U${reset} Trusted ${blue}(8/21/$(date +%y))${reset} ${gray}ME${reset}${yellow} [HEAD, main]${reset}" \
+    "${gray}01234567${reset} ${green}N${reset} Unsigned ${blue}(1/2/99)${reset} ${gray}Other Author${reset}" |
+    "$test_repo/scripts/git-log-format.sh"
+)
+printf '%s\n' "$git_log_color_output" |
+  grep -F "${green}✓${reset} Trusted ${blue}(8/21)${reset}${yellow} [HEAD, main]${reset}" >/dev/null
+printf '%s\n' "$git_log_color_output" |
+  grep -F "${gray}01234567${reset} Unsigned ${blue}(1/2/99)${reset} ${gray}Other Author${reset}" >/dev/null
+gl_output=$(
+  cd "$gl_repo"
+  HOME="$test_home" DOTFILES_SHARED="$shared" bash --noprofile --norc -c '
+    . "$DOTFILES_SHARED" || exit 1
+    case "$(alias gl)" in
+      *"git log -10"*) ;;
+      *) exit 1 ;;
+    esac
+    shopt -s expand_aliases
+    eval "gl -2"
+  '
+)
+case "$(printf '%s\n' "$gl_output" | sed -n '1p')" in
+  *' [HEAD, main, origin/main]') ;;
+  *)
+    echo 'Expected gl to append branch references' >&2
+    exit 1
+    ;;
+esac
+case "$(printf '%s\n' "$gl_output" | sed -n '2p')" in
+  *'['*)
+    echo 'Expected gl to omit empty decorations' >&2
+    exit 1
+    ;;
+esac
+git_raw_output=$(
+  cd "$gl_repo"
+  HOME="$test_home" DOTFILES_SHARED="$shared" bash --noprofile --norc -c '
+    . "$DOTFILES_SHARED" || exit 1
+    git_raw
+  '
+)
+case "$(printf '%s\n' "$git_raw_output" | sed -n '1p')" in
+  *' [HEAD, main, origin/main]') ;;
+  *)
+    echo 'Expected git_raw to append branch references' >&2
+    exit 1
+    ;;
+esac
+case "$(printf '%s\n' "$git_raw_output" | sed -n '2p')" in
+  *'['*)
+    echo 'Expected git_raw to omit empty decorations' >&2
+    exit 1
+    ;;
+esac
 
 # A second default run is idempotent when every destination is already current.
 HOME="$test_home" sh "$test_repo/scripts/link.sh"

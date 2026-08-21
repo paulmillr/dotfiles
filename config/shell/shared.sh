@@ -307,6 +307,7 @@ alias g='git'
 alias ga='git add'
 alias gd='git diff'
 alias gf='git fetch'
+alias gl='git log -10'
 alias gp='git push'
 alias gs='git status --short'
 alias gbr='git branch'
@@ -449,37 +450,6 @@ EOF
   done <<EOF
 $new_commits
 EOF
-}
-
-gl() {
-  local count=10 requested current_year
-  local gray="$_color_gray" green="$_color_green" blue="$_color_blue" reset="$_color_reset"
-  [ -t 1 ] || { gray=''; green=''; blue=''; reset=''; }
-  current_year="$(date +%y)"
-
-  case "${1-}" in
-    -[0-9]*)
-      requested="${1#-}"
-      case "$requested" in
-        *[!0-9]*) ;;
-        *) count="$requested"; shift ;;
-      esac
-      ;;
-  esac
-
-  git --no-pager log -n "$count" --date=format:'%-m/%-d/%y' --format='%h%x1c%G?%x1c%aN%x1c%aE%x1c%GS%x1c%s%x1c%ad' "$@" |
-    awk -v gray="$gray" -v green="$green" -v blue="$blue" -v reset="$reset" -v current_year="$current_year" '
-      BEGIN { FS = sprintf("%c", 28) }
-      {
-        valid = ($2 == "G" || $2 == "U")
-        mine = ($3 == "ME" && index($5, "<" $4 ">") != 0)
-        checkbox = (valid && mine) ? green "✓" reset " " : ""
-        author = ($3 == "ME") ? "" : " " gray $3 reset
-        display_date = $7
-        sub("/" current_year "$", "", display_date)
-        printf "%s%s%s %s%s %s(%s)%s%s\n", gray, $1, reset, checkbox, $6, blue, display_date, reset, author
-      }
-    '
 }
 
 git_release() {
@@ -655,21 +625,23 @@ git_cherry() {
 alias cherry=git_cherry
 
 git_raw() {
-  local hash name email author_date committer_date title sep
-  local red="$_color_red" green="$_color_green" yellow="$_color_yellow" reset="$_color_reset"
-  [ -t 1 ] || { red=''; green=''; yellow=''; reset=''; }
+  local hash name email author_date committer_date title decorations refs sep
+  local gray="$_color_gray" blue="$_color_blue" yellow="$_color_yellow" reset="$_color_reset"
+  [ -t 1 ] || { gray=''; blue=''; yellow=''; reset=''; }
 
   sep=$(printf '\037')
-  git log --pretty='tformat:%H%x1f%an%x1f%ae%x1f%ad%x1f%cd%x1f%s' --date=format:'%Y-%m-%dT%H:%M:%S%z' |
-    while IFS="$sep" read -r hash name email author_date committer_date title; do
+  git log --pretty='tformat:%H%x1f%an%x1f%ae%x1f%ad%x1f%cd%x1f%s%x1f%(decorate:prefix=,suffix=,separator=%x2C ,pointer=%x2C ,tag=tag: )' --date=format:'%Y-%m-%dT%H:%M:%S%z' |
+    while IFS="$sep" read -r hash name email author_date committer_date title decorations; do
+      refs=''
+      [ -z "$decorations" ] || refs=" ${yellow}[${decorations}]${reset}"
       if [ "$author_date" = "$committer_date" ]; then
-        printf '%s%s%s %s %s(%s) %s%s <%s>%s\n' \
-          "$red" "$hash" "$reset" "$title" \
-          "$green" "$author_date" "$yellow" "$name" "$email" "$reset"
+        printf '%s%s%s %s %s(%s)%s %s%s <%s>%s%s\n' \
+          "$gray" "$hash" "$reset" "$title" \
+          "$blue" "$author_date" "$reset" "$gray" "$name" "$email" "$reset" "$refs"
       else
-        printf '%s%s%s %s %s(%s, cmt=%s) %s%s <%s>%s\n' \
-          "$red" "$hash" "$reset" "$title" \
-          "$green" "$author_date" "$committer_date" "$yellow" "$name" "$email" "$reset"
+        printf '%s%s%s %s %s(%s, cmt=%s)%s %s%s <%s>%s%s\n' \
+          "$gray" "$hash" "$reset" "$title" \
+          "$blue" "$author_date" "$committer_date" "$reset" "$gray" "$name" "$email" "$reset" "$refs"
       fi
     done
 }

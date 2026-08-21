@@ -65,6 +65,14 @@ git config --global user.name "Diogenes of Sinope"
 git config --global user.email "diogenes@barrel.com"
 ```
 
+Map your current and historical commit addresses to the `ME` identity used by
+the log formatter. Add entries to `config/git/mailmap`:
+
+```text
+ME <diogenes@barrel.com> <diogenes@barrel.com>
+ME <diogenes@barrel.com> <diogenes@agora.example>
+```
+
 Enable GPG commit signing:
 
 ```sh
