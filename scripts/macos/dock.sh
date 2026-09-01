@@ -10,8 +10,9 @@ if [ "$(uname -s)" != 'Darwin' ]; then
 fi
 
 # Reset the Dock to a fixed layout:
-#   left (apps):     Safari, Terminal, System Settings, Apps (Launchpad's
-#                    replacement in macOS Tahoe)
+#   left (apps):     Safari, Ghostty (or Terminal if Ghostty is missing),
+#                    VS Code (if installed), Passwords, System Settings,
+#                    Apps (Launchpad's replacement in macOS Tahoe)
 #   right (others):  ~/Downloads
 
 defaults delete com.apple.dock persistent-apps 2> /dev/null || true
@@ -20,13 +21,13 @@ defaults delete com.apple.dock persistent-others 2> /dev/null || true
 # Don't let recently used apps reappear next to the pinned ones.
 defaults write com.apple.dock show-recents -bool false
 
-# $1: absolute path to a .app bundle. Spaces must be percent-encoded (%20):
-# _CFURLString is a file:// URL, not a plain path.
+# $1: absolute path to a .app bundle. _CFURLString is a file:// URL, not a
+# plain path, so percent-encode spaces.
 dock_add_app() {
   defaults write com.apple.dock persistent-apps -array-add "<dict>
     <key>tile-data</key><dict>
       <key>file-data</key><dict>
-        <key>_CFURLString</key><string>file://$1/</string>
+        <key>_CFURLString</key><string>file://$(printf '%s' "$1" | sed 's/ /%20/g')/</string>
         <key>_CFURLStringType</key><integer>15</integer>
       </dict>
     </dict>
@@ -34,13 +35,13 @@ dock_add_app() {
   </dict>"
 }
 
-# $1: absolute folder path (percent-encoded), $2: arrangement (1 name, 2 date
-# added), $3: showas (2 grid, 3 list)
+# $1: absolute folder path, $2: arrangement (1 name, 2 date added),
+# $3: showas (2 grid, 3 list)
 dock_add_folder() {
   defaults write com.apple.dock persistent-others -array-add "<dict>
     <key>tile-data</key><dict>
       <key>file-data</key><dict>
-        <key>_CFURLString</key><string>file://$1/</string>
+        <key>_CFURLString</key><string>file://$(printf '%s' "$1" | sed 's/ /%20/g')/</string>
         <key>_CFURLStringType</key><integer>15</integer>
       </dict>
       <key>arrangement</key><integer>$2</integer>
@@ -51,9 +52,22 @@ dock_add_folder() {
   </dict>"
 }
 
-dock_add_app '/Applications/Safari.app'
-dock_add_app '/System/Applications/Utilities/Terminal.app'
-dock_add_app '/System/Applications/System%20Settings.app'
+# /Applications/Safari.app is a symlink into the App cryptex; pinning the
+# symlink gives the tile a shortcut-arrow badge, so pin the real bundle.
+dock_add_app '/System/Cryptexes/App/System/Applications/Safari.app'
+
+if [ -d '/Applications/Ghostty.app' ]; then
+  dock_add_app '/Applications/Ghostty.app'
+else
+  dock_add_app '/System/Applications/Utilities/Terminal.app'
+fi
+
+if [ -d '/Applications/Visual Studio Code.app' ]; then
+  dock_add_app '/Applications/Visual Studio Code.app'
+fi
+
+dock_add_app '/System/Applications/Passwords.app'
+dock_add_app '/System/Applications/System Settings.app'
 
 # Apps.app (Tahoe's Launchpad replacement) is a system app; probe for it since
 # its location isn't documented.

@@ -7,6 +7,7 @@ dotfiles=$(CDPATH='' cd "$script_dir/.." && pwd -P)
 test -d "$dotfiles/config/shell/zsh/vendor/completions/src"
 test -r "$dotfiles/config/shell/zsh/vendor/completions/LICENSE"
 test -x "$dotfiles/scripts/update-vendor.sh"
+test -r "$dotfiles/scripts/macos/finder-sidebar.swift"
 for completion in certbot chromium cmake diskutil golang httpie mkcert nftables playwright tox ufw virtualbox; do
   test -r "$dotfiles/config/shell/zsh/vendor/completions/src/_$completion"
 done
@@ -29,6 +30,10 @@ sh -n \
   "$dotfiles/scripts/link.sh" \
   "$dotfiles/scripts/linux/install-motd.sh" \
   "$dotfiles/scripts/macos/defaults.sh" \
+  "$dotfiles/scripts/macos/defaults-v2.sh" \
+  "$dotfiles/scripts/macos/desktop.sh" \
+  "$dotfiles/scripts/macos/dock.sh" \
+  "$dotfiles/scripts/macos/settings.sh" \
   "$dotfiles/scripts/update-vendor.sh"
 grep -F 'sh "$repo/scripts/link.sh" --overwrite' "$dotfiles/install.sh" >/dev/null
 ! grep -F 'git clone' "$dotfiles/install.sh" >/dev/null
