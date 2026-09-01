@@ -1,0 +1,48 @@
+[push]
+  default = simple
+  autoSetupRemote = true
+[pull]
+  rebase = true
+[init]
+  defaultBranch = main
+[log]
+  date = format:%-m/%-d/%y
+[format]
+  pretty = %C(8)%h%Creset %C(green)%G?%Creset %s %C(blue)(%ad)%Creset%x20%C(8)%aN%Creset%C(yellow)%(decorate:prefix=%x20[,suffix=],separator=%x2C ,pointer=%x2C ,tag=tag: )%Creset
+[mailmap]
+  file = ~/Developer/personal/dotfiles/config/git/mailmap
+[core]
+  abbrev = 8
+  excludesfile = ~/.gitignore
+  pager = ~/Developer/personal/dotfiles/scripts/git-pager.sh
+  sshCommand = ssh -F /dev/null -o IdentitiesOnly=yes -i ~/.ssh/git
+[pager]
+  log = "\"$HOME/Developer/personal/dotfiles/scripts/git-log-format.sh\" | \"$HOME/Developer/personal/dotfiles/scripts/git-pager.sh\""
+[diff]
+  colorMoved = default
+  tool = delta
+[interactive]
+  diffFilter = ~/Developer/personal/dotfiles/scripts/git-pager.sh --color-only
+[delta]
+  navigate = true
+[merge]
+  conflictstyle = zdiff3
+[mergetool]
+  keepBackup = false
+#[color "diff"]
+#  meta = white dim
+#  frag = magenta bold
+#  commit = yellow bold
+#  old = red bold
+#  new = green bold
+#  whitespace = red reverse
+[advice]
+  statusHints = false
+# Selected via DELTA_FEATURES in config/shell/shared.sh, which follows
+# LC_TERM_BG alongside BAT_THEME. An explicit light/dark also makes delta skip
+# its OSC 11 background query, which times out over ssh and races `less` when
+# delta is a diffFilter.
+[delta "light-mode"]
+  light = true
+[delta "dark-mode"]
+  dark = true

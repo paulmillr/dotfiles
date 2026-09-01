@@ -1,0 +1,310 @@
+let mapleader = "\<Space>"
+set nocompatible
+set nomodeline
+set viminfo='1000,f1,:1000,/1000
+set history=1000
+set updatetime=1000
+scriptencoding utf-8
+set encoding=utf-8
+
+" Apple Vim 9.1 can hang when TypeScript syntax is enabled before the first
+" file is read.  Loading the same syntax after startup avoids the faulty code
+" path; :syntax enable also preserves the colorscheme loaded below.
+if has('macunix') && resolve(v:progpath) =~# '^/usr/bin/'
+        augroup apple_system_vim_syntax
+                autocmd!
+                autocmd VimEnter * ++once syntax enable
+        augroup END
+else
+        syntax on
+endif
+
+packadd matchit
+set nonumber
+set nospell
+set foldcolumn=2
+set wrap
+set linebreak
+set textwidth=120
+set vb
+set ruler
+set statusline=%<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P
+set splitbelow
+set splitright
+
+" Toggle whitespace visibility with ,s
+nmap <Leader>s :set list!<CR>
+set listchars=tab:>\ ,trail:·,extends:»,precedes:«,nbsp:×
+:set list " Enable by default
+
+"------  Generic Behavior  ------
+set tabstop=4
+set shiftwidth=4
+set hidden
+filetype indent on
+filetype plugin on
+set autoindent
+
+"allow deletion of previously entered data in insert mode
+set backspace=indent,eol,start
+
+" Edit and Reload .vimrc files
+nmap <silent> <Leader>ev :e $MYVIMRC<CR>
+nmap <silent> <Leader>es :so $MYVIMRC<CR>
+
+
+"------  Disable Annoying Features  ------
+" Wtf is Ex Mode anyways?
+nnoremap Q <nop>
+
+" Annoying window
+map q: :q
+
+" Accidentally pressing Shift K will no longer open stupid man entry
+noremap K <nop>
+
+
+"------  Clipboard  ------
+" Allow Shift+Insert to paste
+map <S-Insert> <MiddleMouse>
+map! <S-Insert> <MiddleMouse>
+" set clipboard=unnamedplus
+
+" Ghostty forwards Command+C as a Kitty keyboard protocol sequence when it has
+" no terminal selection. Assign that sequence to an otherwise-unused function
+" key so terminal Vim can map it; MacVim reports Command+C as <D-c> directly.
+" Homebrew Vim can write to the + register, while Apple's Vim may need pbcopy.
+if has('macunix')
+	" Vim versions predating 'keyprotocol' do not ask Ghostty to encode the
+	" Command modifier, so enable the protocol explicitly for those versions.
+	if !exists('+keyprotocol') && $TERM =~# 'ghostty'
+		let &t_TI .= "\<Esc>[=1;1u"
+		let &t_TE = "\<Esc>[=0;1u" . &t_TE
+	endif
+
+	execute "set <F35>=\e[99;9u"
+
+	function! s:CopyVisualSelectionToMacClipboard() abort
+		let l:unnamed = getreg('"')
+		let l:unnamed_type = getregtype('"')
+
+		if has('clipboard')
+			normal! gv"+y
+		elseif executable('pbcopy')
+			normal! gvy
+			call system('pbcopy', getreg('"'))
+		else
+			echoerr 'Copy requires Vim clipboard support or pbcopy'
+			return
+		endif
+
+		call setreg('"', l:unnamed, l:unnamed_type)
+		normal! gv
+	endfunction
+
+	xnoremap <silent> <F35> :<C-u>call <SID>CopyVisualSelectionToMacClipboard()<CR>
+	xnoremap <silent> <D-c> :<C-u>call <SID>CopyVisualSelectionToMacClipboard()<CR>
+endif
+
+" Copy filename
+:nmap yY :let @" = expand("%")<CR>
+
+" Copy file path
+:nmap yZ :let @" = expand("%:p")<CR>
+
+" F2 = Paste Toggle (in insert mode, pasting indented text behavior changes)
+set pastetoggle=<F2>
+
+
+
+"------  Text Navigation  ------
+" Prevent cursor from moving to beginning of line when switching buffers
+set nostartofline
+
+" Keep the cursor in place while joining lines
+nnoremap J mzJ`z
+
+" H = Home, L = End
+noremap H ^
+noremap L $
+vnoremap L g_
+
+
+"------  Split Navigation  ------
+" <Leader>hljk = Move between splits
+nnoremap <Leader>h <C-w>h
+nnoremap <Leader>l <C-w>l
+nnoremap <Leader>j <C-w>j
+nnoremap <Leader>k <C-w>k
+
+
+"------  Buffer Navigation  ------
+" Ctrl+h & Ctrl+l cycle between buffers in the current split
+noremap <silent> <C-h> :bprev<CR>
+noremap <silent> <C-l> :bnext<CR>
+
+" <Leader>q Closes the current buffer
+nnoremap <silent> <Leader>q :Bclose<CR>
+
+" <Leader>Q Closes the current window
+nnoremap <silent> <Leader>Q <C-w>c
+
+" <Leader>Ctrl+q Force Closes the current buffer
+nnoremap <silent> <Leader><C-q> :Bclose!<CR>
+
+" `g f` will open the filepath under the cursor in current split
+" `Ctrl+w f` will open that same filepath in a horizontal split
+" this allows `g F` to open it in a vertical split
+:nnoremap gF :vertical wincmd f<CR>
+
+"------  Searching  ------
+set incsearch
+set ignorecase
+set smartcase
+set hlsearch
+
+" Clear search highlights when pressing <Leader>b
+nnoremap <silent> <leader>b :nohlsearch<CR>
+
+" <Leader>a opens a prompt for a project-wide search using ripgrep.
+set grepprg=rg\ --vimgrep\ --smart-case
+set grepformat=%f:%l:%c:%m
+nnoremap <leader>a :grep<Space>
+
+"------  NERDTree Options  ------
+let NERDTreeIgnore=['.git', '\.swp$', '\.swo$']
+
+"setting root dir in NT also sets VIM's cd (useful for switching projects)
+let NERDTreeChDirMode=2
+
+" Toggle visibility using <Leader>n
+noremap <silent> <Leader>n :NERDTreeToggle<CR>
+" Focus on NERDTree using <Leader>m
+noremap <silent> <Leader>m :NERDTreeFocus<CR>
+" Focus on NERDTree with the currently opened file with <Leader>M
+noremap <silent> <Leader>M :NERDTreeFind<CR>
+
+" These prevent accidentally loading files while focused on NERDTree
+augroup nerdtree_settings
+	autocmd!
+	autocmd FileType nerdtree noremap <buffer> <c-h> <nop>
+	autocmd FileType nerdtree noremap <buffer> <c-l> <nop>
+	autocmd FileType nerdtree setlocal foldcolumn=0
+	autocmd FileType nerdtree setlocal nocursorline
+	autocmd FileType nerdtree call matchadd('NERDTreeCursorFile', '.*\%#.*', 30)
+augroup END
+
+" Open NERDTree on startup and keep focus on the editing window.
+" When opening a directory, replace Vim's directory buffer with an empty
+" editing buffer so files open beside the persistent tree.
+augroup nerdtree_startup
+	autocmd!
+	autocmd VimEnter * if argc() > 0 && isdirectory(argv()[0]) | call g:NERDTreeCreator.CreateTabTree(argv()[0]) | wincmd p | enew | else | NERDTree | wincmd p | endif
+augroup END
+
+" Exit Vim when quitting a file leaves NERDTree as the only window.
+augroup nerdtree_autoquit
+	autocmd!
+	autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | call feedkeys(":quit\<CR>:\<BS>") | endif
+augroup END
+
+" Hides "Press ? for help"
+let NERDTreeMinimalUI=1
+
+" The tree header already shows the root path, so leave its status line blank.
+let g:NERDTreeStatusline = ' '
+
+" Shows invisibles
+let g:NERDTreeShowHidden=1
+
+" Show gitignored entries with a gray filename. The git status plugin keeps an
+" internal [!] marker for matching, but conceal it from the rendered tree.
+let g:NERDTreeGitStatusShowIgnored = 1
+let g:NERDTreeGitStatusIndicatorMapCustom = {
+	\ 'Modified': '',
+	\ 'Staged': '',
+	\ 'Untracked': '',
+	\ 'Renamed': '',
+	\ 'Unmerged': '',
+	\ 'Deleted': '',
+	\ 'Dirty': '',
+	\ 'Ignored': '!',
+	\ 'Clean': '',
+	\ 'Unknown': ''
+	\ }
+
+augroup nerdtree_gitignored
+	autocmd!
+	autocmd FileType nerdtree highlight NERDTreeGitIgnored cterm=NONE ctermfg=8 gui=NONE guifg=#666666
+	autocmd FileType nerdtree call matchadd('NERDTreeGitIgnored', '\[!\].*$', 20)
+augroup END
+
+
+"------ NERDCommenter Options ------
+" Visual select text then use 'Leader c Leader' to comment the selection
+let g:NERDSpaceDelims = 1
+let g:NERDDefaultAlign = 'left'
+
+
+"------  Text Editing Utilities  ------
+" <Leader>T = Delete all Trailing space in file
+nmap <Leader>T :%s/\s\+$//<CR>
+
+" <Leader>U = Deletes Unwanted empty lines
+nmap <Leader>U :g/^$/d<CR>
+
+" <Leader>R = Converts tabs to spaces in document
+nmap <Leader>R :retab<CR>
+
+" gq will wrap lines, so gQ will unwrap lines
+nmap gQ VipJ
+
+
+"------  JSON Filetype Settings  ------
+nmap <silent> =j :%!python3 -m json.tool<CR>:setfiletype json<CR>
+augroup json_file_settings
+	autocmd!
+	autocmd BufNewFile,BufRead *.webapp setfiletype json
+augroup END
+
+" Vim otherwise treats an empty *.tf file as a TinyFugue script.
+augroup terraform_file_settings
+	autocmd!
+	autocmd BufNewFile,BufRead *.tf setlocal filetype=terraform
+augroup END
+
+"------  Color Theme  ------
+
+" Keep Gruvbox's colors while using a true-black editor background.
+augroup gruvbox_true_black
+	autocmd!
+	autocmd ColorScheme gruvbox highlight Normal ctermbg=0 guibg=#000000
+	autocmd ColorScheme gruvbox highlight NormalNC ctermbg=0 guibg=#000000
+	autocmd ColorScheme gruvbox highlight EndOfBuffer ctermbg=0 guibg=#000000
+	autocmd ColorScheme gruvbox highlight FoldColumn ctermbg=0 guibg=#000000
+	autocmd ColorScheme gruvbox highlight VertSplit ctermbg=0 guibg=#000000
+	autocmd ColorScheme gruvbox highlight WinSeparator ctermbg=0 guibg=#000000
+	autocmd ColorScheme gruvbox highlight! link NERDTreeCursorFile Include
+	autocmd ColorScheme gruvbox highlight StatusLine cterm=NONE ctermfg=223 ctermbg=0 gui=NONE guifg=#ebdbb2 guibg=#000000
+	autocmd ColorScheme gruvbox highlight StatusLineNC cterm=NONE ctermfg=241 ctermbg=0 gui=NONE guifg=#665c54 guibg=#000000
+	autocmd ColorScheme gruvbox highlight StatusLineTerm cterm=NONE ctermfg=223 ctermbg=0 gui=NONE guifg=#ebdbb2 guibg=#000000
+	autocmd ColorScheme gruvbox highlight StatusLineTermNC cterm=NONE ctermfg=241 ctermbg=0 gui=NONE guifg=#665c54 guibg=#000000
+augroup END
+
+"------  Terminal Options  ------
+" Truecolor, except where it breaks highlighting: Apple Terminal renders
+" 24-bit SGR codes wrong, and old stock macOS vims lack the option
+" entirely.  Without it the schemes fall back to their cterm (256-color)
+" definitions, which every scheme in colors/ provides.
+if has('termguicolors') && $TERM_PROGRAM !=# 'Apple_Terminal' && $TERM !=# 'linux'
+	set termguicolors
+endif
+" Use the same light/dark answer that the shell passes to bat and delta.  The
+" value is detected on the local Mac and forwarded over SSH in LC_TERM_BG;
+" unknown terminals retain the existing dark default.
+if $LC_TERM_BG ==# 'light'
+	colorscheme sailormoon
+else
+	colorscheme ice
+endif
+set mouse=a

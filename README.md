@@ -1,61 +1,70 @@
 # Dotfiles
-Colourful & robust configuration files and utilities for Mac, Linux and BSD. Installation is done with a simple command:
+Colourful & robust security-minded configuration files and utilities for Mac, Linux and BSD.
 
 ```sh
-curl -L https://git.io/pmdot | sh
+git clone https://github.com/paulmillr/dotfiles.git "$HOME/Developer/personal/dotfiles"
+cd "$HOME/Developer/personal/dotfiles"
+
+curl -s https://github.com/paulmillr.gpg | gpg --import
+[ "$(git log -1 --format=%GP)" = "78A89CD10959782E23FF8447697079DA6878B89B" ] || { echo 'commit is not signed with the expected key'; exit 1; }
+git show --stat --oneline HEAD
+
+./install.sh
 ```
 
-The short URL expands to GitHub-hosted `install.sh`, which can be easily audited.
-
-## Usage
-
-- **MacOS:** Ensure you have XCode or dev tools. It can be downloaded from the app store.
-    - Optionally `sh etc/bootstrap-macos.sh`
-- **Linux and BSD:** Ensure you have `git` and `zsh` installed.
-- **MacOS terminal:** `terminal/monokai_pro_spectrum.terminal` (Settings -> Profiles -> Press "gear" -> Import).
-- **Git:** Don't forget to adjust `home/.gitconfig` or you'll have improper commit author
+The installer performs no network requests; it invokes `./scripts/link.sh` from its own checkout.
+Displaced paths are preserved as `.bak`, `.bak.1`, and so on.
 
 ## Features
+<img width="957" height="551" alt="Image" src="
 
-![](https://user-images.githubusercontent.com/574696/61765243-eb19dc00-ade4-11e9-8d16-5a402a0fdfec.png)
-![](https://user-images.githubusercontent.com/574696/61765242-eb19dc00-ade4-11e9-8db0-ac607e1eed8a.png)
+![](https://github.com/user-attachments/assets/e7ff10bc-26a8-4f26-8db8-644ab7e2863b)
+![](https://github.com/user-attachments/assets/1970df75-80b6-4f04-816e-73be674b96dc)
 
-* **No external dependencies!** Great, when compared to oh-my-zsh.
-* Auto-completion
-* Syntax highlighting
-* Useful utilities:
-    * `ff file-name-or-pattern` - fast recursive search for a file name in directories.
-    * `tarbz2`, `untarbz2` - best archive compression. Utilizes parallel `pbzip2` when available.
-    * `extract archive.tar.bz` — unpack any archive (supports many extensions)
-    * `ram safari` — show app RAM usage
-    * `loc py coffee js html css` — count lines of code
-    * `curl http://site/v1/api.json | json` - pretty-print JSON
-* `git-extras` - useful git functions, defined in `home/.gitconfig`:
-    * Opinionated `git log`, `git graph`
-    * `gcp` for fast `git commit -m ... && git push`
-    * `git sign` for PGP-signed git
-    * `git cleanup` — clean up merged git branches. Very useful if
-    you’re doing github pull requests in topic branches.
-    * `git summary` — outputs commit email statistics.
-    * `git release` and `git sign-release` — commit and tag the commit. Publishes to NPM for node projects.
-    * `git url` - opens GitHub repo for current git repo.
-    * `git-changelog`, `git-setup` etc.
-* `etc` — MacOS fine tuning
-* `vscode` — Sublime Text theme & settings
-* Sets terminal tab and window title to current directory
-* [homesick](https://github.com/technicalpickles/homesick) /
-  [homeshick](https://github.com/andsens/homeshick)-compatible
+* **No external dependencies!** Great, when compared to oh-my-zsh or prezto.
+* Auto-completion & syntax highlighing for zsh
+* Security-minded:
+    * The branch names, archives, directory names, and other local users are assumed hostile.
+    * The installer doesn't do network and is verifiable / reversible.
+    * git offers exactly ONE key to git hosts via `IdentitiesOnly=yes`
+    * git log shows signature status
+    * Telemetry is disabled to known scripts via env vars like `DO_NOT_TRACK=1`
+* `home` has tiny files installed into `$HOME` - `zshrc`, `bashrc`, `gitconfig`
+* `config/` has all the important parts:
+    * `shell/` - zsh & bash setup + extra helper functions
+    * `git/` - git log formatting
+    * `vim/` - turns vim into full-fledged mini-IDE, with tree view and other plugins
+    * `terminal-themes/` - color scheme for apple terminal, iterm and ghostty (where it's shipped by default)
+    * `ghostty/`, `vscode/` - some settings for terminal and editor
 
-## Not included
+## Git setup
 
-- `diff-so-fancy`: solid alternative to `git diff`
-- To apply CSS (tab = 2 spaces, font) to GitHub, you will need to copy etc/userChrome.css to firefox profile dir & create subdir "chrome".
+Specify git author:
+
+```sh
+git config --global user.name "Diogenes of Sinope"
+git config --global user.email "diogenes@barrel.com"
+```
+
+To enable checkboxes in git logs, also add `config/git/mailmap`:
+
+```text
+ME <diogenes@barrel.com> <diogenes@barrel.com>
+ME <diogenes@barrel.com> <diogenes@agora.example>
+```
+
+Enable GPG commit signing:
+
+```sh
+git config --global commit.gpgsign true
+git config --global tag.gpgSign true
+```
 
 ## License
 
 The MIT License (MIT)
 
-Copyright (c) 2019 Paul Miller [(paulmillr.com)](https://paulmillr.com)
+Copyright (c) 2011 Paul Miller [(paulmillr.com)](https://paulmillr.com)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the “Software”), to deal

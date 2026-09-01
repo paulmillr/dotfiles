@@ -1,0 +1,80 @@
+theme = dark:Paul Millr,light:Kanso Pearl
+shell-integration-features = ssh-env,ssh-terminfo
+cursor-style-blink = false
+cursor-style = block
+clipboard-paste-protection = false
+
+# BOTH option keys must act as alt here, unlike the cmd-driven variant. option
+# is the primary modifier in this scheme and you will reach for it with either
+# hand -- left for option+1..9, right for option+arrows. Setting this to `left`
+# would leave the right option key inert for every binding below.
+#
+# The cost is real: option no longer types †˜∂∑ç, on either side. If you need
+# those more than you need right-hand herdr navigation, set this to `left` and
+# accept that option+arrow only works from the left key.
+macos-option-as-alt = true
+
+
+# ---------------------------------------------------------------- option ----
+# herdr tabs. cmd/super is never delivered to a TUI, and this variant does not
+# rely on it -- \x02 is ctrl+b (herdr's default prefix), followed by the byte
+# for herdr's own stock binding.
+#
+#   option+t, option+n   \x02\x63           new tab      prefix+c
+#   option+w             \x02\x58           close tab    prefix+shift+x
+#   option+q             \x02\x71           detach       prefix+q
+#   option+left          \x02\x70           prev tab     prefix+p
+#   option+right         \x02\x6e           next tab     prefix+n
+#   option+1..9          \x02\x31..\x39     tab 1..9     prefix+1..9
+
+keybind = alt+key_t=text:\x02\x63
+keybind = alt+key_n=text:\x02\x63
+keybind = alt+key_w=text:\x02\x58
+keybind = alt+key_q=text:\x02\x71
+
+# keybind = alt+arrow_left=text:\x02\x70
+# keybind = alt+arrow_right=text:\x02\x6e
+keybind = alt+digit_1=text:\x02\x31
+keybind = alt+digit_2=text:\x02\x32
+keybind = alt+digit_3=text:\x02\x33
+keybind = alt+digit_4=text:\x02\x34
+keybind = alt+digit_5=text:\x02\x35
+keybind = alt+digit_6=text:\x02\x36
+keybind = alt+digit_7=text:\x02\x37
+keybind = alt+digit_8=text:\x02\x38
+keybind = alt+digit_9=text:\x02\x39
+
+
+# ---------------------------------------------------------- shift+option ----
+# herdr workspaces. The digits carry an extra \x1b because the herdr side is
+# bound to prefix+alt+1..9, and alt is encoded as an ESC prefix.
+#
+#   shift+option+w       \x02\x57              rename ws   prefix+shift+w
+#   shift+option+n       \x02\x4e              new ws      prefix+shift+n
+#   shift+option+left    \x02\x1b\x5b\x44      prev ws     prefix+left
+#   shift+option+right   \x02\x1b\x5b\x43      next ws     prefix+right
+#   shift+option+1..9    \x02\x1b\x31..\x39    ws 1..9     prefix+alt+1..9
+
+keybind = alt+shift+key_w=text:\x02\x57
+keybind = alt+shift+key_n=text:\x02\x4e
+keybind = alt+shift+arrow_left=text:\x02\x1b\x5b\x44
+keybind = alt+shift+arrow_right=text:\x02\x1b\x5b\x43
+keybind = alt+shift+digit_1=text:\x02\x1b\x31
+keybind = alt+shift+digit_2=text:\x02\x1b\x32
+keybind = alt+shift+digit_3=text:\x02\x1b\x33
+keybind = alt+shift+digit_4=text:\x02\x1b\x34
+keybind = alt+shift+digit_5=text:\x02\x1b\x35
+keybind = alt+shift+digit_6=text:\x02\x1b\x36
+keybind = alt+shift+digit_7=text:\x02\x1b\x37
+keybind = alt+shift+digit_8=text:\x02\x1b\x38
+keybind = alt+shift+digit_9=text:\x02\x1b\x39
+
+
+# Nothing else is declared. cmd+t, cmd+w, cmd+d, cmd+1..9, cmd+c, cmd+v,
+# cmd+q and the rest keep their stock Ghostty behaviour because this file
+# never mentions them.
+
+# Keep Command+C available to terminal applications when Ghostty itself has no
+# selection. Vim maps the resulting Kitty keyboard sequence to clipboard copy.
+keybind = performable:super+c=copy_to_clipboard
+

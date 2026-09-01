@@ -1,31 +1,42 @@
 # Numerous always-ignore extensions
 *.diff
+*.patch
 *.err
 *.orig
 *.log
 *.swp
 *~
+*.js.map
+*.d.ts.map
+*.pyc
 
 # OS or Editor folders
 .DS_Store
 .cache
 
-# Folders to ignore
+# Version control
 .hg
 .svn
 
-# Node.js package manager
-/bower_components
+# Node.js
 /node_modules
 /npm-debug.log
-
-# Other stuff
-*.pyc
-/tmp
-
-# Project stuff
+package-lock.json
+pnpm-lock.yaml
 yarn.lock
 .pnp.cjs
 .yarn
-package-lock.json
+bun.lockb
+bun.lock
+deno.lock
 /.nyc_output/
+
+# Agents
+LOG.md
+AGENTS.md
+CLAUDE.md
+
+# Misc
+/tmp
+/.zed
+*.claude
